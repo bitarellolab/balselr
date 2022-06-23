@@ -1,6 +1,3 @@
 README.md
 
-#hello
-
-https://r-pkgs.org/r.html
-
+install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
