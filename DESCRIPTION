@@ -8,5 +8,5 @@ Description: Easy-to-use, fast, integrated neutrality tests focused on detecting
 License: GPL-3
 Encoding: en-US
 LazyData: true
-Imports:tidymodels, tidyverse,data.table,ggplot2
-Suggests:glue,tibble
+Imports:tidymodels, tidyverse,data.table,ggplot2, tictoc, testthat, genomalicious, glue
+Suggests:tibble
