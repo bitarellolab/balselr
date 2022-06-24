@@ -13,7 +13,7 @@
 #   Check Package:             'Cmd + Shift + E'
 #   Test Package:              'Cmd + Shift + T'
 #' @export
-parse_vcf_slim<-function(dir=".",infile="*.vcf", outfile=NA,ncores=2, index.col=NA, nind=c(108,10,1), outseq=NA, type="ncd1"){
+parse_vcf_slim<-function(dir=".",infile="*.vcf", outfile=NA,index.col=NA, nind=c(108,10,1), outseq=NA, type="ncd1", fold=T){
   #
   assertthat::assert_that(dir.exists(dir), msg=glue::glue("Dir {dir} does not exist.\n"))
   assertthat::assert_that(file.exists(glue::glue("{dir}{infile}")), msg=glue::glue("VCF file {infile} does not exist.\n"))
@@ -22,27 +22,25 @@ parse_vcf_slim<-function(dir=".",infile="*.vcf", outfile=NA,ncores=2, index.col=
   inp<-data.table::fread(tmp, skip="##", header=T)
   data.table::setnames(inp, "#CHROM","CHR")
   if(is.na(index.col)){
-
-  index.col<-which(colnames(inp)=="FORMAT")+1
-  cat(glue::glue("index.col not provided so we will assume it is column {index.col}..."),"\n")
+        index.col<-which(colnames(inp)=="FORMAT")+1
+        cat(glue::glue("index.col not provided so we will assume it is column {index.col}..."),"\n")
   }
   #Index No. of the individual to use as ``ancestral'' sequence
   if(is.na(outseq) & !(type %in% c("ncd1","ncd2"))){
-    outseq<-(index.col-1)+sum(nind)
+        outseq<-(index.col-1)+sum(nind)
   }else if(type %in% c("ncd1","ncd2")){
-    remove(outseq)
+        remove(outseq)
   }
   if(is.na(outfile)){
-    outfile=gsub(".vcf","_",tmp)
+        outfile=gsub(".vcf","_",tmp)
   }else{
-    outfile=glue("{dir}{outfile}_")
+        outfile=glue("{dir}{outfile}_")
   }
-  cat(glue::glue("output will be written into file {outfile}<name of test>"),"\n")
   #
   if(type=="ncd1"){
           cat(glue::glue("Creating input file for ncd1 from {infile}..."),"\n")
-          vcf_ncd1(x=inp,outfile=glue::glue("{outfile}ncd1.out"), nind=nind[c(1,2)], index.col=index.col)
-          cat("Done.\n")
+          vcf_ncd1(x=inp,outfile=glue::glue("{outfile}ncd1.out"), nind=nind, index.col=index.col, fold=fold)
+          cat(glue::glue("Finished making input file for {type}"),"\n")
   }
 }
  # out.ncd1.unf<-glue("{outfile}ncd1_unf.out")
