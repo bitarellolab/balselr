@@ -70,19 +70,7 @@ vcf_ncd2 <-
                         ref <- x[l, 4]
                         alt <- x[l, 5]
 
-                        if (!(ref %in% c("A", "C", "G", "T") &
-                              alt %in% c("A", "C", "G", "T"))) {
-                                if (verbose == T) {
-                                        cat(
-                                                glue::glue(
-                                                        "Line {l} {ref} {alt} will be skipped. Only bi-allelic SNPs PASS"
-                                                ),
-                                                "\n"
-                                        )
-                                }
-                                counter = counter + 1
-                                next
-                        }
+
                         x <- data.table::setDT(x)
                         anc <-
                                 x[l, colnames(x)[index.col + (sum(nind) - 1)], with = F]

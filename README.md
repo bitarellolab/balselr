@@ -1,3 +1,26 @@
-README.md
 
-install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
+# BalSelTools
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of BalSelTools is to ...
+
+## Installation
+
+You can install the development version of BalSelTools from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("bbitarello/BalSelTools")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(BalSelTools)
+## basic example code
+```
+
