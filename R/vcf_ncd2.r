@@ -1,18 +1,14 @@
-# @
+# Make input file for NCD1 from VCF
 #
-# This is a function called vcf_ncd1.R
-# which makes an input file for NCD1 from a vcf file
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   v
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Cmd + Shift + B'
-#   Check Package:             'Cmd + Shift + E'
-#   Test Package:              'Cmd + Shift + T'
+#' @param x
+#' @param outfile
+#' @param nind
+#' @param index.col
+#' @param fold
+#' @param verbose
+#'
 #' @export
+#' @examples
 vcf_ncd2 <-
         function(x = inp,
                  outfile = outfile,
@@ -45,7 +41,7 @@ vcf_ncd2 <-
                         )
                 }
                 pop1_cols <-
-                        c(index.col + (nind[1]), index.col + (sum(nind) - 1))
+                        c(index.col + nind[1], index.col + (sum(nind) - 1))
                 if (verbose == T) {
                         cat(
                                 glue::glue(
@@ -91,15 +87,15 @@ vcf_ncd2 <-
                         anc <-
                                 x[l, colnames(x)[index.col + (sum(nind) - 1)], with = F]
                         anc <-
-                                stringr::str_split(anc, "|", simplify = F)[[1]][[2]]
+                                split_geno(x=anc,split= "|")[1]
                         drv = 0
                         total = 0
                         drv2 = 0
                         total2 = 0
 
-                        for (i in pop0_cols) {
+                        for (i in seq(from=pop0_cols[1],to=pop0_cols[2])) {
                                 al <-
-                                        stringr::str_split(x[l, colnames(x)[i], with = F], "|", simplify = F)[[1]]
+                                        split_geno(x=x[l, colnames(x)[i], with = F], split="|")
                                 if (al[1] != anc) {
                                         drv = drv + 1
                                 }
@@ -108,10 +104,9 @@ vcf_ncd2 <-
                                 }
                                 total = total + 2
                         }
-                        for (i in (index.col + nind[1]):(index.col + nind[1] + (nind[2] -
-                                                                                1))) {
+                        for (i in seq(from=pop1_cols[1],to=pop1_cols[2])) {
                                 al <-
-                                        stringr::str_split(x[l, colnames(x)[i], with = F], "|", simplify = F)[[1]]
+                                        split_geno(x=x[l, colnames(x)[i], with = F], split="|")
                                 if (al[1] != anc) {
                                         drv2 = drv2 + 1
                                 }
@@ -137,7 +132,7 @@ vcf_ncd2 <-
                                         use.names = FALSE
                                 )
                 }
-                tableout <- tableout[-1,]
+                tableout <- tableout[-1, ]
                 if (verbose == T) {
                         cat(glue::glue("Printing output to {outfile}..."),
                             "\n")

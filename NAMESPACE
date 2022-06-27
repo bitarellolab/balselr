@@ -3,4 +3,6 @@
 export(hello)
 export(ncd2)
 export(parse_vcf_slim)
+export(split_geno)
 export(vcf_ncd1)
+export(vcf_ncd2)

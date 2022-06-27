@@ -1,34 +1,31 @@
-# @
-#
-# This is a function called vcf_ncd1.R
-# which makes an input file for NCD1 from a vcf file
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   v
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Cmd + Shift + B'
-#   Check Package:             'Cmd + Shift + E'
-#   Test Package:              'Cmd + Shift + T'
+#' Make input file for NCD1 from VCF
+#'
+#' @param x
+#' @param outfile
+#' @param nind
+#' @param index.col
+#' @param verbose
+#'
 #' @export
+#'
+#' @examples
 vcf_ncd1 <-
         function(x = inp,
                  outfile = outfile,
                  nind = nind,
                  index.col = index.col,
-                 verbose = verbose
-                 ) {
+                 verbose = verbose) {
                 assertthat::assert_that(length(nind) == 1, msg = "Only one species should be used with ncd1.\n")
-                pop0_cols <- c(index.col - 1, index.col + nind)
+                pop0_cols <- c(index.col, index.col + nind-1)
                 cat(glue::glue("Your vcf contains 1 population:"), "\n")
-                if(verbose==T){cat(
-                        glue::glue(
-                                "Pop0: {nind} diploid individuals.Columns {pop0_cols[1]}:{pop0_cols[2]}. If you have an outgroup species, use ncd2 instead."
-                        ),
-                        "\n"
-                )}
+                if (verbose == T) {
+                        cat(
+                                glue::glue(
+                                        "Pop0: {nind} diploid individuals.Columns {pop0_cols[1]}:{pop0_cols[2]}. If you have an outgroup species, use ncd2 instead."
+                                ),
+                                "\n"
+                        )
+                }
                 tableout <-
                         data.table::data.table(
                                 CHR = NA,
@@ -49,12 +46,14 @@ vcf_ncd1 <-
 
                         if (!(ref %in% c("A", "C", "G", "T") &
                               alt %in% c("A", "C", "G", "T"))) {
-                                if(verbose==T){cat(
-                                        glue::glue(
-                                                "Line {l} {ref} {alt} will be skipped. Only bi-allelic SNPs PASS"
-                                        ),
-                                        "\n"
-                                )}
+                                if (verbose == T) {
+                                        cat(
+                                                glue::glue(
+                                                        "Line {l} {ref} {alt} will be skipped. Only bi-allelic SNPs PASS"
+                                                ),
+                                                "\n"
+                                        )
+                                }
                                 counter = counter + 1
                                 next
                         }
@@ -62,9 +61,9 @@ vcf_ncd1 <-
                         anc = 0
                         drv = 0
                         total = 0
-                        for (i in pop0_cols) {
+                        for (i in seq(from=pop0_cols[1],to=pop0_cols[2])) {
                                 al <-
-                                        stringr::str_split(x[l, colnames(x)[i], with = F], "|", simplify = F)[[1]]
+                                        split_geno(x=x[l, colnames(x)[i], with = F], split="|")
                                 if (al[1] != anc) {
                                         drv = drv + 1
                                 }
@@ -83,22 +82,24 @@ vcf_ncd1 <-
                                                 ref,
                                                 alt,
                                                 tx_1 = drv,
-                                                tn_1 = total,
-
+                                                tn_1 = total
                                         ),
                                         use.names = FALSE
                                 )
                 }
-                tableout <- tableout[-1, ]
-                if(verbose==T){cat(glue::glue("Printing output to {outfile}..."), "\n")}
+                tableout <- tableout[-1,]
+                if (verbose == T) {
+                        cat(glue::glue("Printing output to {outfile}..."),
+                            "\n")
+                }
                 data.table::fwrite(tableout,
                                    file = outfile,
                                    sep = "\t",
                                    col.names = F)
-                if(verbose==T){cat(glue::glue("Lines skipped: {counter}"), "\n")}
+                if (verbose == T) {
+                        cat(glue::glue("Lines skipped: {counter}"), "\n")
+                }
 
                 return(tableout)
 
         }
-
-#install.packages(c("devtools", "roxygen2", "testthat", "knitr"))

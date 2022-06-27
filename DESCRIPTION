@@ -1,7 +1,7 @@
 Package: BalSelTools
 Type: Package
 Title: A set of functions to perform genome-wide scans and tests for balancing selection in genomic data
-Version: 0.1.0
+Version: 0.0.1
 Author: Bárbara Bitarello
 Maintainer: Bárbara D. Bitarello <barbarabitarello@gmail.com>
 Description: Easy-to-use, fast, integrated neutrality tests focused on detecting signatures of balancing selection in genomic data

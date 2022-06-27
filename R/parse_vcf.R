@@ -39,6 +39,11 @@ parse_vcf_slim <-
                                 )
                         }
                 }
+                if (verbose == T) {
+                        cat(glue::glue("Creating input file for {type} from {infile}..."),
+                            "\n")
+                }
+                outfile <- glue::glue("{outfile}_{type}.out")
                 #Index No. of the individual to use as ``ancestral'' sequence
                 if (fold == F & type == "ncd2") {
                         outseq <- (index.col) + (sum(nind) - 1)
@@ -65,13 +70,6 @@ parse_vcf_slim <-
                         }
                 }
                 #
-
-
-if (verbose == T) {
-        cat(glue::glue("Creating input file for {type} from {infile}..."),
-            "\n")
-}
-outfile <- glue::glue("{outfile}_{type}.out")
 #
 if (type == "ncd2") {
         res <-
