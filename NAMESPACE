@@ -2,6 +2,7 @@
 
 export("%>%")
 export(hello)
+export(ncd1)
 export(ncd2)
 export(parse_vcf_slim)
 export(read_vcf)
