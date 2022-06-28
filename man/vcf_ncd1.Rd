@@ -9,6 +9,7 @@ vcf_ncd1(
   outfile = outfile,
   nind = nind,
   index.col = index.col,
+  fold = fold,
   verbose = verbose
 )
 }

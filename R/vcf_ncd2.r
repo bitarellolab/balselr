@@ -129,9 +129,6 @@ vcf_ncd2 <-
                                    file = outfile,
                                    sep = "\t",
                                    col.names = F)
-                if (verbose == T) {
-                        cat(glue::glue("Lines skipped: {counter}"), "\n")
-                }
 
                 return(tableout)
 

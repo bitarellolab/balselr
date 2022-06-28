@@ -16,7 +16,11 @@ ncd2 <- function(x = x,
                  tf = 0.5,
                  fold = T,
                  w = 3000,
-                 by.snp = T, ncores=4,valormaf="val", minIS=10) {
+                 by.snp = T,
+                 ncores=4,
+                 valormaf="val",
+                 minIS=10,
+                 label="example_sim") {
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one chromosome at a time\n")
         x[, MAF := tx_1 / tn_1]
         x[, MAF2 := tx_2 / tn_2]
@@ -69,12 +73,19 @@ ncd2 <- function(x = x,
         res5[, temp:=NULL]
         if(is.null(minIS)=="FALSE"){
          res5<-res5[IS>=minIS]
+
         }else{return(res5)}
 
         if(valormaf=="val"){
-                res5<-res5[which.min(res5$NCD2), ][, .(Win.ID, SegSites, FDs, IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf]
-        }else{
-                res5<-res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, FDs, IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf]
+                res6<-res5[which.min(res5$NCD2), ][, .(Win.ID, SegSites, FDs, IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf]
+        }else if(valormaf=="maf"){
+                res6<-res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, FDs, IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf]
+        }else if(valormaf=="all"){
+                res6<-res5[which.min(res5$NCD1), ][, .(Win.ID, SegSites,FDs,IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf]
+                res6<-rbind(res6, res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, FDs,IS, MaxMaf, Mid, MidMaf, NCD2)][, tf := tf])
         }
-        print(res5)
+        if(is.null(label)==F){
+                res6<-res5[, label:=label]
+        }
+        print(res6)
 }
