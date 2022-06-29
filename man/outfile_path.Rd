@@ -12,3 +12,6 @@ outfile_path(infile = "example.vcf")
 \description{
 Create output file with timestamp
 }
+\examples{
+outfile_path("inst/example.vcf")
+}

@@ -1,12 +1,12 @@
 #' Calculate non-central statistic (NCD1)
 #'
-#' @param x
-#' @param tf
-#' @param fold
-#' @param w
-#' @param by.snp
+#' @param x A data.table object
+#' @param tf Target frequency
+#' @param w Window size in bp.
+#' @param by.snp Logical. If TRUE, windows are defined around each SNP
+#' in the input data
 #'
-#' @return
+#' @return A data.table object
 #' @export
 #'
 #' @examples

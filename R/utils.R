@@ -3,7 +3,7 @@ timestamp <- function(time) format(time, "%Y-%B-%d_%H-%M-%S")
 
 #' Create output file with timestamp
 #' @param infile Name of input file to modify
-#' @example outfile_path("inst/example.vcf")
+#' @examples outfile_path("inst/example.vcf")
 #' @export
 outfile_path <- function(infile = "example.vcf") {
 

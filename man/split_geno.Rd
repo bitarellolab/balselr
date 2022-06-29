@@ -4,11 +4,16 @@
 \alias{split_geno}
 \title{Split a genotype column from a vcf file}
 \usage{
-split_geno(x = x, split = "|")
+split_geno(...)
 }
 \arguments{
-\item{split}{}
+\item{x}{A string from a GT column.}
+
+\item{split}{Pattern to use for splitting.}
 }
 \description{
 Split a genotype column from a vcf file
+}
+\examples{
+split_geno("0|1")
 }

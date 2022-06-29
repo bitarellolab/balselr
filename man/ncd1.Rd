@@ -17,7 +17,17 @@ ncd1(
 )
 }
 \arguments{
-\item{by.snp}{}
+\item{x}{A data.table object}
+
+\item{tf}{Target frequency}
+
+\item{w}{Window size in bp.}
+
+\item{by.snp}{Logical. If TRUE, windows are defined around each SNP
+in the input data}
+}
+\value{
+A data.table object
 }
 \description{
 Calculate non-central statistic (NCD1)

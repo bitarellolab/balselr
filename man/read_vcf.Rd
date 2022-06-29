@@ -4,11 +4,23 @@
 \alias{read_vcf}
 \title{Read vcf}
 \usage{
-read_vcf(x = "inst/example.vcf", only.bi = T, inds = "all")
+read_vcf(infile = "inst/example.vcf", only.bi = T, inds = "all")
 }
 \arguments{
-\item{x}{}
+\item{infile}{The path and name of a vcf file}
+
+\item{only.bi}{Logical. If TRUE, only bi-allelic SNP positions from VCF file
+are kept.}
+
+\item{inds}{A vector specifying which individuals (samples) from vcf file
+should be kept. If "all", all are kept.}
+}
+\value{
+Returns a data.table object
 }
 \description{
 Read vcf
+}
+\examples{
+read_vcf(infile="inst/example.vcf", only.bi=T, inds="all")
 }

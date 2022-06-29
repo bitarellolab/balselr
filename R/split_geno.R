@@ -1,13 +1,11 @@
 #' Split a genotype column from a vcf file
 #'
-#' @param x
-#' @param split
+#' @param x A string from a GT column.
+#' @param split Pattern to use for splitting.
 #'
-#' @return
 #' @export
 #'
-#' @examples
-split_geno <- function(x = x, split = "|") {
-  res <- as.integer(stringr::str_split(string = x, pattern = "|", simplify = F)[[1]][c(2, 4)])
-  return(res)
+#' @examples split_geno("0|1")
+split_geno <- function(...) {
+  as.integer(stringr::str_split(string = x, pattern = "|", simplify = F)[[1]][c(2, 4)])
 }

@@ -1,4 +1,4 @@
-# Make input file for NCD2 from VCF
+#' Make input file for NCD2 from VCF
 #
 #' @param x A data.table object generated from reading a VCF file with read_vcf.
 #' @param outfile The path and name for the outfile. If not provided,
@@ -12,10 +12,11 @@
 #' @param verbose Logical. If TRUE, progress reports will be printed as the
 #' function runs.
 #'
-#' @export
 #' @examples inp = read_vcf("inst/example.vcf")
 #' vcf_ncd2(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108,10),
 #' index.col=10, fold=T, verbose=T)
+#'
+#' @export
 vcf_ncd2 <-
   function(x = inp,
            outfile = outfile,
@@ -26,7 +27,7 @@ vcf_ncd2 <-
           #
     npop <- length(nind)
     assertthat::assert_that(npop == 2 |
-      npop == 3, msg = "If only one species is represented, you should use ncd1.\n")
+    npop == 3, msg = "If only one species is represented, you should use ncd1.\n")
     pop0_cols <- c(index.col, index.col + (nind[1] - 1))
     if (npop > 2) {
       nind <- nind[c(1, 2)]
