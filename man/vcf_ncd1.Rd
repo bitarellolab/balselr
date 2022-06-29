@@ -5,7 +5,7 @@
 \title{Make input file for NCD1 from VCF}
 \usage{
 vcf_ncd1(
-  x = inp,
+  x = infile,
   outfile = outfile,
   nind = nind,
   index.col = index.col,
@@ -13,8 +13,24 @@ vcf_ncd1(
 )
 }
 \arguments{
-\item{verbose}{}
+\item{x}{An object of class data.table containing}
+
+\item{outfile}{The path and name for the outfile. If not provided,
+this will be  a timestamp file in the current directory.}
+
+\item{nind}{A vector containing the number of diploid individuals from each
+population to be used. For ncd1, only one population is used.}
+
+\item{index.col}{First genotype column in VCF file.}
+
+\item{verbose}{Logical. If TRUE, progress reports will be printed as the
+function runs.}
 }
 \description{
 Make input file for NCD1 from VCF
+}
+\examples{
+inp = read_vcf("inst/example.vcf")
+vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
+index.col=10, verbose=T)
 }

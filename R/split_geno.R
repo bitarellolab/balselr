@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-split_geno<-function(x=x, split="|"){
-        res<-as.integer(stringr::str_split(string=x, pattern="|", simplify = F)[[1]][c(2,4)])
-        return(res)
+split_geno <- function(x = x, split = "|") {
+  res <- as.integer(stringr::str_split(string = x, pattern = "|", simplify = F)[[1]][c(2, 4)])
+  return(res)
 }
