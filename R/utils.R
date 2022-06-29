@@ -5,7 +5,7 @@ timestamp <- function(time) format(time, "%Y-%B-%d_%H-%M-%S")
 #' @param infile Name of input file to modify
 #' @example
 #' @export outfile_path("inst/example.vcf")
-outfile_path <- function(infile) {
+outfile_path <- function(infile = "example.vcf") {
 
         sub("\\..*", paste0("_",timestamp(now),".out"), infile)
 }

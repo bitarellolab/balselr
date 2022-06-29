@@ -4,7 +4,7 @@
 \alias{outfile_path}
 \title{Create output file with timestamp}
 \usage{
-outfile_path(infile)
+outfile_path(infile = "example.vcf")
 }
 \arguments{
 \item{infile}{Name of input file to modify}
