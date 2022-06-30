@@ -4,8 +4,12 @@
 \name{BalSelTools-package}
 \alias{BalSelTools}
 \alias{BalSelTools-package}
-\title{BalSelTools: A set of functions to perform genome-wide scans and tests for balancing selection in genomic data}
+\title{BalSelTools: What the Package Does (One Line, Title Case)}
 \description{
-Easy-to-use, fast, integrated neutrality tests focused on detecting signatures of balancing selection in genomic data
+What the package does (one paragraph).
+}
+\author{
+\strong{Maintainer}: Bárbara Bitarello \email{barbarabitarello@gmail.com} (\href{https://orcid.org/0000-0001-7676-9367}{ORCID})
+
 }
 \keyword{internal}
