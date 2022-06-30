@@ -12,8 +12,9 @@ ncd2(
   by.snp = T,
   ncores = 4,
   valormaf = "val",
-  minIS = 10,
-  label = "example_sim"
+  minIS = 2,
+  label = NULL,
+  verbose = T
 )
 }
 \arguments{
@@ -23,14 +24,28 @@ ncd2(
 
 \item{fold}{Logical. If TRUE, NCD2 will use minor allele frequencies.}
 
-\item{w}{Window size in bp.}
+\item{w}{Window size in bp. Default is 1000}
 
 \item{by.snp}{Logical. If TRUE, windows are defined around each SNP
-in the input data}
+in the input data. Else, slidding windows in the range first pos:last pos
+will be used.}
+
+\item{ncores}{Number of cores. Increasing this can spead things up for you.
+Default is 4.}
+
+\item{valormaf}{Value or maf. "val" returns the window with the lowest test
+statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val}
+
+\item{minIS}{Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.}
+
+\item{label}{An optional label to include as the last column of the output}
 }
 \value{
 A data.table object
 }
 \description{
 Calculate non-central statistic (NCD2)
+}
+\examples{
+parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
 }

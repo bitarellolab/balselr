@@ -1,11 +1,16 @@
-Package: BalSelTools
-Title: What the Package Does (One Line, Title Case)
+Package: balselr
+Title: Balancing Selection in R
 Version: 0.0.0.1000
 Authors@R: 
     person("Bárbara", "Bitarello", , "barbarabitarello@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7676-9367"))
-Description: What the package does (one paragraph).
+Description: Produce input files for different balancing selection programs/tests and run the tests.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+LazyData: true
+Imports: 
+    tictoc
+Depends: 
+    R (>= 2.10)

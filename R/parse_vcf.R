@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @examples parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
+#' parse_vcf(infile="inst/example.vcf", type="ncd1", nind=108)
 parse_vcf <-
   function(infile = "*.vcf",
            outfile = NULL,
@@ -29,6 +30,7 @@ parse_vcf <-
     assertthat::assert_that(file.exists(infile),
       msg = glue::glue("VCF file {infile} does not exist.\n")
     )
+    tictoc::tic("Total runtime")
     pref <- gsub(".vcf", "", infile)
     inp <- read_vcf(x = infile, only.bi = T, inds = "all")
 
@@ -64,7 +66,7 @@ parse_vcf <-
       assertthat::assert_that(fold == T, msg = "Only the folded option is available when Ancestral/Derived states are unknown.\n")
     }
     if (is.null(outfile)) {
-            outfile = outfile_path("infile")
+            outfile = outfile_path(glue::glue("{infile}"))
       if (verbose == T) {
         cat(
           glue::glue(
@@ -79,7 +81,7 @@ parse_vcf <-
     #
     if (type == "ncd2") {
       res <-
-        vcf_ncd2(
+        .vcf_ncd2(
           x = inp,
           outfile = outfile,
           nind = nind,
@@ -89,7 +91,7 @@ parse_vcf <-
         )
     } else if (type == "ncd1") {
       res <-
-        vcf_ncd1(
+        .vcf_ncd1(
           x = inp,
           outfile = outfile,
           nind = nind,
@@ -99,9 +101,10 @@ parse_vcf <-
     }
     if (verbose == T) {
       cat(
-        glue::glue("Finished making input file for {type}"),
+        glue::glue("Finished making input file for {type}. File written to: {outfile}"),
         "\n"
       )
+        tictoc::toc()
     } else {
       cat(glue::glue("File written to: {outfile}"), "\n")
     }

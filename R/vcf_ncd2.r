@@ -12,12 +12,11 @@
 #' @param verbose Logical. If TRUE, progress reports will be printed as the
 #' function runs.
 #'
-#' @examples inp = read_vcf("inst/example.vcf")
+#' @examples
 #' vcf_ncd2(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108,10),
 #' index.col=10, fold=T, verbose=T)
 #'
-#' @export
-vcf_ncd2 <-
+.vcf_ncd2 <-
   function(x = inp,
            outfile = outfile,
            nind = nind,
@@ -25,6 +24,7 @@ vcf_ncd2 <-
            fold = fold,
            verbose = verbose) {
           #
+          tictoc::tic("Total runtime")
     npop <- length(nind)
     assertthat::assert_that(npop == 2 |
     npop == 3, msg = "If only one species is represented, you should use ncd1.\n")
@@ -72,8 +72,9 @@ vcf_ncd2 <-
         tn_2 = NA
       )
     counter <- 0
+    if(verbose==T){cat("Parsing vcf lines....\n")}
     for (l in 1:nrow(x)) {
-      cat(l, "\r")
+    if(verbose==T){cat(l, "\r")}
       chr <- x[l, 1]
       pos <- x[l, 2]
       ref <- x[l, 4]
@@ -139,8 +140,8 @@ vcf_ncd2 <-
     data.table::fwrite(tableout,
       file = outfile,
       sep = "\t",
-      col.names = F
+      col.names = T
     )
-
+    if(verbose==T){tictoc::toc()}
     return(tableout)
   }

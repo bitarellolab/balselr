@@ -10,16 +10,16 @@
 #' function runs.
 #'
 #'
-#' @export
 #' @examples inp = read_vcf("inst/example.vcf")
 #' vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
 #' index.col=10, verbose=T)
-vcf_ncd1 <- function(x = infile,
+.vcf_ncd1 <- function(x = infile,
                      outfile = outfile,
                      nind = nind,
                      index.col = index.col,
                      verbose = verbose) {
   #
+        tictoc::tic("Total runtime")
   npop <- length(nind)
   assertthat::assert_that(npop == 1, msg = "NCD1 only uses one species.\n")
   pop0_cols <- c(index.col, index.col + (nind[1] - 1))
@@ -44,8 +44,9 @@ vcf_ncd1 <- function(x = infile,
     tn_1 = NA
   )
   counter <- 0
+  if(verbose==T){cat("Parsing vcf lines....\n")}
   for (l in 1:nrow(x)) {
-    cat(l, "\r")
+    if(verbose==T){cat(l, "\r")}
     chr <- x[l, 1]
     pos <- x[l, 2]
     ref <- x[l, 4]
@@ -91,6 +92,6 @@ vcf_ncd1 <- function(x = infile,
     sep = "\t",
     col.names = F
   )
-
+if(verbose==T){tictoc::toc()}
   return(tableout)
 }

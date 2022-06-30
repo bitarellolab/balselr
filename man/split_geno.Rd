@@ -4,7 +4,7 @@
 \alias{split_geno}
 \title{Split a genotype column from a vcf file}
 \usage{
-split_geno(...)
+split_geno(x = x, split = "|")
 }
 \arguments{
 \item{x}{A string from a GT column.}
