@@ -2,7 +2,7 @@
 
 #.count_alleles<-function(col=10, anc=0){
 
-#        example_vcf[1,] %>% dplyr::summarise(chr=CHR, pos=POS, ref=REF, alt=ALT, anc=split_geno(i118,n=1))
+#        (res<-split_geno())
 
 
 #}
