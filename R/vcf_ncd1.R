@@ -22,7 +22,7 @@
         tictoc::tic("Total runtime")
   npop <- length(nind)
   assertthat::assert_that(npop == 1, msg = "NCD1 only uses one species.\n")
-  pop0_cols <- c(index.col, index.col + (nind[1] - 1))
+  pop0_cols <- colnames(x)[c(index.col: index.col + (nind[1] - 1))]
 
   if (verbose == T) {
     cat(
@@ -31,56 +31,19 @@
   }
   if (verbose == T) {
     cat(
-      glue::glue("Pop0: {nind[1]} diploid individuals.Columns {pop0_cols[1]}:{pop0_cols[2]}. This is your population of interest."), "\n"
+      glue::glue("Pop0: {nind[1]} diploid individuals.Columns {pop0_cols[1]}:{pop0_cols[length(pop0_cols)]}. This is your population of interest."), "\n"
     )
   }
 
-  tableout <- data.table::data.table(
-    CHR = NA,
-    POS = NA,
-    REF = NA,
-    ALT = NA,
-    tx_1 = NA,
-    tn_1 = NA
-  )
-  counter <- 0
-  if(verbose==T){cat("Parsing vcf lines....\n")}
-  for (l in 1:nrow(x)) {
-    if(verbose==T){cat(l, "\r")}
-    chr <- x[l, 1]
-    pos <- x[l, 2]
-    ref <- x[l, 4]
-    alt <- x[l, 5]
-    x <- data.table::setDT(x)
-
-    total <- 0
-    alt2 <- 0
-    for (i in seq(from = pop0_cols[1], to = pop0_cols[2])) {
-      al <-
-        split_geno(x = x[l, colnames(x)[i], with = F], split = "|")
-      if (al[1] == 1) {
-        alt2 <- alt2 + 1
-      }
-      if (al[2] == 1) {
-        alt2 <- alt2 + 1
-      }
-      total <- total + 2
-    }
-    tableout <-
-      rbind(
-        tableout,
-        data.table::data.table(
-          chr,
-          pos,
-          ref,
-          alt,
-          tx_1 = alt2,
-          tn_1 = total
-        ),
-        use.names = FALSE
-      )
-  }
-  tableout <- tableout[-1, ]
+  x <- data.table::setDT(x)
+  tableout<-x %>% dplyr::select(CHR, POS, REF, ALT) %>% as.data.table
+  tableout<-dplyr::bind_cols(tableout,x %>% dplyr::select(pop0_cols) %>%
+                dplyr::rowwise() %>%
+                dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
+                dplyr::summarise(tx_1 = Reduce(`+`,.))) %>%
+                dplyr::mutate(tn_1 = nind[1]*2) %>%
+                dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1) %>%
+                as.data.table
   if (verbose == T) {
     cat(
       glue::glue("Printing output to {outfile}..."),

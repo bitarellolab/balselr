@@ -5,7 +5,7 @@
 \title{Calculate non-central statistic (NCD2)}
 \usage{
 ncd2(
-  x = x,
+  x,
   tf = 0.5,
   fold = T,
   w = 3000,
@@ -47,5 +47,5 @@ A data.table object
 Calculate non-central statistic (NCD2)
 }
 \examples{
-parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
+ncd2()
 }

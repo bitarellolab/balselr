@@ -16,10 +16,10 @@
 #' @return A data.table object
 #' @export
 #'
-#' @examples parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
+#' @examples ncd2(x=hc_)
 #' @import data.table
 #' @importFrom data.table ":="
-ncd2 <- function(x = x,
+ncd2 <- function(x,
                  tf = 0.5,
                  fold = T,
                  w = 3000,
@@ -34,7 +34,7 @@ ncd2 <- function(x = x,
   x[, AF2 := tx_2 / tn_2]
   x[, ID := seq_along(CHR)]
   w1 <- 3000 / 2
-  polpos <- x[MAF != 1 & MAF != 0]$ID
+  polpos <- x[AF != 1 & AF != 0]$ID
   fdpos <- sort(c(x[AF == 1 & AF2 == 0]$ID, x[AF == 0 &
     AF2 == 1]$ID))
   x[, SNP := ifelse(ID %in% polpos, T, F)]
@@ -43,7 +43,7 @@ ncd2 <- function(x = x,
   mylist <-
     parallel::mclapply(x[polpos, ]$POS, function(y) {
       x[POS >= y - w1 &
-        POS < y + w1][, .(POS, AF, AF2, ID, SNP, FD, tx_1, tx_2)][, Mid := y]
+        POS < y + w1][, .(POS, AF, AF2, ID, SNP, FD, tx_1, tx_2)]
     },
     mc.cores =
       ncores
@@ -51,60 +51,50 @@ ncd2 <- function(x = x,
   mylist <-
     do.call(
       rbind,
-      parallel::mclapply(seq_along(mylist), function(y) {
-        mylist[[y]][, Win.ID := y]
-      }, mc.cores = ncores)
-    )
+      parallel::mclapply(1:length(mylist),
+                         function(y) mylist[[y]][,Mid:=x[polpos,]$POS[y]][,Win.ID:=y],
+                         mc.cores=ncores))
   mylist <- data.table::setDT(mylist)
   mylist[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
+
   # }
-  res <-
-    mylist[, .(SegSites = sum(SNP), FDs = sum(FD)), by = Win.ID][, IS := SegSites +
-      FDs]
+  mylist <- data.table::setDT(mylist)
   mylist[,tf:=tf]
-  res1 <- mylist[, (MidMaf <- MAF[which(Mid == POS)]), by = Win.ID]
-  res2 <- mylist[, (maf <- MAF[c(which(SNP), which(FD))]), by = Win.ID]
-  res3 <- res2[, (CenMaf <- max(abs(V1-tf))), by = Win.ID]
-  res4 <- mylist[, (Mid <- Mid[1]), by = Win.ID]
+  res <-
+          mylist[, .(SegSites = sum(SNP), FDs = sum(FD), IS = sum(SNP)+sum(FD)),
+                 by = Win.ID]
+  res[,tf:=tf]
 
-  data.table::setkey(res, Win.ID)
-  data.table::setkey(res1, Win.ID)
-  data.table::setkey(res3, Win.ID)
-  data.table::setkey(res4, Win.ID)
-  res5 <- res[res3, ][res4, ][res1, ]
-  data.table::setnames(
-    res5,
-    c(
-      "Win.ID",
-      "SegSites",
-      "FDs",
-      "IS",
-      "CenMaf",
-      "Mid",
-      "MidMaf"
-    )
-  )
-  res5[, temp := res2[, ((V1 - tf)^2), by = Win.ID]$V1]
-  res5[, NCD2 := sqrt(temp / IS)]
-
-  res5[, temp := NULL]
+  res1<-mylist %>% dplyr::group_by(Win.ID) %>%
+          dplyr::summarise(MidMaf=MAF[which(Mid == POS)], Mid=Mid[1], CenMaf=min(abs(MAF-tf))) %>%
+          dplyr::ungroup() %>%
+          as.data.table
+  res2<-merge(res,res1)
+  res3<-mylist %>% dplyr::filter(SNP==T) %>% dplyr::group_by(Win.ID) %>%
+          dplyr::summarise(temp2 = sum((MAF-tf)^2)) %>% dplyr::ungroup() %>%
+          as.data.table
+  res4<-merge(res2, res3) %>% as.data.table
+  res4<-res4 %>% dplyr::ungroup() %>% as.data.table
+  res4[, temp4:=sum(rep((tf^2),FDs)), by=Win.ID]
+  res4[,NCD2:=sqrt((temp2+temp4)/IS), by=Win.ID]
+  res4[,temp2:=NULL]
+  res4[,temp4:=NULL]
   if (is.null(minIS) == "FALSE") {
-    res5 <- res5[IS >= minIS]
+    res4 <- res4[IS >= minIS]
   } else {
-    return(res5)
+    return(res4)
   }
 
   if (valormaf == "val") {
-    res6 <- res5[which.min(res5$NCD2), ][, .(Win.ID, SegSites, FDs, IS, CenMaf, Mid, MidMaf, NCD2)][, tf := tf]
+    res5 <- res4[which.min(res4$NCD2), ][, .(Win.ID, SegSites, FDs, IS, CenMaf, Mid, MidMaf, NCD2)][, tf := tf]
   } else if (valormaf == "maf") {
-    res6 <- res5[which.min(res5$CenMaf), ][, .(Win.ID, SegSites, FDs, IS, CenMaf, Mid, MidMaf, NCD2)][, tf := tf]
+    res5 <- res4[which.min(res4$CenMaf), ][, .(Win.ID, SegSites, FDs, IS, CenMaf, Mid, MidMaf, NCD2)][, tf := tf]
   } else if (valormaf == "all") {
-    res6 <- res5[which.min(res5$NCD1), ][, .(Win.ID, SegSites, FDs, IS,CenMaf, Mid, MidMaf, NCD2)][, tf := tf]
-    res6 <- rbind(res6, res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, FDs, IS, CenMaf, Mid, MidMaf, NCD2)][, tf := tf])
+    res5<-res4
   }
   if (is.null(label) == F) {
-    res6 <- res5[, label := label]
+    res5 <- res5[, label := label]
   }
   if(verbose==T){tictoc::toc()}
-  print(res6)
+  print(res5)
 }

@@ -35,7 +35,7 @@ function runs.}
 Make input file for NCD2 from VCF
 }
 \examples{
-vcf_ncd2(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108,10),
+.vcf_ncd2(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108,10),
 index.col=10, fold=T, verbose=T)
 
 }

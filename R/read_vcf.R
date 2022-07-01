@@ -25,9 +25,9 @@ read_vcf <- function(x = "inst/example.vcf",
 
   formatcol <- which(colnames(inp) == "FORMAT")
 
-  if (inds != "all") {
+  if (is.numeric(inds)){
     cbind(inp[, 1:formatcol], x2[, ...inds])
-  } else {
+  } else if (inds == 'all'){
     return(inp)
   }
 }
