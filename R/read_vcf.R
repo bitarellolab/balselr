@@ -15,6 +15,7 @@
 read_vcf <- function(x = "inst/example.vcf",
                      only.bi = T,
                      inds = "all") {
+        REF <- ALT <- x2 <- inds <- NULL
   inp <- data.table::fread(x, skip = "##", header = T)
   data.table::setnames(inp, "#CHROM", "CHR")
   if (only.bi == T) {

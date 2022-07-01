@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(BalSelTools)
+library(balselr)
 
-test_check("BalSelTools")
+test_check("balselr")

@@ -10,9 +10,13 @@
 #' @param ncores Number of cores. Increasing this can spead things up for you.
 #' Default is 4.
 #' @param valormaf Value or maf. "val" returns the window with the lowest test
-#' statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val
-#' @param minIS Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.
+#' statistic value. "maf" returns the window with the highest MaxMaf.
+#' Only useful if tf=0.5. Default is val
+#' @param minIS Minimum number of informative sites. Default is 2. Windows with
+#'  less informative sites than this threshold are discarded.
 #' @param label An optional label to include as the last column of the output
+#' @param verbose Logical. If TRUE, progress reports will be printed as the
+#' function runs.
 #' @return A data.table object
 #' @export
 #'
@@ -28,7 +32,10 @@ ncd1 <- function(x = x,
                  valormaf = "val",
                  minIS = 2,
                  label = NULL, verbose=T) {
-  assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one chromosome at a time\n")
+  Win.ID <- IS <- SegSites <- POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
+  tx_1 <- tn_1 <- AF2 <- tx_2 <- tn_2 <- ID <- SNP <- FD <- MAF <-NULL
+  assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
+                          chromosome at a time\n")
   tictoc::tic("Total runtime")
   x[, MAF := tx_1 / tn_1]
   x[, ID := seq_along(CHR)]
@@ -90,12 +97,18 @@ ncd1 <- function(x = x,
   }
 
   if (valormaf == "val") {
-    res6 <- res5[which.min(res5$NCD1), ][, .(Win.ID, SegSites, IS, CenMaf, Mid, MidMaf, NCD1)][, tf := tf]
+    res6 <- res5[which.min(res5$NCD1), ][, .(Win.ID,
+                                             SegSites, IS, CenMaf, Mid, MidMaf,
+                                             NCD1)][, tf := tf]
   } else if (valormaf == "maf") {
-    res6 <- res5[which.min(res5$CenMaf), ][, .(Win.ID, SegSites, IS, CenMaf, Mid, MidMaf, NCD1)][, tf := tf]
+    res6 <- res5[which.min(res5$CenMaf), ][, .(Win.ID, SegSites, IS, CenMaf,
+                                              Mid, MidMaf, NCD1)][, tf := tf]
   } else if (valormaf == "all") {
-    res6 <- res5[which.min(res5$NCD1), ][, .(Win.ID, SegSites, IS, CenMaf, Mid, MidMaf, NCD1)][, tf := tf]
-    res6 <- rbind(res6, res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, IS, CenMaf, Mid, MidMaf, NCD1)][, tf := tf])
+    res6 <- res5[which.min(res5$NCD1), ][, .(Win.ID, SegSites, IS, CenMaf, Mid,
+                                             MidMaf, NCD1)][, tf := tf]
+    res6 <- rbind(res6, res5[which.max(res5$MaxMaf), ][, .(Win.ID, SegSites, IS,
+                                                           CenMaf, Mid, MidMaf,
+                                                           NCD1)][, tf := tf])
   }
   if (is.null(label) == F) {
     res6 <- res6[, label := label]

@@ -39,6 +39,9 @@ statistic value. "maf" returns the window with the highest MaxMaf. Only useful i
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.}
 
 \item{label}{An optional label to include as the last column of the output}
+
+\item{verbose}{Logical. If TRUE, progress reports will be printed as the
+function runs.}
 }
 \value{
 A data.table object
@@ -47,5 +50,5 @@ A data.table object
 Calculate non-central statistic (NCD2)
 }
 \examples{
-ncd2()
+ncd2(x=hc_)
 }

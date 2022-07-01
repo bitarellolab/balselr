@@ -13,6 +13,8 @@
 #' statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.
 #' @param label An optional label to include as the last column of the output
+#' @param verbose Logical. If TRUE, progress reports will be printed as the
+#' function runs.
 #' @return A data.table object
 #' @export
 #'
@@ -28,7 +30,12 @@ ncd2 <- function(x,
                  valormaf = "val",
                  minIS = 2,
                  label = NULL, verbose=T) {
-  assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one chromosome at a time\n")
+        Win.ID <- Mid <- POS <- temp4 <- FDs <- NCD2 <- FD <- NULL
+        temp2 <- IS <- SegSites <- CenMaf <- MidMaf <- SNP <- NULL
+        CHR <- AF <- tx_1 <- tn_1 <- AF2 <- tx_2 <- tn_2 <- ID <- MAF <- NULL
+
+  assertthat::assert_that(length(unique(x[, CHR])) == 1,
+                          msg = "Run one chromosome at a time\n")
         tictoc::tic("Total runtime")
   x[, AF := tx_1 / tn_1]
   x[, AF2 := tx_2 / tn_2]
@@ -51,8 +58,9 @@ ncd2 <- function(x,
   mylist <-
     do.call(
       rbind,
-      parallel::mclapply(1:length(mylist),
-                         function(y) mylist[[y]][,Mid:=x[polpos,]$POS[y]][,Win.ID:=y],
+      parallel::mclapply(
+              1:length(mylist),function(y)
+                      mylist[[y]][,Mid:=x[polpos,]$POS[y]][,Win.ID:=y],
                          mc.cores=ncores))
   mylist <- data.table::setDT(mylist)
   mylist[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]

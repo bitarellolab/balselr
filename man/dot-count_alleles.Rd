@@ -9,12 +9,18 @@
 \arguments{
 \item{x}{A vector containing 0s and 1s corresponding to allele states}
 
-\item{der}{Return derived. Logical. If TRUE, returns the counts of derived (alternate)
+\item{split}{Pattern to look for. Inherited from stringr::str_split}
+
+\item{index}{1 or 2 or c(1,2). Which alleles to consider.}
+
+\item{der}{Return derived. Logical. If TRUE, returns the counts of
+derived (alternate)
 alleles. If FALSE, returns ancestral (ref) counts}
 }
 \description{
 Count derived or ancestral alleles for a given vcf position
 }
 \examples{
-data.table(col1="1|1", col2="1|0", col3="0|0") \%>\% dplyr::summarise(across(col1:col3, .count_alleles))
+data.table::data.table(col1="1|1", col2="1|0", col3="0|0") \%>\%
+dplyr::summarise(across(col1:col3, .count_alleles))
 }

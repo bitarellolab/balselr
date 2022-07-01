@@ -34,11 +34,16 @@ will be used.}
 Default is 4.}
 
 \item{valormaf}{Value or maf. "val" returns the window with the lowest test
-statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val}
+statistic value. "maf" returns the window with the highest MaxMaf.
+Only useful if tf=0.5. Default is val}
 
-\item{minIS}{Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.}
+\item{minIS}{Minimum number of informative sites. Default is 2. Windows with
+less informative sites than this threshold are discarded.}
 
 \item{label}{An optional label to include as the last column of the output}
+
+\item{verbose}{Logical. If TRUE, progress reports will be printed as the
+function runs.}
 }
 \value{
 A data.table object

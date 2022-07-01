@@ -17,13 +17,15 @@
 #' index.col=10, fold=T, verbose=T)
 #'
 .vcf_ncd2 <-
-  function(x = inp,
+  function(x,
            outfile = outfile,
            nind = nind,
            index.col = index.col,
            fold = fold,
            verbose = verbose) {
           #
+          CHR <- POS <- REF <- ALT <- tx_1 <- tn_1 <- NULL
+          tx_2 <- tn_2 <- NULL
           tictoc::tic("Total runtime")
     npop <- length(nind)
     assertthat::assert_that(npop == 2 |

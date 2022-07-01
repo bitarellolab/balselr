@@ -13,13 +13,17 @@
 #' @examples inp = read_vcf("inst/example.vcf")
 #' vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
 #' index.col=10, verbose=T)
-.vcf_ncd1 <- function(x = infile,
+.vcf_ncd1 <- function(x,
                      outfile = outfile,
                      nind = nind,
                      index.col = index.col,
                      verbose = verbose) {
   #
         tictoc::tic("Total runtime")
+        infile <- CHR <- POS <- REF <- ALT <- tx_1 <- tn_1 <- NULL
+        across <- tx_2 <- tn_2 <- NULL
+
+
   npop <- length(nind)
   assertthat::assert_that(npop == 1, msg = "NCD1 only uses one species.\n")
   pop0_cols <- colnames(x)[c(index.col: index.col + (nind[1] - 1))]

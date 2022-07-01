@@ -5,7 +5,7 @@
 \title{Make input file for NCD1 from VCF}
 \usage{
 .vcf_ncd1(
-  x = infile,
+  x,
   outfile = outfile,
   nind = nind,
   index.col = index.col,
