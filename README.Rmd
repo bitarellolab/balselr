@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # balselr
 
 <!-- badges: start -->
-![](images/balselr.png)
+![](images/balselr.png){width=50% height=50%}
 <!-- badges: end -->
 
 The goal of balselr is to ...
