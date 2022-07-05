@@ -7,8 +7,7 @@
 
 ![](images/balselr.png) <!-- badges: end -->
 
-The goal of balselr is to perform balancing selection tests in R. 
-It also provides simulation capacity with SLiM and aids in the generation of plots. 
+The goal of balselr is to …
 
 ## Installation
 
