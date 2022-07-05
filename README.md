@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-![](images/balselr.png) 
-
+<img src="images/balselr2.png" style="width:50.0%;height:50.0%" />
 <!-- badges: end -->
 
 The goal of balselr is to …
