@@ -5,7 +5,9 @@
 
 <!-- badges: start -->
 
-![](images/balselr.png) <!-- badges: end -->
+![](images/balselr.png) 
+
+<!-- badges: end -->
 
 The goal of balselr is to …
 
