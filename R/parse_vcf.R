@@ -32,7 +32,7 @@ parse_vcf <-
     )
     tictoc::tic("Total runtime")
     pref <- gsub(".vcf", "", infile)
-    inp <- read_vcf(x = infile, only.bi = T, inds = "all")
+    inp <- read_vcf(x = infile, only.bi = T)
 
     type <- tolower(type)
 
