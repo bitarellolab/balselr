@@ -22,5 +22,5 @@ Returns a data.table object
 Read vcf
 }
 \examples{
-read_vcf(infile="inst/example.vcf", only.bi=T, inds="all")
+read_vcf(x="inst/example.vcf", only.bi=T, inds="all")
 }
