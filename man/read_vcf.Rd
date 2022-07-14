@@ -4,7 +4,7 @@
 \alias{read_vcf}
 \title{Read vcf}
 \usage{
-read_vcf(x = "inst/example.vcf", only.bi = T, inds = "all")
+read_vcf(x = "inst/example.vcf", only.bi = T)
 }
 \arguments{
 \item{x}{The path and name of a vcf file}

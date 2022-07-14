@@ -13,23 +13,15 @@
 #' @import data.table
 #' @importFrom data.table ":="
 read_vcf <- function(x = "inst/example.vcf",
-                     only.bi = T,
-                     inds = "all") {
+                     only.bi = T) {
         REF <- ALT <- x2 <- NULL
         inp <- data.table::fread(x, skip = "##", header = T)
         data.table::setnames(inp, "#CHROM", "CHR")
         if (only.bi == T) {
                 inp <-
                         inp[REF %in% c("A", "C", "T", "G")][ALT %in% c("A", "C", "T", "G")]
+                inp
         } else {
-                return(inp)
-        }
-
-        formatcol <- which(colnames(inp) == "FORMAT")
-
-        if (is.numeric(inds)) {
-                cbind(inp[, 1:formatcol], x2[, ...inds])
-        } else if (inds == 'all') {
-                return(inp)
+                inp
         }
 }
