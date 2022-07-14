@@ -17,7 +17,7 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
+#' @examples parse_vcf(infile =  system.file("example.vcf",package="balselr"), nind = c(108, 1), fold=T)
 #' parse_vcf(infile="inst/example.vcf", type="ncd1", nind=108)
 parse_vcf <-
   function(infile = "*.vcf",
