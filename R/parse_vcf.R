@@ -16,8 +16,9 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile = "inst/example.vcf", n=108, n1=NULL, fold=T, type="ncd2")
-#' parse_vcf(infile="inst/example.vcf", type="ncd1", n0=108)
+#' @examples parse_vcf(infile =  system.file("example.vcf",package="balselr"), nind = c(108, 1), fold=T)
+#' parse_vcf(infile="inst/example.vcf", type="ncd1", nind=108)
+
 parse_vcf <-
   function(infile = "*.vcf",
            outfile = NULL,
@@ -33,7 +34,7 @@ parse_vcf <-
     tictoc::tic("Total runtime")
     nind<-c(n0,n1)
     pref <- gsub(".vcf", "", infile)
-    inp <- read_vcf(x = infile, only.bi = T, inds = "all")
+    inp <- read_vcf(x = infile, only.bi = T)
 
     type <- tolower(type)
 
