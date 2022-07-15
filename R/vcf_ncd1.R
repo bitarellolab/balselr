@@ -12,7 +12,7 @@
 #'
 #' @examples inp = read_vcf("inst/example.vcf")
 #' vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
-#' index.col=10, verbose=T)
+#' .vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=108, index.col=10, verbose=T)
 .vcf_ncd1 <- function(x,
                      outfile = outfile,
                      nind = nind,
@@ -25,8 +25,9 @@
 
 
   npop <- length(nind)
-  assertthat::assert_that(npop == 1, msg = "NCD1 only uses one species.\n")
-  pop0_cols <- colnames(x)[c(index.col: index.col + (nind[1] - 1))]
+  assertthat::assert_that(npop == 1, msg = "NCD1 only uses one species. nind should have length 1. \n")
+
+  pop0_cols <- colnames(x)[index.col:(index.col + (nind[1] - 1))]
 
   if (verbose == T) {
     cat(
@@ -41,7 +42,7 @@
 
   x <- data.table::setDT(x)
   tableout<-x %>% dplyr::select(CHR, POS, REF, ALT) %>% as.data.table
-  tableout<-dplyr::bind_cols(tableout,x %>% dplyr::select(pop0_cols) %>%
+  tableout<-dplyr::bind_cols(tableout,x %>% dplyr::select(all_of(pop0_cols)) %>%
                 dplyr::rowwise() %>%
                 dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
                 dplyr::summarise(tx_1 = Reduce(`+`,.))) %>%
@@ -57,7 +58,7 @@
   data.table::fwrite(tableout,
     file = outfile,
     sep = "\t",
-    col.names = F
+    col.names = T
   )
 if(verbose==T){tictoc::toc()}
   return(tableout)

@@ -7,9 +7,13 @@
 #' @param by.snp Logical. If TRUE, windows are defined around each SNP
 #' in the input data. Else, slidding windows in the range first pos:last pos
 #' will be used.
+#' @param mid Logical. If TRUE runs NCD centered on a core SNP frequency isntead of a pre-defined tf.
 #' @param ncores Number of cores. Increasing this can spead things up for you.
 #' Default is 4.
-#' @param valormaf Value or maf. "val" returns the window with the lowest test
+#' @param selectwin Select window. "val" returns the window with the lowest test. "maf" returns the window
+#' which has the lowest difference between its central MAF and the tf."mid" returns the window
+#' centered closest on a value provided by the user under targetpos."all" returns all windows (idea for when the user wants to select windows after scanning a genome)
+#' @param targetpos
 #' statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.
 #' @param label An optional label to include as the last column of the output
@@ -18,23 +22,27 @@
 #' @return A data.table object
 #' @export
 #'
-#' @examples ncd2(x=hc_)
+#' @examples ncd2(x=hc_input_ncd2.rda)
 #' @import data.table
 #' @importFrom data.table ":="
 ncd2 <- function(x,
                  tf = 0.5,
                  fold = T,
                  w = 3000,
-                 by.snp = T,
-                 ncores = 4,
-                 valormaf = "val",
+                 by.snp = TRUE,
+                 mid = TRUE,
+                 ncores = 2,
+                 selectwin = "val",
+                 targetpos = NULL,
                  minIS = 2,
                  label = NULL,
                  verbose = T) {
         Win.ID <- Mid <- POS <- temp4 <- FDs <- NCD2 <- FD <- NULL
         temp2 <- IS <- SegSites <- CenMaf <- MidMaf <- SNP <- NULL
         CHR <-
-                AF <- tx_1 <- tn_1 <- AF2 <- tx_2 <- tn_2 <- ID <- MAF <- NULL
+                AF <-
+                tx_1 <-
+                tn_1 <- AF2 <- tx_2 <- tn_2 <- ID <- MAF <- NULL
 
         assertthat::assert_that(length(unique(x[, CHR])) == 1,
                                 msg = "Run one chromosome at a time\n")
@@ -42,7 +50,7 @@ ncd2 <- function(x,
         x[, AF := tx_1 / tn_1]
         x[, AF2 := tx_2 / tn_2]
         x[, ID := seq_along(CHR)]
-        w1 <- 3000 / 2
+        w1 <- w / 2
         polpos <- x[AF != 1 & AF != 0]$ID
         fdpos <- sort(c(x[AF == 1 & AF2 == 0]$ID, x[AF == 0 &
                                                             AF2 == 1]$ID))
@@ -78,19 +86,23 @@ ncd2 <- function(x,
         res[, tf := tf]
 
         res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
-                dplyr::summarise(MidMaf = MAF[which(Mid == POS)],
-                                 Mid = Mid[1],
-                                 CenMaf = min(abs(MAF - tf))) %>%
+                dplyr::summarise(
+                        MidMaf = MAF[which(Mid == POS)],
+                        Mid = Mid[1],
+                        CenMaf = ifelse(mid == TRUE, min(abs(MAF -
+                                                                     MidMaf)), min(abs(MAF - tf)))
+                ) %>%
                 dplyr::ungroup() %>%
                 as.data.table
         res2 <- merge(res, res1)
         res3 <-
                 mylist %>% dplyr::filter(SNP == T) %>% dplyr::group_by(Win.ID) %>%
-                dplyr::summarise(temp2 = sum((MAF - tf) ^ 2)) %>% dplyr::ungroup() %>%
+                dplyr::summarise(temp2 = ifelse(mid == TRUE, sum((MAF -
+                                                                          MidMaf) ^ 2), sum((MAF - tf) ^ 2))) %>% dplyr::ungroup() %>%
                 as.data.table
         res4 <- merge(res2, res3) %>% as.data.table
         res4 <- res4 %>% dplyr::ungroup() %>% as.data.table
-        res4[, temp4 := sum(rep((tf ^ 2), FDs)), by = Win.ID]
+        res4[, temp4 := ifelse(mid == TRUE, sum(rep((MidMaf ^ 2), FDs)), sum(rep((tf ^ 2), FDs))), by = Win.ID]
         res4[, NCD2 := sqrt((temp2 + temp4) / IS), by = Win.ID]
         res4[, temp2 := NULL]
         res4[, temp4 := NULL]
@@ -123,6 +135,9 @@ ncd2 <- function(x,
         } else if (valormaf == "all") {
                 res5 <- res4
         }
+        setnames(res5,
+                 "NCD2",
+                 ifelse(mid == TRUE, "NCD2_mid", glue::glue("NCD2_{tf}")))
         if (is.null(label) == F) {
                 res5 <- res5[, label := label]
         }

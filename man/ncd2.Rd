@@ -9,9 +9,11 @@ ncd2(
   tf = 0.5,
   fold = T,
   w = 3000,
-  by.snp = T,
-  ncores = 4,
-  valormaf = "val",
+  by.snp = TRUE,
+  mid = TRUE,
+  ncores = 2,
+  selectwin = "val",
+  targetpos = NULL,
   minIS = 2,
   label = NULL,
   verbose = T
@@ -30,11 +32,16 @@ ncd2(
 in the input data. Else, slidding windows in the range first pos:last pos
 will be used.}
 
+\item{mid}{Logical. If TRUE runs NCD centered on a core SNP frequency isntead of a pre-defined tf.}
+
 \item{ncores}{Number of cores. Increasing this can spead things up for you.
 Default is 4.}
 
-\item{valormaf}{Value or maf. "val" returns the window with the lowest test
-statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val}
+\item{selectwin}{Select window. "val" returns the window with the lowest test. "maf" returns the window
+which has the lowest difference between its central MAF and the tf."mid" returns the window
+centered closest on a value provided by the user under targetpos."all" returns all windows (idea for when the user wants to select windows after scanning a genome)}
+
+\item{targetpos}{statistic value. "maf" returns the window with the highest MaxMaf. Only useful if tf=0.5. Default is val}
 
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.}
 
@@ -50,5 +57,5 @@ A data.table object
 Calculate non-central statistic (NCD2)
 }
 \examples{
-ncd2(x=hc_)
+ncd2(x=hc_input_ncd2.rda)
 }

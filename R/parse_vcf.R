@@ -16,8 +16,8 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile =  system.file("example.vcf",package="balselr"), nind = c(108, 1), fold=T)
-#' parse_vcf(infile="inst/example.vcf", type="ncd1", nind=108)
+#' @examples parse_vcf(infile="inst/exampledocu.vcf", outfile="inst/example_parse_ncd1.out", n0=108, n1=NULL, type="ncd1")
+#'parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
 
 parse_vcf <-
   function(infile = "*.vcf",
@@ -28,15 +28,46 @@ parse_vcf <-
            fold = T,
            intern = T,
            verbose = T) {
+          tictoc::tic("Total runtime")
     assertthat::assert_that(file.exists(infile),
       msg = glue::glue("VCF file {infile} does not exist.\n")
     )
-    tictoc::tic("Total runtime")
+    type <- tolower(type)
+    # Index No. of the individual to use as ``ancestral'' sequence
+    if (fold == F & type == "ncd2") {
+            outseq <- (index.col) + (sum(nind) - 1)
+            if (verbose == T) {
+                    cat(
+                            glue::glue(
+                                    "You asked for the unfolded version. You need a third species. I will use column {outseq} for this."
+                            ),
+                            "\n"
+                    )
+            }
+    }else if (type == "ncd2"){
+            assertthat::assert_that(is.null(n1)==FALSE, msg="n1 cannot be NULL. NCD2 requires an outgroup.")
+    }
+    else if (type == "ncd1") {
+            assertthat::assert_that(fold == T, msg = "Only the folded option is available when Ancestral/Derived states are unknown.\n")
+    }
+    #
+    if (is.null(outfile)) {
+            outfile = outfile_path(glue::glue("{infile}"))
+            if (verbose == T) {
+                    cat(
+                            glue::glue(
+                                    "No outfile provided. Will write this into tmp file {outfile}_{type}.out"
+                            ),
+                            "\n"
+                    )
+            }
+    }else{
+    outfile <- glue::glue("{outfile}_{type}.out")
+    }
+
     nind<-c(n0,n1)
     pref <- gsub(".vcf", "", infile)
     inp <- read_vcf(x = infile, only.bi = T)
-
-    type <- tolower(type)
 
     index.col <- which(colnames(inp) == "FORMAT") + 1
     if (verbose == T) {
@@ -53,33 +84,7 @@ parse_vcf <-
       )
     }
 
-    # Index No. of the individual to use as ``ancestral'' sequence
-    if (fold == F & type == "ncd2") {
-      outseq <- (index.col) + (sum(nind) - 1)
-      if (verbose == T) {
-        cat(
-          glue::glue(
-            "You asked for the unfolded version. You need a third species. I will use column {outseq} for this."
-          ),
-          "\n"
-        )
-      }
-    } else if (type == "ncd1") {
-      assertthat::assert_that(fold == T, msg = "Only the folded option is available when Ancestral/Derived states are unknown.\n")
-    }
-    if (is.null(outfile)) {
-            outfile = outfile_path(glue::glue("{infile}"))
-      if (verbose == T) {
-        cat(
-          glue::glue(
-            "No outfile provided. Will write this into tmp file {outfile}_{type}.out"
-          ),
-          "\n"
-        )
-      }
-    }
-    #
-    outfile <- glue::glue("{outfile}_{type}.out")
+
     #
     if (type == "ncd2") {
       res <-
