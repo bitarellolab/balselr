@@ -11,9 +11,6 @@ read_vcf(x = "inst/example.vcf", only.bi = T)
 
 \item{only.bi}{Logical. If TRUE, only bi-allelic SNP positions from VCF file
 are kept.}
-
-\item{inds}{A vector specifying which individuals (samples) from vcf file
-should be kept. If "all", all are kept.}
 }
 \value{
 Returns a data.table object

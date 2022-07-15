@@ -3,9 +3,6 @@
 #' @param x The path and name of a vcf file
 #' @param only.bi Logical. If TRUE, only bi-allelic SNP positions from VCF file
 #' are kept.
-#' @param inds A vector specifying which individuals (samples) from vcf file
-#' should be kept. If "all", all are kept.
-#'
 #' @return Returns a data.table object
 #' @export
 #'
