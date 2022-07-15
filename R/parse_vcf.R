@@ -3,9 +3,8 @@
 #' @param infile The path and name of a vcf file - single chromosome
 #' @param outfile The path and name for the outfile. If not provided,
 #' this will be  a timestamp + infile in the current directory.
-#' @param nind A vector containing the number of diploid individuals from each
-#' population to be used. The length of the vector should be equal to the number
-#' of populations being sampled.
+#' @param n0 Number of individuals in pop0
+#' @param n0 Number of individuals in pop1
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
 #' @param fold Logical. If TRUE, the output will have alternate allele counts.
 #' If FALSE, derived allele counts will be used. Default is TRUE.
@@ -17,12 +16,13 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T)
-#' parse_vcf(infile="inst/example.vcf", type="ncd1", nind=108)
+#' @examples parse_vcf(infile = "inst/example.vcf", n=108, n1=NULL, fold=T, type="ncd2")
+#' parse_vcf(infile="inst/example.vcf", type="ncd1", n0=108)
 parse_vcf <-
   function(infile = "*.vcf",
            outfile = NULL,
-           nind = c(10, 10, 1),
+           n0=108,
+           n1=1,
            type = "ncd2",
            fold = T,
            intern = T,
@@ -31,6 +31,7 @@ parse_vcf <-
       msg = glue::glue("VCF file {infile} does not exist.\n")
     )
     tictoc::tic("Total runtime")
+    nind<-c(n0,n1)
     pref <- gsub(".vcf", "", infile)
     inp <- read_vcf(x = infile, only.bi = T, inds = "all")
 
