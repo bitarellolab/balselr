@@ -38,8 +38,8 @@ ncd1 <- function(x = x,
                  label = NULL,
                  verbose = T) {
         Win.ID <-
-        SegSites<-
-        POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
+                SegSites <-
+                POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
         tx_1 <-
                 tn_1 <-
                 AF2 <-
@@ -87,7 +87,7 @@ ncd1 <- function(x = x,
                 mylist <- mylist[temp == min(temp)]
                 mylist[, temp := NULL]
                 mylist[, tf := round(mylist[POS == Mid]$MAF[1], 2)]
-                mylist<-mylist[POS!=Mid] #target SNP excluded
+
         } else{
                 mylist[, tf := tf]
         }
@@ -97,13 +97,25 @@ ncd1 <- function(x = x,
                        by = Win.ID]
         res[, tf := ifelse(mid == FALSE, tf, round(mylist[1, tf], 2))] #if mid==TRUE, tf is the MAF of the targetpos SNP
 
-        res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
-                dplyr::summarise(MidMaf = MAF[which(Mid == POS)],
-                                 Mid = Mid[1],
-                                 CenMaf = max(abs(MAF - tf))) %>%
-                dplyr::ungroup() %>%
-                as.data.table
-
+        if (mid == T) {
+                res1 <- dplyr::bind_rows((
+                        mylist %>%
+                                dplyr::summarise(MidMaf = MAF[which(Mid == POS)],
+                                                 Mid = Mid[1])
+                ),
+                (mylist[POS != Mid] %>% dplyr::summarise(CenMaf = max(
+                        abs(MAF - tf)
+                )))) %>% as.data.table  #target SNP excluded
+        } else{
+                res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
+                        dplyr::summarise(
+                                MidMaf = MAF[which(Mid == POS)],
+                                Mid = Mid[1],
+                                CenMaf = max(abs(MAF - tf))
+                        ) %>%
+                        dplyr::ungroup() %>%
+                        as.data.table
+        }
 
         res2 <- merge(res, res1)
         res3 <-
@@ -120,34 +132,34 @@ ncd1 <- function(x = x,
         }
         if (selectwin == "val") {
                 res4 <-
-                        res4[which.min(res4$NCD1), ][, .(Win.ID,
-                                                         SegSites,
-                                                         IS,
-                                                         CenMaf,
-                                                         Mid,
-                                                         MidMaf,
-                                                         NCD1,
-                                                         tf)]
+                        res4[which.min(res4$NCD1),][, .(Win.ID,
+                                                        SegSites,
+                                                        IS,
+                                                        CenMaf,
+                                                        Mid,
+                                                        MidMaf,
+                                                        NCD1,
+                                                        tf)]
         } else if (selectwin == "maf") {
                 res4 <-
-                        res4[which.min(res4$CenMaf), ][, .(Win.ID,
-                                                           SegSites,
-                                                           IS,
-                                                           CenMaf,
-                                                           Mid,
-                                                           MidMaf,
-                                                           NCD1,
-                                                           tf)]
+                        res4[which.min(res4$CenMaf),][, .(Win.ID,
+                                                          SegSites,
+                                                          IS,
+                                                          CenMaf,
+                                                          Mid,
+                                                          MidMaf,
+                                                          NCD1,
+                                                          tf)]
         } else if (selectwin == "mid") {
                 res4 <- res4[which.min(res4$NCD)][, .(Win.ID,
-                                 SegSites,
-                                 IS,
-                                 CenMaf,
-                                 Mid,
-                                 MidMaf,
-                                 NCD1,
-                                 tf)]
-        }else{
+                                                      SegSites,
+                                                      IS,
+                                                      CenMaf,
+                                                      Mid,
+                                                      MidMaf,
+                                                      NCD1,
+                                                      tf)]
+        } else{
                 res4 <- res4[, .(Win.ID,
                                  SegSites,
                                  IS,
