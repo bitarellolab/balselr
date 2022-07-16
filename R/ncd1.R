@@ -22,8 +22,7 @@
 #' @return A data.table object
 #' @export
 #'
-#' @examples ncd1(x=h_input_ncd1)
-#' ncd1(x=ncd1_input, selectwin=mid, targetpos=15000)
+#' @examples ncd1(x=ncd1_input, selectwin="mid", targetpos=15000, mid=TRUE)
 #' @import data.table
 #' @importFrom data.table ":="
 ncd1 <- function(x = x,
@@ -38,10 +37,9 @@ ncd1 <- function(x = x,
                  minIS = 2,
                  label = NULL,
                  verbose = T) {
-        Win.ID <- Mid
-                IS <- temp2
-                SegSites <- CenMaf <- MidMaf
-                POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
+        Win.ID <-
+        SegSites<-
+        POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
         tx_1 <-
                 tn_1 <-
                 AF2 <-
@@ -50,12 +48,12 @@ ncd1 <- function(x = x,
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
                           chromosome at a time\n")
         if (mid == TRUE) {
-                assertthat::assert_that(is.null(targetpos) == FALSE, msg="NCD_mid requires a targetpos")
-                assertthat::assert_that(selectwin=="mid", msg="If mid=T, selectwin must be=='mid'.")
+                assertthat::assert_that(is.null(targetpos) == FALSE, msg = "NCD_mid requires a targetpos")
+                assertthat::assert_that(selectwin == "mid", msg = "If mid=T, selectwin must be=='mid'.")
         }
-        if (selectwin == "mid"){
-                assertthat::assert_that(mid==TRUE, msg="If selectwin=='mid', mid must be TRUE.")
-                assertthat::assert_that(mid==TRUE, msg="NCD_mid requires a targetpos.")
+        if (selectwin == "mid") {
+                assertthat::assert_that(mid == TRUE, msg = "If selectwin=='mid', mid must be TRUE.")
+                assertthat::assert_that(mid == TRUE, msg = "NCD_mid requires a targetpos.")
         }
 
         x[, AF := tx_1 / tn_1]
@@ -65,7 +63,7 @@ ncd1 <- function(x = x,
 
         x[, SNP := ifelse(ID %in% polpos, T, F)]
 
-        x<-x[SNP==T]
+        x <- x[SNP == T]
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
 
         mylist <-
@@ -79,33 +77,31 @@ ncd1 <- function(x = x,
                 do.call(rbind,
                         parallel::mclapply(1:length(mylist), function(y)
                                 mylist[[y]][, Mid := x$POS[y]][, Win.ID :=
-                                                                                 y],
+                                                                       y],
                                 mc.cores = ncores))
         mylist <- data.table::setDT(mylist)
         # }
 
         if (mid == TRUE) {
-                mylist[, temp:=abs(Mid-15000), by=Win.ID]
-                mylist<-mylist[temp==min(temp)]
-                mylist[,temp:=NULL]
-                mylist[,tf:=round(mylist[POS==Mid]$MAF,2)]
-        }else{
-                mylist[,tf:=tf]
+                mylist[, temp := abs(Mid - 15000), by = Win.ID]
+                mylist <- mylist[temp == min(temp)]
+                mylist[, temp := NULL]
+                mylist[, tf := round(mylist[POS == Mid]$MAF, 2)]
+        } else{
+                mylist[, tf := tf]
         }
-                res <-
-                        mylist[, .(SegSites = sum(SNP),
-                                   IS = sum(SNP)),
-                               by = Win.ID]
-                res[, tf := ifelse(mid==FALSE, tf,round(mylist[1,tf],2))] #if mid==TRUE, tf is the MAF of the targetpos SNP
+        res <-
+                mylist[, .(SegSites = sum(SNP),
+                           IS = sum(SNP)),
+                       by = Win.ID]
+        res[, tf := ifelse(mid == FALSE, tf, round(mylist[1, tf], 2))] #if mid==TRUE, tf is the MAF of the targetpos SNP
 
-                res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
-                        dplyr::summarise(
-                                MidMaf = MAF[which(Mid == POS)],
-                                Mid = Mid[1],
-                                CenMaf = max(abs(MAF - tf))
-                        ) %>%
+        res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
+                dplyr::summarise(MidMaf = MAF[which(Mid == POS)],
+                                 Mid = Mid[1],
+                                 CenMaf = max(abs(MAF - tf))) %>%
                 dplyr::ungroup() %>%
-                        as.data.table
+                as.data.table
 
 
         res2 <- merge(res, res1)
@@ -123,30 +119,33 @@ ncd1 <- function(x = x,
         }
         if (selectwin == "val") {
                 res4 <-
-                        res4[which.min(res4$NCD1),][, .(Win.ID,
-                                                        SegSites,
-                                                        IS,
-                                                        CenMaf,
-                                                        Mid,
-                                                        MidMaf,
-                                                        NCD1, tf )]
+                        res4[which.min(res4$NCD1), ][, .(Win.ID,
+                                                         SegSites,
+                                                         IS,
+                                                         CenMaf,
+                                                         Mid,
+                                                         MidMaf,
+                                                         NCD1,
+                                                         tf)]
         } else if (selectwin == "maf") {
                 res4 <-
-                        res4[which.min(res4$CenMaf),][, .(Win.ID,
-                                                          SegSites,
-                                                          IS,
-                                                          CenMaf,
-                                                          Mid,
-                                                          MidMaf,
-                                                          NCD1, tf)]
-        } else if (selectwin == "all" || selectwin == "mid" ) {
-                res4<-res4[, .(Win.ID,
-                           SegSites,
-                           IS,
-                           CenMaf,
-                           Mid,
-                           MidMaf,
-                           NCD1, tf)]
+                        res4[which.min(res4$CenMaf), ][, .(Win.ID,
+                                                           SegSites,
+                                                           IS,
+                                                           CenMaf,
+                                                           Mid,
+                                                           MidMaf,
+                                                           NCD1,
+                                                           tf)]
+        } else if (selectwin == "all" || selectwin == "mid") {
+                res4 <- res4[, .(Win.ID,
+                                 SegSites,
+                                 IS,
+                                 CenMaf,
+                                 Mid,
+                                 MidMaf,
+                                 NCD1,
+                                 tf)]
         }
 
         setnames(res4,

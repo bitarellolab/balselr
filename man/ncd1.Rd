@@ -58,6 +58,5 @@ A data.table object
 Calculate non-central statistic (NCD1)
 }
 \examples{
-ncd1(x=h_input_ncd1)
-ncd1(x=ncd1_input, selectwin=mid, targetpos=15000)
+ncd1(x=ncd1_input, selectwin="mid", targetpos=15000, mid=TRUE)
 }
