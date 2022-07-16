@@ -83,10 +83,11 @@ ncd1 <- function(x = x,
         # }
 
         if (mid == TRUE) {
-                mylist[, temp := abs(Mid - 15000), by = Win.ID]
+                mylist[, temp := abs(Mid - targetpos), by = Win.ID]
                 mylist <- mylist[temp == min(temp)]
                 mylist[, temp := NULL]
                 mylist[, tf := round(mylist[POS == Mid]$MAF[1], 2)]
+                mylist<-mylist[POS!=Mid] #target SNP excluded
         } else{
                 mylist[, tf := tf]
         }
@@ -137,7 +138,16 @@ ncd1 <- function(x = x,
                                                            MidMaf,
                                                            NCD1,
                                                            tf)]
-        } else if (selectwin == "all" || selectwin == "mid") {
+        } else if (selectwin == "mid") {
+                res4 <- res4[which.min(res4$NCD)][, .(Win.ID,
+                                 SegSites,
+                                 IS,
+                                 CenMaf,
+                                 Mid,
+                                 MidMaf,
+                                 NCD1,
+                                 tf)]
+        }else{
                 res4 <- res4[, .(Win.ID,
                                  SegSites,
                                  IS,
