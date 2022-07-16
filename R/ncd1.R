@@ -38,9 +38,9 @@ ncd1 <- function(x = x,
                  minIS = 2,
                  label = NULL,
                  verbose = T) {
-        Win.ID <-
-                IS <-
-                SegSites <-
+        Win.ID <- Mid
+                IS <- temp2
+                SegSites <- CenMaf <- MidMaf
                 POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
         tx_1 <-
                 tn_1 <-

@@ -16,14 +16,14 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile="inst/exampledocu.vcf", outfile="inst/example_parse_ncd1.out", n0=108, n1=NULL, type="ncd1")
+#' @examples parse_vcf(infile="inst/example.vcf", outfile="inst/example_parse_ncd1.out", n0=108,  type="ncd1")
 #'parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
 
 parse_vcf <-
   function(infile = "*.vcf",
            outfile = NULL,
            n0=108,
-           n1=1,
+           n1=NULL,
            type = "ncd2",
            fold = T,
            intern = T,
