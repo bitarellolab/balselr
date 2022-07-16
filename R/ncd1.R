@@ -87,7 +87,7 @@ ncd1 <- function(x = x,
                 mylist <- mylist[temp == min(temp)]
                 mylist[, temp := NULL]
                 mylist[, tf := round(mylist[POS == Mid]$MAF[1], 2)]
-                res <-
+
                        res<- mylist[POS!=Mid][, .(SegSites = sum(SNP),
                                    IS = sum(SNP)),
                                by = Win.ID]
@@ -104,7 +104,7 @@ ncd1 <- function(x = x,
                 res2 <- merge(res, res1)
                 res3 <-
                         mylist %>% dplyr::filter(SNP == T) %>% dplyr::filter(POS!=Mid) %>% #exclude target SNP
-                        dplyr::summarise(temp2 = sum((MAF - tf) ^ 2)) %>% dplyr::ungroup() %>%
+                        dplyr::summarise(temp2 = sum((MAF - tf) ^ 2), Win.ID=Win.ID[1]) %>%
                         as.data.table
 
 
