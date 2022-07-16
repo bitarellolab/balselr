@@ -86,7 +86,7 @@ ncd1 <- function(x = x,
                 mylist[, temp := abs(Mid - 15000), by = Win.ID]
                 mylist <- mylist[temp == min(temp)]
                 mylist[, temp := NULL]
-                mylist[, tf := round(mylist[POS == Mid]$MAF, 2)]
+                mylist[, tf := round(mylist[POS == Mid]$MAF[1], 2)]
         } else{
                 mylist[, tf := tf]
         }
