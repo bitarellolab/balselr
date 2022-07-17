@@ -88,14 +88,18 @@ ncd1 <- function(x = x,
                 mylist[, temp := NULL]
                 mylist[, tf := round(mylist[POS == Mid]$MAF[1], 2)]
 
-                       res<- mylist[POS!=Mid][, .(SegSites = sum(SNP),
-                                   IS = sum(SNP)),
-                               by = Win.ID]
+                res <-
+                        mylist[POS != Mid][, .(SegSites = sum(SNP),
+                                               IS = sum(SNP)),
+                                           by = Win.ID]
                 res[, tf := round(mylist[1, tf], 2)]
                 res1 <- dplyr::bind_cols((
                         mylist %>%
-                                dplyr::summarise(MidMaf = MAF[which(Mid == POS)],
-                                                 Mid = Mid[1], Win.ID=Win.ID[1])
+                                dplyr::summarise(
+                                        MidMaf = MAF[which(Mid == POS)],
+                                        Mid = Mid[1],
+                                        Win.ID = Win.ID[1]
+                                )
                 ),
                 (mylist[POS != Mid] %>% dplyr::summarise(CenMaf = max(
                         abs(MAF - tf)
@@ -103,23 +107,22 @@ ncd1 <- function(x = x,
 
                 res2 <- merge(res, res1)
                 res3 <-
-                        mylist %>% dplyr::filter(SNP == T) %>% dplyr::filter(POS!=Mid) %>% #exclude target SNP
-                        dplyr::summarise(temp2 = sum((MAF - tf) ^ 2), Win.ID=Win.ID[1]) %>%
+                        mylist %>% dplyr::filter(SNP == T) %>%
+                        dplyr::filter(POS != Mid) %>% #exclude target SNP
+                        dplyr::summarise(temp2 = sum((MAF - tf) ^ 2), Win.ID = Win.ID[1]) %>%
                         as.data.table
-
-
         } else{
                 mylist[, tf := tf]
                 res <-
                         mylist[, .(SegSites = sum(SNP),
                                    IS = sum(SNP)),
                                by = Win.ID]
-                res[,tf:=tf]
+                res[, tf := tf]
                 res1 <- mylist %>% dplyr::group_by(Win.ID) %>%
                         dplyr::summarise(
                                 MidMaf = MAF[which(Mid == POS)],
                                 Mid = Mid[1],
-                                CenMaf = max(abs(MAF - tf), Win.ID=Win.ID)
+                                CenMaf = max(abs(MAF - tf), Win.ID = Win.ID)
                         ) %>%
                         dplyr::ungroup() %>%
                         as.data.table
