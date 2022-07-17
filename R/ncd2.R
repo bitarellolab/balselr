@@ -23,6 +23,7 @@
 #' @export
 #'
 #' @examples ncd2(x=ncd2_input, selectwin="mid", targetpos=15000, mid=TRUE)
+#' ncd2(x=ncd2_input, selectwin="val", targetpos=NULL, mid=F)
 #' @import data.table
 #' @importFrom data.table ":="
 ncd2 <- function(
@@ -116,7 +117,8 @@ ncd2 <- function(
                 mylist[, tf := tf]
                 res <-
                         mylist[, .(SegSites = sum(SNP),
-                                   IS = sum(SNP)),
+                                   FDs = sum(FD),
+                                   IS = sum(SNP)+sum(FD)),
                                by = Win.ID]
                 res[, tf := tf]
                 res1 <- mylist %>% dplyr::group_by(Win.ID) %>%

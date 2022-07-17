@@ -59,4 +59,5 @@ Calculate non-central statistic (NCD2)
 }
 \examples{
 ncd2(x=ncd2_input, selectwin="mid", targetpos=15000, mid=TRUE)
+ncd2(x=ncd2_input, selectwin="val", targetpos=NULL, mid=F)
 }
