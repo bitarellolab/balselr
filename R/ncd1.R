@@ -60,12 +60,9 @@ ncd1 <- function(x = x,
         x[, ID := seq_along(CHR)]
         w1 <- w / 2
         polpos <- x[AF != 1 & AF != 0]$ID
-
         x[, SNP := ifelse(ID %in% polpos, T, F)]
-
         x <- x[SNP == T]
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
-
         mylist <-
                 parallel::mclapply(x$POS, function(y) {
                         x[POS >= y - w1 &
@@ -144,26 +141,26 @@ ncd1 <- function(x = x,
         }
         if (selectwin == "val") {
                 res4 <-
-                        res4[which.min(res4$NCD1),][, .(Win.ID,
-                                                        SegSites,
-                                                        IS,
-                                                        CenMaf,
-                                                        Mid,
-                                                        MidMaf,
-                                                        NCD1,
-                                                        tf)]
+                        res4[which.min(res4$NCD1), ][, .(Win.ID,
+                                                         SegSites,
+                                                         IS,
+                                                         CenMaf,
+                                                         Mid,
+                                                         MidMaf,
+                                                         NCD1,
+                                                         tf)]
         } else if (selectwin == "maf") {
                 res4 <-
-                        res4[which.min(res4$CenMaf),][, .(Win.ID,
-                                                          SegSites,
-                                                          IS,
-                                                          CenMaf,
-                                                          Mid,
-                                                          MidMaf,
-                                                          NCD1,
-                                                          tf)]
+                        res4[which.min(res4$CenMaf), ][, .(Win.ID,
+                                                           SegSites,
+                                                           IS,
+                                                           CenMaf,
+                                                           Mid,
+                                                           MidMaf,
+                                                           NCD1,
+                                                           tf)]
         } else if (selectwin == "mid") {
-                res4 <- res4[which.min(res4$NCD)][, .(Win.ID,
+                res4 <- res4[which.min(res4$NCD1)][, .(Win.ID,
                                                       SegSites,
                                                       IS,
                                                       CenMaf,
