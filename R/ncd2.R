@@ -193,11 +193,9 @@ ncd2 <- function(
                                  MidMaf,
                                  NCD2,
                                  tf)]
-
         }
 
-        setnames(res4,
-                 "NCD2",
+        setnames(res4,"NCD2",
                  ifelse(mid == TRUE, "NCD2_mid", glue::glue("NCD2_{tf}")))
 
 
