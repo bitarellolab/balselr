@@ -119,8 +119,7 @@ ncd1 <- function(x = x,
                         dplyr::summarise(
                                 MidMaf = MAF[which(Mid == POS)],
                                 Mid = Mid[1],
-                                CenMaf = max(abs(MAF - tf), Win.ID = Win.ID)
-                        ) %>%
+                                CenMaf = max(abs(MAF - tf)), Win.ID = Win.ID) %>%
                         dplyr::ungroup() %>%
                         as.data.table
 
