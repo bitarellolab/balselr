@@ -140,7 +140,10 @@ ncd2 <- function(
 
         res4 <- merge(res2, res3) %>% as.data.table
         res4 <- res4 %>% dplyr::ungroup() %>% as.data.table
-        res4[, temp4 := sum(rep((tf ^ 2), FDs)), by = Win.ID]
+        mini_fun<-function(x,y){
+        sum((rep(0, x)-y)^2)
+        }
+        res4[, temp4 := mini_fun(unique(FDs),unique(tf)), by=Win.ID]
         res4[, NCD2 := sqrt(((temp2 + temp4) / IS)), by = Win.ID]
         res4[, temp2 := NULL]
         res4[, temp4 := NULL]

@@ -17,7 +17,7 @@ You can install the development version of balselr from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("bbitarello/balselr")
+devtools::install_github("bitarellolab/balselr")
 library(balselr)
 ```
 
