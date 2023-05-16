@@ -34,14 +34,14 @@ This is an example which shows how to parse a vcf file and output an
 input file for ncd1 or ncd2:
 
 ``` r
-parse_vcf(infile = "inst/example.vcf", nind = c(108, 1), fold=T, type = "ncd2")
+parse_vcf(infile = "inst/example.vcf", n0 = c(108, 1), fold=T, type = "ncd2")
 ```
 
 This is an example which shows how to parse a vcf file and output an
 input file for ncd1 or ncd1:
 
 ``` r
-parse_vcf(infile = "inst/example.vcf", nind = 108, fold = T, type = "ncd1")
+parse_vcf(infile = "inst/example.vcf", n0 = 108, fold = T, type = "ncd1")
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
