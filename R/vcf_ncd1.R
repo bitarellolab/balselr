@@ -42,11 +42,16 @@
 
   x <- data.table::setDT(x)
   tableout<-x %>% dplyr::select(CHR, POS, REF, ALT) %>% as.data.table
-  tableout<-dplyr::bind_cols(tableout,x %>% dplyr::select(all_of(pop0_cols)) %>%
-                dplyr::rowwise() %>%
-                dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
-                dplyr::summarise(tx_1 = Reduce(`+`,.))) %>%
-                dplyr::mutate(tn_1 = nind[1]*2) %>%
+  tableout<-dplyr::bind_cols(tableout,
+                             x %>% dplyr::select(all_of(pop0_cols)) %>%
+                                dplyr::rowwise() %>%
+                                dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
+                                dplyr::summarise(tx_1 = Reduce(`+`,.)),
+                             x %>% dplyr::select(all_of(pop0_cols)) %>%
+                                dplyr::rowwise() %>%
+                                dplyr::summarise(across(pop0_cols, .count_nonmissing)) %>%
+                                dplyr::summarise(tn_1 = Reduce(`+`,.))
+                            ) %>%
                 dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1) %>%
                 as.data.table
   if (verbose == T) {
