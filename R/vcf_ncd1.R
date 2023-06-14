@@ -13,7 +13,7 @@
 #' @examples inp = read_vcf("inst/example.vcf")
 #' vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
 #' .vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=108, index.col=10, verbose=T)
-.vcf_ncd1 <- function(x,
+vcf_ncd1 <- function(x,
                      outfile = outfile,
                      nind = nind,
                      index.col = index.col,
@@ -45,11 +45,11 @@
   tableout<-dplyr::bind_cols(tableout,
                              x %>% dplyr::select(all_of(pop0_cols)) %>%
                                 dplyr::rowwise() %>%
-                                dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
+                                dplyr::summarise(across(pop0_cols, count_alleles)) %>%
                                 dplyr::summarise(tx_1 = Reduce(`+`,.)),
                              x %>% dplyr::select(all_of(pop0_cols)) %>%
                                 dplyr::rowwise() %>%
-                                dplyr::summarise(across(pop0_cols, .count_nonmissing)) %>%
+                                dplyr::summarise(across(pop0_cols, count_nonmissing)) %>%
                                 dplyr::summarise(tn_1 = Reduce(`+`,.))
                             ) %>%
                 dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1) %>%

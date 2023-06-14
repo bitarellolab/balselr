@@ -6,7 +6,7 @@
 #'
 #' @examples split_geno(x = c("0|0","0|1","1|1"))
 #' data.table(col1="1|1", col2="1|0", col3="0|0") %>% dplyr::summarise(across(col1:col3, .split_geno))
-.split_geno <- function(x, split="|",index=c(1,2)) {
+split_geno <- function(x, split="|",index=c(1,2)) {
         #assertthat::assert_that(is.numeric(which.al), err = "Parameter which.al must be numeric")
 
         if(length(x) == 1){
