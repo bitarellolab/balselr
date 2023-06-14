@@ -98,7 +98,7 @@ parse_vcf <-
         )
     } else if (type == "ncd1") {
       res <-
-        .vcf_ncd1(
+        vcf_ncd1(
           x = inp,
           outfile = outfile,
           nind = nind,
