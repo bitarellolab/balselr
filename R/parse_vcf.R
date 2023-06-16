@@ -22,9 +22,9 @@
 parse_vcf <-
   function(infile = "*.vcf",
            outfile = NULL,
-           n0=108,
-           n1=NULL,
-           type = "ncd2",
+           n0= NULL,
+           n1= NULL,
+           type = NULL,
            fold = T,
            intern = T,
            verbose = T) {
@@ -32,7 +32,9 @@ parse_vcf <-
     assertthat::assert_that(file.exists(infile),
       msg = glue::glue("VCF file {infile} does not exist.\n")
     )
-    type <- tolower(type)
+    assertthat::assert_that(is.numeric(n0)
+      )
+     type <- tolower(type)
     # Index No. of the individual to use as ``ancestral'' sequence
     if (fold == F & type == "ncd2") {
             outseq <- (index.col) + (sum(nind) - 1)
