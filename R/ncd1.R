@@ -28,6 +28,7 @@
 ncd1 <- function(x = x,
                  tf = 0.5,
                  fold = T,
+
                  w = 3000,
                  by.snp = TRUE,
                  mid = FALSE,

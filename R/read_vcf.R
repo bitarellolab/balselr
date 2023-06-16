@@ -22,4 +22,3 @@ read_vcf <- function(x = "inst/example.vcf",
                 inp
         }
 }
-
