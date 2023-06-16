@@ -6,7 +6,7 @@
 #' @return Returns a data.table object
 #' @export
 #'
-#' @examples read_vcf(x="inst/example.vcf", only.bi=T, inds="all")
+#' @examples read_vcf(x="inst/example.vcf", only.bi=T")
 #' @import data.table
 #' @importFrom data.table ":="
 read_vcf <- function(x = "inst/example.vcf",
