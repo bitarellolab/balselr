@@ -34,9 +34,26 @@ parse_vcf <-
     )
     assertthat::assert_that(is.numeric(n0)
       )
-     type <- tolower(type)
-    # Index No. of the individual to use as ``ancestral'' sequence
-    if (fold == F & type == "ncd2") {
+        format_type <- function(type) {
+             incorrect_types_ncd1 <- c("ncd1", "ned1", "ncd_1", "ned_1")
+             incorrect_types_ncd2 <- c("ncd2", "ned2", "ncd_2", "ned_2")
+
+             type <- tolower(type)
+             if (type %in% incorrect_types_ncd1) {
+                     type <- "ncd1"
+             } else if (type %in% incorrect_types_ncd2) {
+                     type <- "ncd2"
+             }
+
+             return(type)
+
+        }
+        if (is.null(type)) {
+                print("You must choose either 'ncd1' or 'ncd2'")
+                return(NULL)
+        }
+        # Index No. of the individual to use as ``ancestral'' sequence
+        if (fold == F & type == "ncd2") {
             outseq <- (index.col) + (sum(nind) - 1)
             if (verbose == T) {
                     cat(
