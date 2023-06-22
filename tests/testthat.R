@@ -6,6 +6,10 @@
 # * https://r-pkgs.org/tests.html
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 library(testthat)
 library(balselr)
 

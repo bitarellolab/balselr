@@ -21,7 +21,6 @@ You can install the development version of balselr from
 library(devtools)
 devtools::install_github("bitarellolab/balselr")
 library(balselr)
-library(load_all)
 ```
 
 ## Example

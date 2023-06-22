@@ -30,7 +30,6 @@ You can install the development version of balselr from [GitHub](https://github.
 library(devtools)
 devtools::install_github("bitarellolab/balselr")
 library(balselr)
-library(load_all)
 ```
 
 

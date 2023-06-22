@@ -23,3 +23,5 @@ Imports:
     tictoc
 Depends: 
     R (>= 2.10)
+Suggests: testthat (>= 3.1.9)
+Config/testthat/edition: 3
