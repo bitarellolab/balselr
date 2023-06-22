@@ -44,7 +44,7 @@ This is an example which shows how to parse a vcf file and output an
 input file for ncd1 or ncd1:
 
 ``` r
-parse_vcf(infile = "inst/example.vcf", nind = 108, fold = T, type = "ncd1")
+#upcoming
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
