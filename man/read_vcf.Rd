@@ -18,6 +18,3 @@ Returns a data.table object
 \description{
 Read vcf
 }
-\examples{
-read_vcf(x="inst/example.vcf", only.bi=T, inds="all")
-}
