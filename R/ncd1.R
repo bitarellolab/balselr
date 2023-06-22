@@ -16,7 +16,7 @@
 #' @param targetpos Position of the target SNP. Only needed for mid==T
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
-#' @param label An optional label to include as the last column of the output
+#' @param label An optional label to include as the last column of the output. Defaults to value in selectwin.
 #' @param verbose Logical. If TRUE, progress reports will be printed as the
 #' function runs.
 #' @return A data.table object
@@ -184,7 +184,9 @@ ncd1 <- function(x = x,
                  ifelse(mid == TRUE, "NCD1_mid", glue::glue("NCD1_{tf}")))
 
         if (is.null(label) == F) {
-                res4 <- res4[, label := label]
+                res4 <- res4[, Method := label]
+        } else{
+                res4<-res4[, Method := paste(selectwin)]
         }
         if (verbose == T) {
                 tictoc::toc()

@@ -4,7 +4,7 @@
 \alias{.count_alleles}
 \title{Count derived or ancestral alleles for a given vcf position}
 \usage{
-.count_alleles(x, split = "|", index = c(1, 2), der = T)
+.count_alleles(x, split = "|", index = c(1, 2), der = F)
 }
 \arguments{
 \item{x}{A vector containing 0s and 1s corresponding to allele states}
