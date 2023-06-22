@@ -46,7 +46,7 @@ centered closest on a value provided by the user under targetpos."all" returns a
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
 less informative sites than this threshold are discarded.}
 
-\item{label}{An optional label to include as the last column of the output}
+\item{label}{An optional label to include as the last column of the output. Defaults to value in selectwin.}
 
 \item{verbose}{Logical. If TRUE, progress reports will be printed as the
 function runs.}

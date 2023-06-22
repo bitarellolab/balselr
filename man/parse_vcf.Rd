@@ -7,9 +7,9 @@
 parse_vcf(
   infile = "*.vcf",
   outfile = NULL,
-  n0 = 108,
+  n0 = NULL,
   n1 = NULL,
-  type = "ncd2",
+  type = NULL,
   fold = T,
   intern = T,
   verbose = T

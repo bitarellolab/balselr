@@ -13,3 +13,4 @@ options(
   ),
   usethis.protocol = "ssh"
 )
+options(rstudio.help.showDataPreview = FALSE)

@@ -5,10 +5,11 @@
 
 <!-- badges: start -->
 
-<img src="images/balselr2.png" style="width:10.0%;height:10.0%" />
+<img src="images/balselr2.png" style="width:40.0%;height:40.0%" />
 <!-- badges: end -->
 
-The goal of balselr is to …
+The goal of balselr is to calculate NCD1 and NCD2 (and more) …\[under
+construction. Feedback welcome!\]
 
 ## Installation
 
@@ -17,8 +18,10 @@ You can install the development version of balselr from
 
 ``` r
 # install.packages("devtools")
+library(devtools)
 devtools::install_github("bitarellolab/balselr")
 library(balselr)
+library(load_all)
 ```
 
 ## Example
@@ -27,21 +30,21 @@ This is a basic example which shows you how to read in a vcf file and
 keep all samples/individuals
 
 ``` r
-read_vcf(x="inst/example.vcf", only.bi=T, inds="all")
+read_vcf(x="inst/example.vcf", only.bi=T)
 ```
 
 This is an example which shows how to parse a vcf file and output an
 input file for ncd1 or ncd2:
 
 ``` r
-parse_vcf(infile = "inst/example.vcf", n0 = c(108, 1), fold=T, type = "ncd2")
+parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
 ```
 
 This is an example which shows how to parse a vcf file and output an
 input file for ncd1 or ncd1:
 
 ``` r
-parse_vcf(infile = "inst/example.vcf", n0 = 108, fold = T, type = "ncd1")
+parse_vcf(infile = "inst/example.vcf", nind = 108, fold = T, type = "ncd1")
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
