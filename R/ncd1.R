@@ -4,10 +4,7 @@
 #' @param tf Target frequency
 #' @param fold Logical. If TRUE, NCD1 will use minor allele frequencies.
 #' @param w Window size in bp. Default is 1000
-#' @param by.snp Logical. If TRUE, windows are defined around each SNP
-#' in the input data. Else, slidding windows in the range first pos:last pos
-#' will be used.
-#' @param mid Logical. If TRUE runs NCD centered on a core SNP frequency instead of a pre-defined tf. Requires targetpos.
+#' @param mid  "sliding" windows in the range first pos:last pos. "mid" runs NCD centered on a core SNP frequency instead of a pre-defined tf. Requires targetpos.
 #' @param ncores Number of cores. Increasing this can spead things up for you.
 #' Default is 4.
 #'@param selectwin Select window. "val" returns the window with the lowest test. "maf" returns the window
@@ -29,8 +26,7 @@ ncd1 <- function(x = x,
                  tf = 0.5,
                  fold = T,
                  w = 3000,
-                 by.snp = TRUE,
-                 mid = FALSE,
+                 mode = "sliding",
                  ncores = 2,
                  selectwin = "val",
                  targetpos = NULL,
@@ -47,13 +43,13 @@ ncd1 <- function(x = x,
         tictoc::tic("Total runtime")
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
                           chromosome at a time\n")
-        if (mid == TRUE) {
+        if (mode == "mid") {
                 assertthat::assert_that(is.null(targetpos) == FALSE, msg = "NCD_mid requires a targetpos")
                 assertthat::assert_that(selectwin == "mid", msg = "If mid=T, selectwin must be=='mid'.")
         }
         if (selectwin == "mid") {
-                assertthat::assert_that(mid == TRUE, msg = "If selectwin=='mid', mid must be TRUE.")
-                assertthat::assert_that(mid == TRUE, msg = "NCD_mid requires a targetpos.")
+                assertthat::assert_that(mode=="mid", msg = "If selectwin=='mid',mode must be 'mid'.")
+                assertthat::assert_that(mode=="mid", msg = "NCD_mid requires a targetpos.")
         }
 
         x[, AF := tx_1 / tn_1]
