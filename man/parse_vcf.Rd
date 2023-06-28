@@ -21,7 +21,9 @@ parse_vcf(
 \item{outfile}{The path and name for the outfile. If not provided,
 this will be  a timestamp + infile in the current directory.}
 
-\item{n0}{Number of individuals in pop1}
+\item{n0}{Number of individuals in pop0}
+
+\item{n1}{Number of individuals in pop1}
 
 \item{type}{Which input format will be generated. Options: ncd1, ncd2.}
 

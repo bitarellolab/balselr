@@ -4,7 +4,7 @@
 #' @param outfile The path and name for the outfile. If not provided,
 #' this will be  a timestamp + infile in the current directory.
 #' @param n0 Number of individuals in pop0
-#' @param n0 Number of individuals in pop1
+#' @param n1 Number of individuals in pop1
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
 #' @param fold Logical. If TRUE, the output will have alternate allele counts.
 #' If FALSE, derived allele counts will be used. Default is TRUE.
@@ -49,7 +49,7 @@ parse_vcf <-
 
         }
         if (is.null(type)) {
-                print("You must choose either 'ncd1' or 'ncd2'")
+                stop("You must choose either 'ncd1' or 'ncd2'")
                 return(NULL)
         }
         # Index No. of the individual to use as ``ancestral'' sequence
