@@ -4,19 +4,16 @@
 \alias{.split_geno}
 \title{Split a genotype column from a vcf file}
 \usage{
-.split_geno(x, split = "|", index = c(1, 2))
+.split_geno(x, split = "|")
 }
 \arguments{
 \item{x}{A string from a GT column.}
 
 \item{split}{Pattern to use for splitting.}
-
-\item{index}{Which elements to keep 1, 2, or 1 & 2}
 }
 \description{
 Split a genotype column from a vcf file
 }
 \examples{
-split_geno(x = c("0|0","0|1","1|1"))
-data.table(col1="1|1", col2="1|0", col3="0|0") \%>\% dplyr::summarise(across(col1:col3, .split_geno))
+split_geno(x = c("0|0","0|1","1|1"), split="|")
 }

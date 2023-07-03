@@ -4,16 +4,11 @@
 \alias{.vcf_ncd1}
 \title{Make input file for NCD1 from VCF}
 \usage{
-.vcf_ncd1(
-  x,
-  outfile = outfile,
-  nind = nind,
-  index.col = index.col,
-  verbose = verbose
-)
+.vcf_ncd1(x, outfile = outfile, nind = nind, index.col = index.col)
 }
 \arguments{
-\item{x}{An object of class data.table containing}
+\item{x}{An object of class data.table containing typical elements of a vcf file. Output: data.table with
+columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles)}
 
 \item{outfile}{The path and name for the outfile. If not provided,
 this will be  a timestamp file in the current directory.}
@@ -22,9 +17,6 @@ this will be  a timestamp file in the current directory.}
 population to be used. For ncd1, only one population is used.}
 
 \item{index.col}{First genotype column in VCF file.}
-
-\item{verbose}{Logical. If TRUE, progress reports will be printed as the
-function runs.}
 }
 \description{
 Make input file for NCD1 from VCF

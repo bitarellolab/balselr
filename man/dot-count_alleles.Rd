@@ -4,23 +4,17 @@
 \alias{.count_alleles}
 \title{Count derived or ancestral alleles for a given vcf position}
 \usage{
-.count_alleles(x, split = "|", index = c(1, 2), der = F)
+.count_alleles(x, split = "|")
 }
 \arguments{
-\item{x}{A vector containing 0s and 1s corresponding to allele states}
+\item{x}{A vector containing 0s and 1s corresponding to allele states. 0/0: homozygous reference; 0/1: heterozygous; 1/1: homozygous alternate}
 
 \item{split}{Pattern to look for. Inherited from stringr::str_split}
-
-\item{index}{1 or 2 or c(1,2). Which alleles to consider.}
-
-\item{der}{Return derived. Logical. If TRUE, returns the counts of
-derived (alternate)
-alleles. If FALSE, returns ancestral (ref) counts}
 }
 \description{
 Count derived or ancestral alleles for a given vcf position
 }
 \examples{
-data.table::data.table(col1="1|1", col2="1|0", col3="0|0") \%>\%
+data.table::data.table(col1="1|1", col2="0|0", col3="0|0") \%>\%
 dplyr::summarise(across(col1:col3, .count_alleles))
 }

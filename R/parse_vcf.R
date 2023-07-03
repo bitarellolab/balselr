@@ -4,122 +4,89 @@
 #' @param outfile The path and name for the outfile. If not provided,
 #' this will be  a timestamp + infile in the current directory.
 #' @param n0 Number of individuals in pop0
-#' @param n0 Number of individuals in pop1
+#' @param n1 Number of individuals in pop1
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
-#' @param fold Logical. If TRUE, the output will have alternate allele counts.
-#' If FALSE, derived allele counts will be used. Default is TRUE.
-#' @param intern Logical. If TRUE, output is kept in R in addition to being written
-#' in output file. If FALSE, output is written to file only. Default is TRUE.
-#' @param verbose Logical. If TRUE, progress reports will be printed as the
-#' function runs.
 #'
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile="inst/example.vcf", outfile="inst/example_parse_ncd1.out", n0=108,  type="ncd1")
-#'parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
-
-parse_vcf <-
-  function(infile = "*.vcf",
-           outfile = NULL,
-           n0=108,
-           n1=NULL,
-           type = "ncd2",
-           fold = T,
-           intern = T,
-           verbose = T) {
-          tictoc::tic("Total runtime")
-    assertthat::assert_that(file.exists(infile),
-      msg = glue::glue("VCF file {infile} does not exist.\n")
-    )
-    type <- tolower(type)
-    # Index No. of the individual to use as ``ancestral'' sequence
-    if (fold == F & type == "ncd2") {
-            outseq <- (index.col) + (sum(nind) - 1)
-            if (verbose == T) {
-                    cat(
-                            glue::glue(
-                                    "You asked for the unfolded version. You need a third species. I will use column {outseq} for this."
-                            ),
-                            "\n"
-                    )
-            }
-    }else if (type == "ncd2"){
-            assertthat::assert_that(is.null(n1)==FALSE, msg="n1 cannot be NULL. NCD2 requires an outgroup.")
-    }
-    else if (type == "ncd1") {
-            assertthat::assert_that(fold == T, msg = "Only the folded option is available when Ancestral/Derived states are unknown.\n")
-    }
-    #
-    if (is.null(outfile)) {
-            outfile = outfile_path(glue::glue("{infile}"))
-            if (verbose == T) {
-                    cat(
-                            glue::glue(
-                                    "No outfile provided. Will write this into tmp file {outfile}_{type}.out"
-                            ),
-                            "\n"
-                    )
-            }
-    }else{
-    outfile <- glue::glue("{outfile}_{type}.out")
-    }
-
-    nind<-c(n0,n1)
-    pref <- gsub(".vcf", "", infile)
-    inp <- read_vcf(x = infile, only.bi = T)
-
-    index.col <- which(colnames(inp) == "FORMAT") + 1
-    if (verbose == T) {
-      cat(
-        glue::glue(
-          "First genotype column is {index.col}"
-        ), "\n"
-      )
-    }
-    if (verbose == T) {
-      cat(
-        glue::glue("Creating input file for {type} from {infile}..."),
-        "\n"
-      )
-    }
+#' @examples parse_vcf(infile="inst/example.vcf", outfile="example_parse_ncd1.out", n0=108,  type="ncd1")
 
 
-    #
-    if (type == "ncd2") {
-      res <-
-        .vcf_ncd2(
-          x = inp,
-          outfile = outfile,
-          nind = nind,
-          index.col = index.col,
-          fold = fold,
-          verbose = verbose
-        )
-    } else if (type == "ncd1") {
-      res <-
-        .vcf_ncd1(
-          x = inp,
-          outfile = outfile,
-          nind = nind,
-          index.col = index.col,
-          verbose = verbose
-        )
-    }
-    if (verbose == T) {
-      cat(
-        glue::glue("Finished making input file for {type}. File written to: {outfile}"),
-        "\n"
-      )
-        tictoc::toc()
-    } else {
-      cat(glue::glue("File written to: {outfile}"), "\n")
-    }
+parse_vcf <- function(infile = "*.vcf",
+                      outfile = NULL,
+                      n0 = 108,
+                      n1 = NULL,
+                      type = "ncd1") {
+       # tictoc::tic("Total runtime")
+        assertthat::assert_that(file.exists(infile), msg = glue::glue("VCF file {infile} does not exist.\n"))
+        type <- tolower(type)
+        assertthat::assert_that(type %in% c("ncd1", "ncd2"), msg="ncd_type must be either ncd1 or ncd2.\n")
+        if(type=="ncd2"){
+        assertthat::assert_that(is.null(n1) == FALSE, msg = "n1 cannot be 'NULL'. NCD2 requires an outgroup.")
+        }
+        local.path=getwd()
+        if (!(is.null(outfile))) {
+        pat=stringr::str_split(infile, pattern="/", simplify=T)[length(stringr::str_split(infile, pattern="/", simplify=T))]
+        #outfile = outfile_path(glue::glue("{local.path}/{pat}_{type}.out"))
+        #if (verbose == T) {
+        #cat(glue::glue("No outfile provided. Will write this into tmp file {outfile}_{type}.out"),"\n")
+        #}
+        #} else{
+        outfile <- glue::glue("{local.path}/{outfile}")
+        }
+        #}
+        #}else{
+        #        cat(glue::glue("No outfile provided.
+        #}
+        pref <- gsub(".vcf", "", infile)
+        inp <- read_vcf(x = infile, only.bi = T)
 
-    if (intern == T) {
-      return(res)
-    }
-  }
+        index.col <- which(colnames(inp) == "FORMAT") + 1
+       # if (verbose == T) {
+        #cat(glue::glue("First genotype column is {index.col}"),"\n")
+        #}
+        #if (verbose == T) {
+        #        cat(glue::glue("Creating input file for {type} from {infile}..."),"\n")
+        #}
+
+        #
+        if (type == "ncd2") {
+                res <-
+                        .vcf_ncd2(
+                                x = inp,
+                                outfile = outfile,
+                                nind = nind,
+                                index.col = index.col,
+                                fold = fold
+                                #verbose = verbose
+                        )
+        } else if (type == "ncd1") {
+                res <-
+                        .vcf_ncd1(
+                                x = inp,
+                                outfile = outfile,
+                                nind = nind,
+                                index.col = index.col
+                                #verbose = verbose
+                        )
+        }
+  #      if (verbose == T) {
+         #       cat(
+         #               glue::glue(
+          #                      "Finished making input file for {type}. File written to: {outfile}"
+         #               ),
+         #               "\n"
+          #      )
+         #       tictoc::toc()
+  #      } else {
+         #       cat(glue::glue("File written to: {local.path}/{outfile}"), "\n")
+    #    }
+
+   #     if (intern == T) {
+   ##     }
+                return(res)
+}
 #
 # out.ncd1.unf<-glue("{outfile}ncd1_unf.out")
 # out.ncd2<-glue("{outfile}ncd2")
