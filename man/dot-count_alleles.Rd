@@ -14,7 +14,3 @@
 \description{
 Count derived or ancestral alleles for a given vcf position
 }
-\examples{
-data.table::data.table(col1="1|1", col2="0|0", col3="0|0") \%>\%
-dplyr::summarise(across(col1:col3, .count_alleles))
-}

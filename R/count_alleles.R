@@ -3,8 +3,7 @@
 
 #' @param split Pattern to look for. Inherited from stringr::str_split
 
-#' @examples data.table::data.table(col1="1|1", col2="0|0", col3="0|0") %>%
-#' dplyr::summarise(across(col1:col3, .count_alleles))
+
 .count_alleles<-function(x, split="|"){
         x<-.split_geno(x = x, split = split)
         #if(der == T){sum(x, na.rm=T)}else if (der == F){sum(!is.na(x))-sum(x, na.rm=T)}

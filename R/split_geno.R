@@ -2,7 +2,7 @@
 #'
 #' @param x A string from a GT column.
 #' @param split Pattern to use for splitting.
-#' @examples split_geno(x = c("0|0","0|1","1|1"), split="|")
+
 .split_geno <- function(x, split="|") {
         #assertthat::assert_that(is.numeric(which.al), err = "Parameter which.al must be numeric")
 

@@ -57,8 +57,7 @@ parse_vcf <- function(infile = "*.vcf",
                                 x = inp,
                                 outfile = outfile,
                                 nind = nind,
-                                index.col = index.col,
-                                fold = fold
+                                index.col = index.col
                                 #verbose = verbose
                         )
         } else if (type == "ncd1") {

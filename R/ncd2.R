@@ -20,7 +20,6 @@
 #' @param verbose Logical. If TRUE, progress reports will be printed as the
 #' function runs.
 #' @return A data.table object
-#' @export
 #'
 #' @examples ncd2(x=ncd2_input, selectwin="mid", targetpos=15000, mid=TRUE)
 #' ncd2(x=ncd2_input, selectwin="val", targetpos=NULL, mid=F)

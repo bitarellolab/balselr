@@ -23,6 +23,5 @@ Make input file for NCD1 from VCF
 }
 \examples{
 inp = read_vcf("inst/example.vcf")
-vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108),
-.vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=108, index.col=10, verbose=T)
+.vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108))
 }

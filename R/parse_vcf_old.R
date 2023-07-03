@@ -4,7 +4,7 @@
 #' @param outfile The path and name for the outfile. If not provided,
 #' this will be  a timestamp + infile in the current directory.
 #' @param n0 Number of individuals in pop0
-#' @param n0 Number of individuals in pop1
+#' @param n1 Number of individuals in pop1
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
 #' @param fold Logical. If TRUE, the output will have alternate allele counts.
 #' If FALSE, derived allele counts will be used. Default is TRUE.
@@ -17,7 +17,6 @@
 
 #'
 #' @examples parse_vcf(infile="inst/example.vcf", outfile="inst/example_parse_ncd1.out", n0=108,  type="ncd1")
-#'parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
 
 parse_vcf_old <-
         function(infile = "*.vcf",

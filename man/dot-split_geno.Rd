@@ -14,6 +14,3 @@
 \description{
 Split a genotype column from a vcf file
 }
-\examples{
-split_geno(x = c("0|0","0|1","1|1"), split="|")
-}
