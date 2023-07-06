@@ -4,52 +4,20 @@
 \alias{ncd2}
 \title{Calculate non-central statistic (NCD2)}
 \usage{
-ncd2(
-  x = x,
-  tf = 0.5,
-  fold = T,
-  w = 3000,
-  by.snp = TRUE,
-  mid = FALSE,
-  ncores = 2,
-  selectwin = "val",
-  targetpos = NULL,
-  minIS = 2,
-  label = NULL,
-  verbose = T
-)
+ncd2(x = x, tf = 0.5, w = 3000, ncores = 2, minIS = 2)
 }
 \arguments{
 \item{x}{A data.table object}
 
 \item{tf}{Target frequency}
 
-\item{fold}{Logical. If TRUE, NCD2 will use minor allele frequencies.}
-
 \item{w}{Window size in bp. Default is 1000}
-
-\item{by.snp}{Logical. If TRUE, windows are defined around each SNP
-in the input data. Else, slidding windows in the range first pos:last pos
-will be used.}
-
-\item{mid}{Logical. If TRUE runs NCD centered on a core SNP frequency instead of a pre-defined tf. Requires targetpos.}
 
 \item{ncores}{Number of cores. Increasing this can spead things up for you.
 Default is 4.}
 
-\item{selectwin}{Select window. "val" returns the window with the lowest test. "maf" returns the window
-which has the lowest difference between its central MAF and the tf."mid" returns the window
-centered closest on a value provided by the user under targetpos."all" returns all windows (idea for when the user wants to select windows after scanning a genome)}
-
-\item{targetpos}{Position of the target SNP. Only needed for mid==T}
-
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
 less informative sites than this threshold are discarded.}
-
-\item{label}{An optional label to include as the last column of the output}
-
-\item{verbose}{Logical. If TRUE, progress reports will be printed as the
-function runs.}
 }
 \value{
 A data.table object
@@ -58,6 +26,5 @@ A data.table object
 Calculate non-central statistic (NCD2)
 }
 \examples{
-ncd2(x=ncd2_input, selectwin="mid", targetpos=15000, mid=TRUE)
-ncd2(x=ncd2_input, selectwin="val", targetpos=NULL, mid=F)
+ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=8)
 }

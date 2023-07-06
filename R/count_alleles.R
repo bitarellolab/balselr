@@ -8,8 +8,8 @@
         x<-.split_geno(x = x, split = split)
         #if(der == T){sum(x, na.rm=T)}else if (der == F){sum(!is.na(x))-sum(x, na.rm=T)}
         #sum(!is.na(x))-sum(x, na.rm=T)
-        ref<-sum(x==0, na.rm=T) #number of ref alleles
-        alt<-sum(x==1, na.rm=T) #number of alt alleles
+        #ref<-sum(x==0, na.rm=T) #number of ref alleles
+        sum(x==1, na.rm=T) #number of alt alleles
 
 }
 .count_nonmissing<-function(x, split="|"){

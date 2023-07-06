@@ -10,40 +10,48 @@
 #' @return Returns a data table object.
 #' @export
 #'
-#' @examples parse_vcf(infile="inst/example.vcf", outfile="example_parse_ncd1.out", n0=108,  type="ncd1")
+#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
+#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=2, type="ncd2")
 
 
-parse_vcf <- function(infile = "*.vcf",
+parse_vcf <- function(infile = NULL,
                       outfile = NULL,
-                      n0 = 108,
+                      n0 = NULL,
                       n1 = NULL,
-                      type = "ncd1") {
-       # tictoc::tic("Total runtime")
-        assertthat::assert_that(file.exists(infile), msg = glue::glue("VCF file {infile} does not exist.\n"))
+                      type = NULL) {
+
+        assertthat::assert_that(file.exists(infile),
+                                msg = glue::glue("VCF file {infile} does not exist.\n"))
         type <- tolower(type)
-        assertthat::assert_that(type %in% c("ncd1", "ncd2"), msg="ncd_type must be either ncd1 or ncd2.\n")
-        if(type=="ncd2"){
-        assertthat::assert_that(is.null(n1) == FALSE, msg = "n1 cannot be 'NULL'. NCD2 requires an outgroup.")
+        assertthat::assert_that(type %in% c("ncd1", "ncd2"), msg = "ncd_type must be either ncd1 or ncd2.\n")
+        if (type == "ncd2") {
+                assertthat::assert_that(is.null(n1) == FALSE, msg = "n1 cannot be 'NULL'. NCD2 requires an outgroup.")
         }
-        local.path=getwd()
+        local.path = getwd()
         if (!(is.null(outfile))) {
-        pat=stringr::str_split(infile, pattern="/", simplify=T)[length(stringr::str_split(infile, pattern="/", simplify=T))]
-        #outfile = outfile_path(glue::glue("{local.path}/{pat}_{type}.out"))
-        #if (verbose == T) {
-        #cat(glue::glue("No outfile provided. Will write this into tmp file {outfile}_{type}.out"),"\n")
-        #}
-        #} else{
-        outfile <- glue::glue("{local.path}/{outfile}")
+                pat = stringr::str_split(infile,
+                                         pattern = "/",
+                                         simplify = T)[length(stringr::str_split(
+                                                 infile,
+                                                 pattern = "/",
+                                                 simplify = T
+                                         ))]
+                outfile = outfile_path(glue::glue("{local.path}/{pat}_{type}.out"))
+                #if (verbose == T) {
+                #cat(glue::glue("No outfile provided. Will write this into tmp file {outfile}_{type}.out"),"\n")
+                #}
+                #} else{
+                outfile <- glue::glue("{local.path}/{outfile}")
         }
         #}
         #}else{
         #        cat(glue::glue("No outfile provided.
         #}
-        pref <- gsub(".vcf", "", infile)
-        inp <- read_vcf(x = infile, only.bi = T)
-
+        #pref <- gsub(".vcf", "", infile)
+        inp <- read_vcf(x = infile)
+        nind<-c(n0,n1)
         index.col <- which(colnames(inp) == "FORMAT") + 1
-       # if (verbose == T) {
+        # if (verbose == T) {
         #cat(glue::glue("First genotype column is {index.col}"),"\n")
         #}
         #if (verbose == T) {
@@ -70,81 +78,19 @@ parse_vcf <- function(infile = "*.vcf",
                                 #verbose = verbose
                         )
         }
-  #      if (verbose == T) {
-         #       cat(
-         #               glue::glue(
-          #                      "Finished making input file for {type}. File written to: {outfile}"
-         #               ),
-         #               "\n"
-          #      )
-         #       tictoc::toc()
-  #      } else {
-         #       cat(glue::glue("File written to: {local.path}/{outfile}"), "\n")
-    #    }
+        #      if (verbose == T) {
+        #       cat(
+        #               glue::glue(
+        #                      "Finished making input file for {type}. File written to: {outfile}"
+        #               ),
+        #               "\n"
+        #      )
+        #
+        #      } else {
+        #       cat(glue::glue("File written to: {local.path}/{outfile}"), "\n")
+        #    }
 
-   #     if (intern == T) {
-   ##     }
-                return(res)
+        #     if (intern == T) {
+        ##     }
+        return(res)
 }
-#
-# out.ncd1.unf<-glue("{outfile}ncd1_unf.out")
-# out.ncd2<-glue("{outfile}ncd2")
-# out.ncd2.unf<-glue("{outfile}ncd2_unf.out")
-# out.betascan<-glue("{outfile}betascan.out")
-# out.betascan.unf<-glue("{outfile}betascan_unf.out")
-# out.mutebass<-glue("{outfile}mutebass.out")
-# out.balmixder<-glue("{outfile}mutebass.out")
-# out.ballet.snp<-glue("{outfile}ballet_snp.out")
-# out.ballet.rec<-glue("{outfile}ballet_rec.out")
-#
-# 	for(l in 1:nrow(inp)){
-# chr<-inp[l,1]
-# pos<-inp[l,2]
-# ref<-inp[l,4]
-# alt<-inp[l,5]
-# anc<-inp[l,get(colnames(inp)[outseq])]
-# anc<-str_split(anc,"|",simplify=F)[[1]][[2]]
-# drv=0 ; total=0; drv2=0; total2=0
-# for(i in index.col:(index.col+nind[1])){
-#    al<-str_split(inp[l,get(colnames(inp)[i])],"|",simplify=F)[[1]]
-#    if(al[1]!=anc){drv=drv+1}
-#      if(al[2]!=anc){drv=drv+1}
-# 		      total = total + 2
-# 		}
-# for(i in ((index.col+nind[1])+1):(index.col+nind[2])){
-#    al<-str_split(inp[l,get(colnames(inp)[i])],"|",simplify=F)[[1]]
-#   if(al[1]!=anc){drv2=drv2+1}
-#    if(al[2]!=anc){drv2=drv2+1}
-#     total2 = total2 + 2
-# }
-# 	sink(out.ncd1)
-#  cat("CHR\tPOS\tREF\tALT\tx_1\tn_1\tx_2\tn_2")
-#  cat(chr,pos,ref,alt,drv,total, drv2, total2)
-# 	sink()
-# 		print $1, $2, 1.2e-8*$2,drv,total, drv2, total2 > outmute # recombination rate
-#    		print $2, drv,total > betaout
-#                if(drv>0) print $2, total-drv, total > balout".snp"
-#                if(drv>0){
-#                    print $2, ($2-prevpos)*2.75e-4 > balout".rec" # pop-scaled recombination rate (2Nr = 2*11477*1.2e-8 = 2.75448e-4)
-#                    prevpos=$2
-#                }
-#    		if(drv>0) print $2, "NA", drv, total > balmixder #BalLeRMix_manual p.5: When the user does not have recombination maps for reference, the seceond column
-# can be NAs as long as the user makes sure to use --physPos.
-# }
-# }'
-
-# 	sink(out.mutebass)
-# 	cat("CHR\tPOS\tGenPOS\tx_1\tn_1\tx_2\tn_2")
-# 	sink()
-# 	sink(out.balmixder)
-# 	cat("physPos\tgenPos\tx\tn")
-# 	sync()
-# 	sync(out.ballet.snp)
-# cat("position\tx\tn")
-# sync()
-# sync(out.ballet.rec)
-# cat("position\trate")
-# sync()
-# }
-# outseq=128
-# }

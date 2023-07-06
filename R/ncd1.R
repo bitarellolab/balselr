@@ -23,9 +23,9 @@ ncd1 <- function(x = x,
                  w = 3000,
                  ncores = 2,
                  minIS = 2) {
- Win.ID <-SegSites <-POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
-        tx_1 <-tn_1 <-AF2 <-tx_2 <- tn_2 <- ID <- SNP <- FD <- MAF <- NULL
-        tictoc::tic("Total runtime")
+        #Win.ID <-SegSites <-POS <- V1 <- temp <- NCD1 <- CHR <- AF <- NULL
+       # tx_1 <-tn_1 <-AF2 <-tx_2 <- tn_2 <- ID <- SNP <- FD <- MAF <- NULL
+
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
                           chromosome at a time\n")
 
@@ -50,9 +50,8 @@ ncd1 <- function(x = x,
                                                                        y],
                                 mc.cores = ncores))
         mylist2 <- data.table::setDT(mylist2)
+        ####################
         # }
-
-
                 mylist2[, tf := tf]
                 res <-
                         mylist2[, .(SegSites = sum(SNP),
@@ -62,7 +61,7 @@ ncd1 <- function(x = x,
                 res1 <- mylist2 %>% dplyr::group_by(Win.ID) %>%
                         dplyr::reframe(
                                 MidMaf = MAF[which(Mid == POS)],
-                                Mid.SNP = Mid[1]) %>%
+                                MidSNP = Mid[1]) %>%
                                # TopMaf = which(min(abs(MAF - tf)), Win.ID = Win.ID) %>%
                         #dplyr::ungroup() %>%
                         as.data.table %>%
@@ -85,5 +84,5 @@ ncd1 <- function(x = x,
         res4 <- res4 %>% dplyr::ungroup() %>% as.data.table
         res4[, NCD1 := sqrt(temp2 / IS), by = Win.ID]
         res4[, temp2 := NULL]
-        print(res4)
+        return(print(res4))
 }

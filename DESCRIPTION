@@ -16,9 +16,7 @@ Imports:
     dplyr,
     glue,
     magrittr,
-    stringr,
-    testthat,
-    tictoc
+    stringr
 Depends: 
     R (>= 2.10)
 Suggests: testthat (>= 3.1.9)

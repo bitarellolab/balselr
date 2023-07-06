@@ -21,7 +21,3 @@ population to be used. For ncd1, only one population is used.}
 \description{
 Make input file for NCD1 from VCF
 }
-\examples{
-inp = read_vcf("inst/example.vcf")
-.vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108))
-}

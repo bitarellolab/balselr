@@ -7,16 +7,15 @@
 #' @param nind A vector containing the number of diploid individuals from each
 #' population to be used. For ncd1, only one population is used.
 #' @param index.col First genotype column in VCF file.
-#' @examples inp = read_vcf("inst/example.vcf")
-#' .vcf_ncd1(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108))
+
 .vcf_ncd1 <- function(x,
                      outfile = outfile,
                      nind = nind,
                      index.col = index.col) {
   #
-        tictoc::tic("Total runtime")
-        infile <- CHR <- POS <- REF <- ALT <- tx_1 <- tn_1 <- NULL
-        across <- tx_2 <- tn_2 <- NULL
+       # tictoc::tic("Total runtime")
+       # infile <- CHR <- POS <- REF <- ALT <- tx_1 <- tn_1 <- NULL
+        #across <- tx_2 <- tn_2 <- NULL
 
 
   npop <- length(nind)
@@ -41,12 +40,13 @@
                              x %>%
                                      #dplyr::select(all_of(pop0_cols)) %>%
                                 dplyr::rowwise() %>%
-                                dplyr::summarise(across(pop0_cols, .count_alleles)) %>%
-                                dplyr::summarise(tx_1 = Reduce(`+`,.)),
-                             x %>% dplyr::select(all_of(pop0_cols)) %>%
+                                dplyr::reframe(across(pop0_cols, .count_alleles)) %>%
+                                dplyr::reframe(tx_1 = Reduce(`+`,.)),
+                             x %>%
+                                #dplyr::select(all_of(pop0_cols)) %>%
                                 dplyr::rowwise() %>%
-                                dplyr::summarise(across(pop0_cols, .count_nonmissing)) %>%
-                                dplyr::summarise(tn_1 = Reduce(`+`,.))
+                                dplyr::reframe(across(pop0_cols, .count_nonmissing)) %>%
+                                dplyr::reframe(tn_1 = Reduce(`+`,.))
                             ) %>%
                 dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1) %>%
                 as.data.table
