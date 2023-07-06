@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 
 # balselr
 
+This package is under construction. If you want to run NCD1 or NCD2, please use this [other repo](https://github.com/bbitarello/NCD-Statistics) for now. 
+
 <!-- badges: start -->
 ![](images/balselr2.png){width=40% height=40%}
 <!-- badges: end -->
-
-The goal of balselr is to calculate NCD1 and NCD2 (and more) ...[under construction. Feedback welcome!]
 
 ## Installation
 
