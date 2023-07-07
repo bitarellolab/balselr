@@ -4,14 +4,7 @@
 \alias{.vcf_ncd2}
 \title{Make input file for NCD2 from VCF}
 \usage{
-.vcf_ncd2(
-  x,
-  outfile = outfile,
-  nind = nind,
-  index.col = index.col,
-  fold = fold,
-  verbose = verbose
-)
+.vcf_ncd2(x, outfile = outfile, nind = nind, index.col = index.col)
 }
 \arguments{
 \item{x}{A data.table object generated from reading a VCF file with read_vcf.}
@@ -24,18 +17,7 @@ population to be used. The length of the vector should be equal to the number
 of populations being sampled.}
 
 \item{index.col}{First genotype column in VCF file.}
-
-\item{fold}{Logical. If TRUE, the output will have alternate allele counts.
-If FALSE, derived allele counts will be used. Default is TRUE.}
-
-\item{verbose}{Logical. If TRUE, progress reports will be printed as the
-function runs.}
 }
 \description{
 Make input file for NCD2 from VCF
-}
-\examples{
-.vcf_ncd2(x=inp, outfile=outfile_path("inst/example.vcf"),nind=c(108,10),
-index.col=10, fold=T, verbose=T)
-
 }

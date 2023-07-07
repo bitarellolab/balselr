@@ -16,11 +16,7 @@ Imports:
     dplyr,
     glue,
     magrittr,
-    reticulate,
-    slendr,
-    stringr,
-    testthat,
-    tictoc
+    stringr
 Depends: 
     R (>= 2.10)
 Suggests: 

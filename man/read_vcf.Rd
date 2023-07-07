@@ -4,20 +4,17 @@
 \alias{read_vcf}
 \title{Read vcf}
 \usage{
-read_vcf(x = "inst/example.vcf", only.bi = T)
+read_vcf(x = "inst/example.vcf")
 }
 \arguments{
 \item{x}{The path and name of a vcf file}
-
-\item{only.bi}{Logical. If TRUE, only bi-allelic SNP positions from VCF file
-are kept.}
 }
 \value{
-Returns a data.table object
+Returns a data.table object containing only SNPs
 }
 \description{
 Read vcf
 }
 \examples{
-read_vcf(x="inst/example.vcf", only.bi=T, inds="all")
+read_vcf(x=system.file(package="balselr", "example.vcf"))
 }
