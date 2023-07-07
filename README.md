@@ -26,25 +26,24 @@ library(balselr)
 
 ## Example
 
-This is a basic example which shows you how to read in a vcf file and
-keep all samples/individuals
+This is a basic example which shows you how to read in a vcf file:
 
 ``` r
-read_vcf(x="inst/example.vcf", only.bi=T)
+read_vcf(x="inst/example.vcf")
 ```
 
 This is an example which shows how to parse a vcf file and output an
-input file for ncd1 or ncd2:
+input file for `ncd1`:
 
 ``` r
-parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
+parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
 ```
 
 This is an example which shows how to parse a vcf file and output an
-input file for ncd1 or ncd1:
+input file for `ncd2`:
 
 ``` r
-#upcoming
+parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=2, type="ncd2")
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
