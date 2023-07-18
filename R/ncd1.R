@@ -5,7 +5,7 @@
 
 #' @param w Window size in bp. Default is 1000
 
-#' @param ncores Number of cores. Increasing this can spead things up for you.
+#' @param ncores Number of cores. Increasing this can speed things up for you.
 #' Default is 4.
 
 
