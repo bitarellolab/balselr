@@ -46,6 +46,13 @@ input file for `ncd2`:
 parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=2, type="ncd2")
 ```
 
+Run `ncd1 (tf=0.5)` with a 3000 basepair window and a minimum of 8
+informative sites per window using 2 cores:
+
+``` r
+ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
+```
+
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this. You could also
 use GitHub Actions to re-render `README.Rmd` every time you push. An
