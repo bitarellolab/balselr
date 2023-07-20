@@ -23,7 +23,8 @@ ncd1 <- function(x = x,
                  tf = 0.5,
                  w = 3000,
                  ncores = 2,
-                 minIS = 2, by="POS") {
+                 minIS = 2,
+                 by="POS") {
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
                           chromosome at a time\n")
 
