@@ -13,8 +13,8 @@ ncd1(x = x, tf = 0.5, w = 3000, ncores = 2, minIS = 2)
 
 \item{w}{Window size in bp. Default is 1000}
 
-\item{ncores}{Number of cores. Increasing this can spead things up for you.
-Default is 4.}
+\item{ncores}{Number of cores. Increasing this can speed things up for you.
+Default is 2.}
 
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
 less informative sites than this threshold are discarded.}

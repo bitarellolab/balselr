@@ -1,43 +1,40 @@
 #' Calculate non-central statistic (NCD2)
 #'
-#' @param x A data.table object
-#' @param tf Target frequency
-
-#' @param w Window size in bp. Default is 1000
-
-#' @param ncores Number of cores. Increasing this can spead things up for you.
-#' Default is 4.
-
-
+#' @param x A data.table object with
+#' columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles), tx_2, and tn_2.
+#' @param tf Target frequency. Any value between 0 and 0.5. Default is 0.5.
+#' @param w Window size in bp. Default is 1000.
+#' @param ncores Number of cores. Increasing this can speed things up for you.
+#' Default is 2.
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
-
-#' @return A data.table object
+#' @return A data.table object with columns: TO DO
 #' @export
 #'
 #' @examples ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=8)
 #' @import data.table
 #' @importFrom data.table ":="
 #'
+# to do: check that ncd2_input (internal object) is the same as the output of example command for ncd2 in the parse_vcf function.
 ncd2 <- function(x = x,
                  tf = 0.5,
                  w = 3000,
                  ncores = 2,
                  minIS = 2) {
-        #Win.ID <- SegSites <- POS <- V1 <- temp <- NCD2 <- CHR <- AF <- AF2 <- NULL
-        #tx_1 <- tn_1 <- tx_1 <- tx_2 <- tn_2 <- ID <- SNP <- FD <- MAF <- NULL
+
 
         assertthat::assert_that(length(unique(x[, CHR])) == 1,
                                 msg = "Run one chromosome at a time\n")
 
-        x[, AF := tx_1 / tn_1]
-        x[, AF2 := tx_2 / tn_2]
+        x[, AF := tx_1 / tn_1]  #allele relative frequency
+        x[, AF2 := tx_2 / tn_2]  #allele relative frequency
         x[, ID := seq_along(CHR)]
         w1 <- w / 2
-        polpos <- x[AF != 1 & AF != 0]$ID
-        fdpos <- sort(c(x[AF == 1 & AF2 == 0]$ID, x[AF == 0 & AF2 == 1]$ID))
-        x[, SNP := ifelse(ID %in% polpos, T, F)]
-        x[, FD := ifelse(ID %in% fdpos, T, F)]
+        polpos <- x[AF != 1 & AF != 0]$ID #select positions that are polymorphic
+        fdpos <- sort(c(x[AF == 1 & AF2 == 0]$ID, #fixed difference
+                        x[AF == 0 & AF2 == 1]$ID)) #also fixed difference
+        x[, SNP := ifelse(ID %in% polpos, T, F)] #logical: True if SNP, False if not.
+        x[, FD := ifelse(ID %in% fdpos, T, F)] #logical: True if FD, False if not.
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
         x2 <- x[SNP == T | FD == T]
         x2[, ID := seq_along(CHR)]
@@ -47,10 +44,13 @@ ncd2 <- function(x = x,
         mylist <-
                 parallel::mclapply(x$POS, function(y) {
                         x[POS >= y - w1 &
-                                  POS < y + w1][, .(POS, AF, AF2, FD, ID, SNP, tx_1, MAF)]
+                                  POS < y + w1][, .(POS, AF, AF2, ID, FD, SNP, tx_1, tx_2, MAF)]
                 },
                 mc.cores =
-                        ncores)
+                        ncores) #creates list where each element is a genomic window
+
+        #remove first and last windows in a chromosome
+        mylist<-mylist[seq(from=2, to=length(mylist)-1)]
         mylist2 <-
                 do.call(rbind,
                         parallel::mclapply(1:length(mylist), function(y)
