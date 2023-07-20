@@ -33,5 +33,13 @@ my_parsed_vcf<-parse_vcf(infile="inst/example.vcf", n0=108,  type="ncd1")
 
 ```
 
+## 07/19
 
+* removed "outfile" param from parse_vcf and internal functions within.
+* put verbose back in
+* added comments regarding pending things to do and test.
+
+to do:
+* go over the comments in the code and make tests and adjustments
+* figure out how to add references to the help page of functions.
 

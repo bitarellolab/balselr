@@ -4,19 +4,18 @@
 \alias{.vcf_ncd2}
 \title{Make input file for NCD2 from VCF}
 \usage{
-.vcf_ncd2(x, outfile = outfile, nind = nind, index.col = index.col)
+.vcf_ncd2(x, nind = nind, index.col = index.col, verbose = T)
 }
 \arguments{
 \item{x}{A data.table object generated from reading a VCF file with read_vcf.}
-
-\item{outfile}{The path and name for the outfile. If not provided,
-this will be  a timestamp file in the current directory.}
 
 \item{nind}{A vector containing the number of diploid individuals from each
 population to be used. The length of the vector should be equal to the number
 of populations being sampled.}
 
 \item{index.col}{First genotype column in VCF file.}
+
+\item{verbose}{Logical. Printed updates. Default is T.}
 }
 \description{
 Make input file for NCD2 from VCF

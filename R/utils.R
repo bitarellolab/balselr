@@ -9,3 +9,13 @@ outfile_path <- function(infile = "example.vcf") {
 
         sub("\\..*", paste0("_",timestamp(now),".out"), infile)
 }
+
+
+.even_or_odd<-function(num){
+        if((num %% 2) == 0) {
+        return(0)
+} else {
+        return(1)
+}
+}
+

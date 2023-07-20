@@ -4,19 +4,18 @@
 \alias{.vcf_ncd1}
 \title{Make input file for NCD1 from VCF}
 \usage{
-.vcf_ncd1(x, outfile = outfile, nind = nind, index.col = index.col)
+.vcf_ncd1(x, nind = nind, index.col = index.col, verbose = T)
 }
 \arguments{
 \item{x}{An object of class data.table containing typical elements of a vcf file. Output: data.table with
-columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles)}
-
-\item{outfile}{The path and name for the outfile. If not provided,
-this will be  a timestamp file in the current directory.}
+columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles) and (if type is ncd2) tx_2 and tn_2}
 
 \item{nind}{A vector containing the number of diploid individuals from each
 population to be used. For ncd1, only one population is used.}
 
 \item{index.col}{First genotype column in VCF file.}
+
+\item{verbose}{Logical. Printed updates. Default is T.}
 }
 \description{
 Make input file for NCD1 from VCF
