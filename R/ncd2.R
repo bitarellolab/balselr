@@ -20,7 +20,8 @@ ncd2 <- function(x = x,
                  tf = 0.5,
                  w = 3000,
                  ncores = 2,
-                 minIS = 2) {
+                 minIS = 2,
+                 by= "POS") {
 
 
         assertthat::assert_that(length(unique(x[, CHR])) == 1,

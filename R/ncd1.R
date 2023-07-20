@@ -9,7 +9,7 @@
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
 #' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
-#' @return A data.table object with columns:  Win.ID SegSites IS tf MidMaf Mid ncd1
+#' @return A data.table object with columns:  TO DO
 #' @export
 #'
 #' @examples ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
