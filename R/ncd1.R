@@ -37,7 +37,7 @@ ncd1 <- function(x = x,
         mylist <-
                 parallel::mclapply(x$POS, function(y) {
                         x[POS >= y - w1 &
-                                  POS < y + w1][, Mid:=y][, .(POS, AF, ID, SNP, tx_1, MAF, Mid)]
+                                  POS < y + w1][, Mid:=y][, .(POS, AF, ID, SNP, MAF, Mid)]
                 },
                 mc.cores =
                         ncores) #creates list where each element is a genomic window
@@ -49,7 +49,7 @@ ncd1 <- function(x = x,
                         parallel::mclapply(1:length(mylist), function(y)
                                 mylist[[y]][, Win.ID := y][,tf:=tf],
                                 mc.cores = ncores))
-        mylist2 <- data.table::setDT(mylist2)
+        #to do: check that mylist2 is a data table
         ####################
         res <-
                 mylist2[, .(SegSites = sum(SNP),
@@ -71,9 +71,8 @@ ncd1 <- function(x = x,
                 mylist2 %>%
                 dplyr::group_by(Win.ID) %>%
                 dplyr::reframe(temp2 = sum((MAF - tf) ^ 2)) %>%
-
                 as.data.table
-        # }
+        #}
 
         res4 <- merge(res2, res3) %>%
                 dplyr::filter(IS >= minIS) %>%
