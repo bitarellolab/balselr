@@ -33,32 +33,32 @@ ncd2 <- function(x = x,
         polpos <- x[AF != 1 & AF != 0]$ID #select positions that are polymorphic
         fdpos <- sort(c(x[AF == 1 & AF2 == 0]$ID, #fixed difference
                         x[AF == 0 & AF2 == 1]$ID)) #also fixed difference
+        #to do: check that the there is no intersection between polpos and fdpos.
         x[, SNP := ifelse(ID %in% polpos, T, F)] #logical: True if SNP, False if not.
         x[, FD := ifelse(ID %in% fdpos, T, F)] #logical: True if FD, False if not.
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
-        x2 <- x[SNP == T | FD == T]
+        x2 <- x[SNP == T | FD == T] #select informative sites
         x2[, ID := seq_along(CHR)]
         polpos2<-x2[SNP==T]$ID
         fdpos2<-x2[FD==T]$ID
         # if(by.snp==T){
         mylist <-
-                parallel::mclapply(x$POS, function(y) {
-                        x[POS >= y - w1 &
-                                  POS < y + w1][, .(POS, AF, AF2, ID, FD, SNP, tx_1, tx_2, MAF)]
+                parallel::mclapply(x2$POS, function(y) {
+                        x2[POS >= y - w1 &
+                                  POS < y + w1][, Mid:=y][, .(POS, AF, ID, SNP, FD, MAF, Mid)]
                 },
                 mc.cores =
                         ncores) #creates list where each element is a genomic window
 
         #remove first and last windows in a chromosome
         mylist<-mylist[seq(from=2, to=length(mylist)-1)]
+
         mylist2 <-
                 do.call(rbind,
                         parallel::mclapply(1:length(mylist), function(y)
-                                mylist[[y]][, Mid := x2[polpos2,]$POS[y]][, Win.ID :=
-                                                                                  y],
+                                mylist[[y]][, Win.ID := y][,tf:=tf],
                                 mc.cores = ncores))
-        mylist2 <- data.table::setDT(mylist2)
-
+        #to do: check that mylist2 is a data table
         ####################
                 mylist2[, tf := tf]
                 res <-

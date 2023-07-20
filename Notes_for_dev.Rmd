@@ -42,4 +42,6 @@ my_parsed_vcf<-parse_vcf(infile="inst/example.vcf", n0=108,  type="ncd1")
 to do:
 * go over the comments in the code and make tests and adjustments
 * figure out how to add references to the help page of functions.
+* changed SegSites to "S" in ncd1 and ncd2 functions.
+* Created parameter "by" for ncd1 and ncd2 allowing user to perform scan based on sliding windows or windows around each SNP.
 
