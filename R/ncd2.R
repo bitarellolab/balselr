@@ -8,6 +8,7 @@
 #' Default is 2.
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
+#'  #' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
 #' @return A data.table object with columns: TO DO
 #' @export
 #'
@@ -38,69 +39,39 @@ ncd2 <- function(x = x,
         x[, SNP := ifelse(ID %in% polpos, T, F)] #logical: True if SNP, False if not.
         x[, FD := ifelse(ID %in% fdpos, T, F)] #logical: True if FD, False if not.
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
-        x2 <- x[SNP == T | FD == T] #select informative sites
-        x2[, ID := seq_along(CHR)]
-        polpos2<-x2[SNP==T]$ID
-        fdpos2<-x2[FD==T]$ID
-        # if(by.snp==T){
-        mylist <-
-                parallel::mclapply(x2$POS, function(y) {
-                        x2[POS >= y - w1 &
-                                  POS < y + w1][, Mid:=y][, .(POS, AF, ID, SNP, FD, MAF, Mid)]
-                },
-                mc.cores =
-                        ncores) #creates list where each element is a genomic window
+        ####################################################################################
+        if(by=="POS"){
+                #windows (sliding)
+                #to do: add some checks here
+                vec<-data.table(start=seq(from=x$POS[1], to=x$POS[nrow(x)], by=w1))
+                vec[,end:=start+w]
+                setkey(vec, start, end)
+                x[,start:=POS][,end:=POS]
 
-        #remove first and last windows in a chromosome
-        mylist<-mylist[seq(from=2, to=length(mylist)-1)]
+                res_0<-foverlaps(x, vec, type="within")[, Win.ID:=paste0(CHR,"_",start,"_",end)][,.(POS, ID,SNP,FD,MAF, Win.ID)]
+                res_0<-res_0[SNP==T | FD==T][, tf:=tf]
+                res_1<-unique(res_0[,.(S = sum(SNP),
+                                       Subst = sum (FD),
+                                       IS = sum(SNP) + sum(FD),
+                                       tf = tf),
+                                    by= Win.ID])
 
-        mylist2 <-
-                do.call(rbind,
-                        parallel::mclapply(1:length(mylist), function(y)
-                                mylist[[y]][, Win.ID := y][,tf:=tf],
-                                mc.cores = ncores))
-        #to do: check that mylist2 is a data table
-        ####################
-                mylist2[, tf := tf]
-                res <-
-                        mylist2[, .(SegSites = sum(SNP),
-                                   FDs = sum(FD),
-                                   IS = sum(SNP)+sum(FD)),
-                               by = Win.ID]
-                res[, tf := tf]
-                res1 <- mylist2 %>%
-                        dplyr::group_by(Win.ID) %>%
-                        dplyr::reframe(
-                                MidMaf = MAF[which(Mid == POS)],
-                                MidSNP = Mid[1]) %>%
-                                #CenMaf = max(abs(MAF - tf)), Win.ID = Win.ID) %>%
-                       # dplyr::ungroup() %>%
-                        as.data.table %>%
-                        unique()
 
-                res2 <- merge(res, res1)
-                res3 <-
-                        mylist2 %>%
-                        dplyr::filter(SNP == T) %>%
-                        dplyr::group_by(Win.ID) %>%
-                        dplyr::reframe(temp2 = sum((MAF - tf) ^ 2)) %>%
+                res_2<-merge(res_0, res_1)
+                #to do: check that each Win.ID has the number of rows given by IS
+                res_3<-res_2[, .(ncd2 = sqrt(sum((MAF-tf)^2)/IS)), by=Win.ID]
+                res_3<-unique(res_3)
+                res_2<-res_2[,.(Win.ID, tf, S, Subst, IS)]
+                res_2<-unique(res_2)
+                res4 <- merge(res_2, res_3) %>%
+                        dplyr::filter(IS >= minIS) %>%
+                        dplyr::arrange(ncd2) %>%
                         as.data.table
-        #}
 
-        ####################
+        }else if (by=="IS"){
 
-        res4 <- merge(res2, res3) %>% as.data.table
-        res4 <- res4 %>%
-                dplyr::ungroup() %>%
-                as.data.table
-        mini_fun<-function(x,y){
-        sum((rep(0, x)-y)^2)
-        }
-        res4[, temp4 := mini_fun(unique(FDs),unique(tf)), by=Win.ID]
-        res4[, NCD2 := sqrt(((temp2 + temp4) / IS)), by = Win.ID]
-        res4[, temp2 := NULL]
-        res4[, temp4 := NULL]
-        #if (is.null(minIS) == "FALSE") {
-        res4 <- res4[IS >= minIS]
-        return(print(res4))
+#to do: write this code.
+
+}
+        return(res4)
 }

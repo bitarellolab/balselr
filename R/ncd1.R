@@ -55,8 +55,7 @@ ncd1 <- function(x = x,
                         dplyr::filter(IS >= minIS) %>%
                         as.data.table
                 res4<-res4[, ncd1:=sqrt((temp2)/IS)][,temp2:=NULL] %>% dplyr::arrange(Win.ID) %>% as.data.table
-                #remove first and last windows in a chromosome
-                #res0<-dplyr::arrange(res0, Win.ID)[Win.ID %in% res0$Win.ID[seq(from=2, to=nrow(res0)-1)]]
+
         } else if(by=="IS"){
                 ###################################
                 #windows centered on SNPs
@@ -68,8 +67,7 @@ ncd1 <- function(x = x,
                         },
                         mc.cores =
                                 ncores) #creates list where each element is a genomic window
-                #remove first and last windows in a chromosome
-               # mylist<-mylist[seq(from=2, to=length(mylist)-1)]
+
                 mylist2 <-
                         do.call(rbind, mylist)
 
@@ -99,9 +97,9 @@ ncd1 <- function(x = x,
                 dplyr::mutate(ncd1:=sqrt((temp2)/IS)) %>%
                 dplyr::filter(IS >= minIS) %>%
                 dplyr::select(Win.ID, S, IS, tf, MidMaf, Mid) %>%
-                dplyr::arrange(Win.ID) %>%
+                dplyr::arrange(ncd1) %>%
                 as.data.table
 
 }
-        return(print(res4))
+        return(res4)
 }
