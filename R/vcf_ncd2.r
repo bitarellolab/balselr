@@ -23,7 +23,14 @@
                         colnames(x)[index.col:(index.col + (nind[1] - 1))]
                 if (npop > 2) {
                         nind <- nind[c(1, 2)]
-                        #to do: if verbose is T, print message saying only the first two elements of nind are considered.
+                        if (verbose == T) {
+                                cat(
+                                        glue::glue(
+                                                "Only the first two elements of nind are considered:"
+                                        ),
+                                        "\n"
+                                )
+                        }
                 }
                 npop2 <- length(nind)
                 if (verbose == T) {

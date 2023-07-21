@@ -44,3 +44,9 @@ testthat::test_that("parse_vcf calls .vcf_ncd1 correctly for type = 'ncd1'", {
 
 
 })
+
+
+testthat::test_that("parse_vcf correctly produces ncd1 imput", {
+        expected_output<-parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
+        expect_equal(ncd1_input, expected_output)
+})
