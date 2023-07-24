@@ -19,7 +19,7 @@
 # to do: check that ncd1_input (internal object) is the same as the output of example command for ncd1 in the parse_vcf function.
 # something like ncd1(x=parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1"), tf=0.5, w=3000, ncores=2, minIS=8) == ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
 # do the equivalent thing for ncd2
-ncd1 <- function(x = x,
+ncd1.test <- function(x = x,
                  tf = 0.5,
                  w = 3000,
                  ncores = 2,
@@ -51,10 +51,12 @@ ncd1 <- function(x = x,
                         tf = tf),
                 by= Win.ID])
                 res_2<-res_0[, .(temp2 = sum((MAF - tf) ^ 2)), by=Win.ID]
-                res4 <- merge(res_1, res_2) %>%
-                        dplyr::filter(IS >= minIS) %>%
-                        as.data.table
-                res4<-res4[, ncd1:=sqrt((temp2)/IS)][,temp2:=NULL] %>% dplyr::arrange(Win.ID) %>% as.data.table
+                res4 <- merge(res_1, res_2, all = TRUE)
+                res4 <- res4[IS >= minIS]
+                res4[, ncd1 := sqrt(temp2 / IS)]
+                res4[, temp2 := NULL]
+                setorder(res4, Win.ID)
+
 
         } else if(by=="IS"){
                 ###################################
@@ -100,11 +102,6 @@ ncd1 <- function(x = x,
                 dplyr::arrange(ncd1) %>%
                 as.data.table
 
-        }
-        split_ids <- lapply(strsplit(res4$Win.ID, "_"), as.numeric)
-        sort_values <- sapply(split_ids, function(x) x[2])
-        res5 <- res4[order(sort_values), ]
-
-        return(res5)
 }
-
+        return(res4)
+}

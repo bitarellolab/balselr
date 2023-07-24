@@ -15,3 +15,22 @@ test_that("parse_vcf correctly parses a VCF file", {
 
 
 
+testthat::test_that( "ncd correctly calculates ncd1"{
+
+})
+
+x = ncd1_input
+tf = 0.5
+w = 3000
+x[, AF := tx_1 / tn_1] #allele relative frequency
+x[, ID := seq_along(CHR)]
+w1 <- w / 2
+polpos <-
+        x[AF != 1 & AF != 0]$ID #select positions that are polymorphic
+x[, SNP := ifelse(ID %in% polpos, T, F)] #logical: True if SNP, False if not.
+x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
+x[SNP==T]
+
+
+
+

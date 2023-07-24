@@ -19,12 +19,6 @@ testthat::test_that("parse_vcf returns a data table", {
         expect_s3_class(parsed_vcf, "data.table")
 })
 
-# testthat::test_that("parse_vcf correctly generates output file name", {
-#         result <- parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0 = 108, type = "ncd1")
-#         print(result)
-#         outfile <- basename(result$outfile)
-#         expect_equal(outfile, "example_ncd1.out")
-# })
 
 
 testthat::test_that("parse_vcf calls .vcf_ncd2 correctly for type = 'ncd2'", {
