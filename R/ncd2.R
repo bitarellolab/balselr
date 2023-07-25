@@ -56,8 +56,9 @@ ncd2 <- function(x = x,
                                        tf = tf),
                                     by= Win.ID])
 
-
-                res_2<-merge(res_0, res_1)
+                setkey(res_0, Win.ID)
+                setkey(res_1, Win.ID)
+                res_2<-res_0[res_1]
                 #to do: check that each Win.ID has the number of rows given by IS
                 res_3<-res_2[, .(ncd2 = sqrt(sum((MAF-tf)^2)/IS)), by=Win.ID]
                 res_3<-unique(res_3)
