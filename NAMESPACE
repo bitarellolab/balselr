@@ -3,6 +3,7 @@
 export("%>%")
 export(hello)
 export(ncd1)
+export(ncd1.test)
 export(ncd2)
 export(outfile_path)
 export(parse_vcf)
