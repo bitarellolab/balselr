@@ -10,12 +10,19 @@
 #' @import data.table
 #' @importFrom data.table ":="
 #'
-mod_read_vcf <- function(x = "inst/example.vcf", id.range = NULL) {
+mod_read_vcf <- function(x = "inst/example.vcf", id.range = NULL, pos.range = NULL) {
         # Read VCF file
         inp <- data.table::fread(x, skip = "##", header = TRUE)
         data.table::setnames(inp, "#CHROM", "CHR")
 
         inp <- inp[REF %in% c("A", "C", "T", "G") & ALT %in% c("A", "C", "T", "G")]
+        if (!is.null(pos.range)) {
+                if (length(pos.range) != 2 || pos.range[1] > pos.range[2]) {
+                        stop("pos.range must have 2 values with the first being less than or equal to the second.")
+                }
+
+                inp <- inp[POS >= pos.range[1] & POS <= pos.range[2]]
+        }
         if (!is.null(id.range)) {
                 if (length(id.range) != 1 && length(id.range) != 2) {
                         stop("id.range must have either 1 or 2 values.")
