@@ -11,7 +11,6 @@
 #' @importFrom data.table ":="
 #'
 mod_read_vcf <- function(x = "inst/example.vcf", id.range = NULL, pos.range = NULL) {
-        # Read VCF file
         inp <- data.table::fread(x, skip = "##", header = TRUE)
         data.table::setnames(inp, "#CHROM", "CHR")
 
