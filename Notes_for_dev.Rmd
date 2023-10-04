@@ -13,7 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=T, eval=F}
 my_vcf<-read_vcf(x="inst/example.vcf", only.bi=T)
 #to do:
-# (daphne note: done) 1. add option to only keep certain individuals with a parameter "id.range" where c(x, y), x is first individual in the range and y is last individual in the range.(e.g. first individual column in the VCF is 1, second is 2, and so on.). If the length of the vector is >2, this will be interpreted as a vector of ID positions to keep.
+# 1. add option to only keep certain individuals with a parameter "id.range" where c(x, y), x is first individual in the range and y is last individual in the range.(e.g. first individual column in the VCF is 1, second is 2, and so on.). If the length of the vector is >2, this will be interpreted as a vector of ID positions to keep.
+ #get rid of the i thing, use 9 + id.range. also add columns by id name 
+
+# make everything data table
 #(daphne note: done) 2. include possibility for user to only keep certain positions with a parameter "pos.range" where c(x, y), x is beginning position and y is end position of range.
 #3. instead of simply creating a data.table, creates a list with first element the data.table. Other elements: IDs: holds the ID names, Geno: holds the genotypes, var_ids: holds variant IDs. (low priority)
 ```
@@ -21,13 +24,14 @@ my_vcf<-read_vcf(x="inst/example.vcf", only.bi=T)
 ## parse.vcf()
 
 ```{r, echo=T, eval=F}
-
+# make this the parsing function
 my_parsed_vcf<-parse_vcf(infile="inst/example.vcf", n0=108,  type="ncd1")
 #CHANGES:
 #1. removed most parameters
 # added: assertthat::assert_that(ncd_type %in% c("ncd1", "ncd2"), msg="ncd_type must be either ncd1 or ncd2.\n")
 #2. fixed many details in count_alleles and split_geno
 #To do:
+# check what infile is. if object run like that, else read in object using read_vcf
 #2. include possibility for "infile" to be a vcf object read in with read.vcf. Might require creating a function that assesses whether an R object has the characteristics of a vcf file. 
 #a copy of "my_parsed_vcf" is included as an example file in the package and is called ncd1_input
 
