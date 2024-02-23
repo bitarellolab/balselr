@@ -48,7 +48,7 @@ read_vcf(x=system.file(package="balselr", "example.vcf"))
 ```{r, output.lines=10}
 
 #Parse the VCF Files
-ncd1imput <-parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
+ncd1_input <-parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
 ```
 
 
