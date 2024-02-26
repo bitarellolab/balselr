@@ -37,6 +37,14 @@ knit_hooks$set(output = function(x, options) {
 ``` 
 
 
+```{r, echo=TRUE}
+# install.packages("devtools")
+library(devtools)
+devtools::install_github("bitarellolab/balselr")
+library(balselr)
+```
+
+
 
 
 ```{r, output.lines=10}
