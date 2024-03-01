@@ -1,8 +1,8 @@
 ---
-title: "balselrexample"
+title: "Example"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
   word_document: default
 date: "2024-02-18"
 ---
@@ -12,8 +12,10 @@ date: "2024-02-18"
 
 
 ```{r, echo=FALSE}
-library(balselr)
 library(knitr)
+library(devtools)
+devtools::install_github("bitarellolab/balselr")
+library(balselr)
 hook_output <- knit_hooks$get("output")
 knit_hooks$set(output = function(x, options) {
   lines <- options$output.lines
@@ -36,9 +38,9 @@ knit_hooks$set(output = function(x, options) {
 })
 ``` 
 
+### Install `balselr`
 
-```{r, echo=TRUE}
-# install.packages("devtools")
+```{r, echo=TRUE, eval=F}
 library(devtools)
 devtools::install_github("bitarellolab/balselr")
 library(balselr)

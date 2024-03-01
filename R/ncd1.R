@@ -1,15 +1,16 @@
 #' Calculate non-central statistic (NCD1)
 #'
 #' @param x A data.table object with
-#' columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles).
+#' columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies),
+#' tn_1 (total number of alleles).
 #' @param tf Target frequency.
-#' @param w Window size in bp. Default is 1000.
+#' @param w Window size in bp. Default is 3000.
 #' @param ncores Number of cores. Increasing this can speed things up for you.
 #' Default is 2.
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
 #' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
-#' @return A data.table object with columns:  TO DO
+#' @return A data.table object with columns:  Win.ID, S (sites), IS (informative sites), tf, ncd1
 #' @export
 #'
 #' @examples ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)

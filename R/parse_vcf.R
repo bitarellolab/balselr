@@ -15,7 +15,7 @@ parse_vcf <- function(infile = NULL,
                       n0 = NULL,
                       n1 = NULL,
                       type = NULL,
-                      verbose=T) {
+                      verbose=F) {
 
         assertthat::assert_that(file.exists(infile),
                                 msg = glue::glue("VCF file {infile} does not exist.\n"))

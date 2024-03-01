@@ -12,7 +12,7 @@
 
 <meta name="date" content="2024-02-18" />
 
-<title>balselrexample</title>
+<title>Example</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,52 +349,72 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">balselrexample</h1>
+<h1 class="title toc-ignore">Example</h1>
 <h4 class="date">2024-02-18</h4>
 
 </div>
 
 
+<pre><code>## Loading required package: usethis</code></pre>
+<pre><code>## Skipping install of &#39;balselr&#39; from a github remote, the SHA1 (2d3bdc5f) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<div id="install-balselr" class="section level3">
+<h3>Install <code>balselr</code></h3>
+<pre class="r"><code>library(devtools)
+devtools::install_github(&quot;bitarellolab/balselr&quot;)
+library(balselr)</code></pre>
 <pre class="r"><code>library(balselr)
 #Read In the VCF File
 read_vcf(x=system.file(package=&quot;balselr&quot;, &quot;example.vcf&quot;))</code></pre>
-<pre><code>##      CHR   POS ID REF ALT QUAL FILTER
-##   1:   1    92  .   A   C 1000   PASS
-##   2:   1   177  .   C   A 1000   PASS
-##   3:   1   283  .   T   C 1000   PASS
-##   4:   1   289  .   C   G 1000   PASS
-##   5:   1   327  .   G   T 1000   PASS
-##  ---                                 
-## 834:   1 29734  .   A   T 1000   PASS
-## 835:   1 29761  .   T   C 1000   PASS
-## 836:   1 29795  .   A   T 1000   PASS
+<pre><code>##        CHR   POS     ID    REF    ALT  QUAL FILTER
+##      &lt;int&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;int&gt; &lt;char&gt;
+##   1:     1    92      .      A      C  1000   PASS
+##   2:     1   177      .      C      A  1000   PASS
+##   3:     1   283      .      T      C  1000   PASS
+##   4:     1   289      .      C      G  1000   PASS
+##   5:     1   327      .      G      T  1000   PASS
+##  ---                                              
+## 834:     1 29734      .      A      T  1000   PASS
+## 835:     1 29761      .      T      C  1000   PASS
 ...</code></pre>
 <pre class="r"><code>#Parse the VCF Files
-ncd1imput &lt;-parse_vcf(infile=system.file(package=&quot;balselr&quot;, &quot;example.vcf&quot;), n0=108, type=&quot;ncd1&quot;)</code></pre>
-<pre><code>##      CHR   POS ID REF ALT QUAL FILTER
-##   1:   1    92  .   A   C 1000   PASS
-##   2:   1   177  .   C   A 1000   PASS
-##   3:   1   283  .   T   C 1000   PASS
-##   4:   1   289  .   C   G 1000   PASS
-##   5:   1   327  .   G   T 1000   PASS
-##  ---                                 
-## 834:   1 29734  .   A   T 1000   PASS
-## 835:   1 29761  .   T   C 1000   PASS
-## 836:   1 29795  .   A   T 1000   PASS
+ncd1_input &lt;-parse_vcf(infile=system.file(package=&quot;balselr&quot;, &quot;example.vcf&quot;), n0=108, type=&quot;ncd1&quot;)</code></pre>
+<pre><code>##        CHR   POS     ID    REF    ALT  QUAL FILTER
+##      &lt;int&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;int&gt; &lt;char&gt;
+##   1:     1    92      .      A      C  1000   PASS
+##   2:     1   177      .      C      A  1000   PASS
+##   3:     1   283      .      T      C  1000   PASS
+##   4:     1   289      .      C      G  1000   PASS
+##   5:     1   327      .      G      T  1000   PASS
+##  ---                                              
+## 834:     1 29734      .      A      T  1000   PASS
+## 835:     1 29761      .      T      C  1000   PASS
 ...</code></pre>
-<pre class="r"><code>#Run ncd1 Test
-ncd1(ncd1_input)</code></pre>
-<pre><code>##      Win.ID SegSites IS  tf     MidMaf MidSNP      NCD1
-##   1:      1       10 10 0.5 0.00462963    398 0.3906102
-##   2:      2       12 12 0.5 0.38425926    627 0.4094693
-##   3:      3       15 15 0.5 0.31018519    956 0.4236469
-##   4:      4       16 16 0.5 0.02314815   1155 0.4265262
-##   5:      5       17 17 0.5 0.01388889   1336 0.4270404
-##  ---                                                   
-## 191:    191       19 19 0.5 0.24537037  29259 0.4167113
-## 192:    192       18 18 0.5 0.27314815  29377 0.4134089
-## 193:    193       15 15 0.5 0.24537037  29734 0.4096756
+<hr />
+</div>
+<div id="run-ncd1" class="section level3">
+<h3>Run <code>ncd1</code></h3>
+<ul>
+<li>window size = 3000</li>
+<li><span class="math inline">\(tf=0.5\)</span></li>
+</ul>
+<pre class="r"><code>ncd1(
+        x = ncd1_input,
+        tf = 0.5,
+        w = 3000,
+        ncores = 2,
+        minIS = 8
+)</code></pre>
+<pre><code>## Key: &lt;Win.ID&gt;
+##      Win.ID SegSites    IS    tf     MidMaf MidSNP      NCD1
+##       &lt;int&gt;    &lt;int&gt; &lt;int&gt; &lt;num&gt;      &lt;num&gt;  &lt;int&gt;     &lt;num&gt;
+##   1:      1       10    10   0.5 0.00462963    398 0.3906102
+##   2:      2       12    12   0.5 0.38425926    627 0.4094693
+##   3:      3       15    15   0.5 0.31018519    956 0.4236469
+##   4:      4       16    16   0.5 0.02314815   1155 0.4265262
+##   5:      5       17    17   0.5 0.01388889   1336 0.4270404
 ...</code></pre>
+</div>
 
 
 

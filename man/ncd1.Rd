@@ -8,11 +8,12 @@ ncd1(x = x, tf = 0.5, w = 3000, ncores = 2, minIS = 2, by = "POS")
 }
 \arguments{
 \item{x}{A data.table object with
-columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles).}
+columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies),
+tn_1 (total number of alleles).}
 
 \item{tf}{Target frequency.}
 
-\item{w}{Window size in bp. Default is 1000.}
+\item{w}{Window size in bp. Default is 3000.}
 
 \item{ncores}{Number of cores. Increasing this can speed things up for you.
 Default is 2.}
@@ -23,7 +24,7 @@ less informative sites than this threshold are discarded.}
 \item{by}{Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
 }
 \value{
-A data.table object with columns:  TO DO
+A data.table object with columns:  Win.ID, S (sites), IS (informative sites), tf, ncd1
 }
 \description{
 Calculate non-central statistic (NCD1)
