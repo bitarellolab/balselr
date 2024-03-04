@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tutorial</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+&lt;style&gt;
+.inverse {
+  background-color: #046C9A;
+  color: #D9D0D3;
+}
+
+&lt;/style&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 3em 1em 3em;
+}
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+ul li::before {
+  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: #C27D38; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+
+.remark-code, .remark-inline-code { font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+                                    font-size: 85%;
+}
+&lt;/style&gt;
+
+---
+### Install `balselr`
+
+
+
+
+
+```r
+library(devtools)
+devtools::install_github("bitarellolab/balselr")
+library(balselr)
+```
+
+---
+
+### Walkthrough example
+
+* In this example, the VCF (Variant Call Format) file contains population-level information for 108 individuals for the ingroup (pop0) and one individual for the outgroup (pop1). 
+* `ncd1` only requires ingroup information while `ncd2` requires both.
+
+---
+
+### Install `balselr`
+
+```r
+library(devtools)
+devtools::install_github("bitarellolab/balselr")
+library(balselr)
+```
+
+---
+
+### Read in a `vcf` file
+
+
+```r
+#showing first 6 columns
+read_vcf(x=system.file(package="balselr", "example.vcf"))
+```
+
+
+```
+##        CHR   POS     ID    REF    ALT  QUAL
+##      &lt;int&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;int&gt;
+##   1:     1    92      .      A      C  1000
+##   2:     1   177      .      C      A  1000
+##   3:     1   283      .      T      C  1000
+##   4:     1   289      .      C      G  1000
+##   5:     1   327      .      G      T  1000
+##  ---                                       
+...
+```
+
+
+---
+
+### Make an `ncd1` input file
+
+
+
+```r
+parse_vcf(
+  infile = system.file(package = "balselr", "example.vcf"),
+  n0 = 108, type = "ncd1")
+```
+
+```
+##        CHR   POS    REF    ALT  tx_1  tn_1
+##      &lt;int&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;int&gt; &lt;int&gt;
+##   1:     1    92      A      C   216   216
+##   2:     1   177      C      A   216   216
+##   3:     1   283      T      C     0   216
+##   4:     1   289      C      G     0   216
+##   5:     1   327      G      T     0   216
+##  ---                                      
+...
+```
+
+---
+
+
+### Make an `ncd2` input file
+
+
+
+```r
+parse_vcf(
+  infile = system.file(package = "balselr", "example.vcf"),
+  n0 = 108, n1 =1, type = "ncd2")
+```
+
+```
+##        CHR   POS    REF    ALT  tx_1  tn_1  tx_2  tn_2
+##      &lt;int&gt; &lt;int&gt; &lt;char&gt; &lt;char&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##   1:     1    92      A      C   216   216     0     2
+##   2:     1   177      C      A   216   216     0     2
+##   3:     1   283      T      C     0   216     0     2
+##   4:     1   289      C      G     0   216     2     2
+##   5:     1   327      G      T     0   216     1     2
+##  ---                                                  
+...
+```
+
+---
+
+### Run `ncd1`
+
+
+```r
+ncd1(x = ncd1_input,
+        tf = 0.5,
+        w = 3000,
+        ncores = 2,
+        minIS = 8)
+```
+
+```
+##            Win.ID     S    IS    tf      ncd1
+##            &lt;char&gt; &lt;int&gt; &lt;int&gt; &lt;num&gt;     &lt;num&gt;
+##  1:     1_92_3092    20    20   0.5 0.4286047
+##  2:   1_1592_4592    21    21   0.5 0.4392331
+##  3:   1_3092_6092    15    15   0.5 0.4046166
+##  4:   1_4592_7592    12    12   0.5 0.3897881
+##  5:   1_6092_9092    19    19   0.5 0.3793086
+##  6:  1_7592_10592    28    28   0.5 0.3641235
+...
+```
+
+---
+
+### Run `ncd2`
+
+
+```r
+ncd2(x = ncd2_input,
+        tf = 0.5,
+        w = 3000,
+        ncores = 2,
+        minIS = 8)
+```
+
+```
+## Key: &lt;Win.ID&gt;
+##            Win.ID    tf     S Subst    IS      ncd2
+##            &lt;char&gt; &lt;num&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;num&gt;
+##  1:  1_7592_10592   0.5    28    27    55 0.4361486
+##  2:  1_9092_12092   0.5    25    28    53 0.4473241
+##  3: 1_13592_16592   0.5    30    39    69 0.4559905
+##  4: 1_15092_18092   0.5    22    26    48 0.4573078
+##  5:   1_6092_9092   0.5    19    33    52 0.4595906
+...
+```
+
+
+---
+
+### Core Functions
+
+`read_vcf`: Read in a VCF (Variant Call Format) file. This uses `data.table` and is very fast.
+
+`parse_vcf`: Read in a VCF (Variant Call Format) file and prepare input files for `ncd1()` and `ncd2()`.
+
+`ncd1`: Calculate non-central statistic (NCD1). Returns a data.table object with columns:  Win.ID, S (SNPs), IS (informative sites), tf, ncd1. 
+
+`ncd2`: Calculate non-central statistic (NCD2).Returns a data.table object with columns:  Win.ID, S (SNPs), Subst (Fixed differences), IS (informative sites), tf, ncd1. 
+
+---
+
+Arguments for `ncd1` and `ncd2`:
+
+- `tf`: Target frequency.
+- `w`: Window size in bp. Default 3000.
+- `minIS`: Minimum number of informative sites. Default is 2. Windows with less informative sites than this threshold are discarded.
+- `by`: Define how to scan the genome. "POS" (default) defined sliding windows based on `w`. "IS" defined windows around each informative site.
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
