@@ -3,10 +3,6 @@
 
 # balselr
 
-This package is under construction. If you want to run NCD1 or NCD2,
-please use this [other
-repo](https://github.com/bbitarello/NCD-Statistics) for now.
-
 <!-- badges: start -->
 
 <img src="images/balselr2.png" style="width:40.0%;height:40.0%" />
