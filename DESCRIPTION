@@ -8,7 +8,7 @@ Description: Produce input files for different balancing selection programs/test
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LazyData: true
 Imports: 
     assertthat,
@@ -20,6 +20,9 @@ Imports:
 Depends: 
     R (>= 2.10)
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.1.9),
     withr
 Config/testthat/edition: 3
+VignetteBuilder: knitr

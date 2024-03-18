@@ -4,23 +4,25 @@
 \alias{ncd2}
 \title{Calculate non-central statistic (NCD2)}
 \usage{
-ncd2(x = x, tf = 0.5, w = 3000, ncores = 2, minIS = 2)
+ncd2(x = x, tf = 0.5, w = 3000, ncores = 2, minIS = 2, by = "POS")
 }
 \arguments{
-\item{x}{A data.table object}
+\item{x}{A data.table object with
+columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (total number of alleles), tx_2, and tn_2.}
 
-\item{tf}{Target frequency}
+\item{tf}{Target frequency. Any value between 0 and 0.5. Default is 0.5.}
 
-\item{w}{Window size in bp. Default is 1000}
+\item{w}{Window size in bp. Default is 1000.}
 
-\item{ncores}{Number of cores. Increasing this can spead things up for you.
-Default is 4.}
+\item{ncores}{Number of cores. Increasing this can speed things up for you.
+Default is 2.}
 
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
-less informative sites than this threshold are discarded.}
+less informative sites than this threshold are discarded.
+#' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
 }
 \value{
-A data.table object
+A data.table object with columns: TO DO
 }
 \description{
 Calculate non-central statistic (NCD2)

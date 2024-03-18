@@ -11,7 +11,7 @@
 read_vcf <- function(x = "inst/example.vcf") {
         inp <- data.table::fread(x, skip = "##", header = T)
         data.table::setnames(inp, "#CHROM", "CHR")
-        inp <-
+        #inp <-
                 inp[REF %in% c("A", "C", "T", "G")][ALT %in% c("A", "C", "T", "G")]
-        return(inp)
+        #return(inp)
 }
