@@ -27,18 +27,18 @@
 #' @import data.table
 #' @importFrom data.table ":="
 ncd2 <- function(
-        x = x,
-        tf = 0.5,
-        fold = T,
-        w = 3000,
-        by.snp = TRUE,
-        mid = FALSE,
-        ncores = 2,
-        selectwin = "val",
-        targetpos = NULL,
-        minIS = 2,
-        label = NULL,
-        verbose = T) {
+                x = x,
+                tf = 0.5,
+                fold = T,
+                w = 3000,
+                by.snp = TRUE,
+                mid = FALSE,
+                ncores = 2,
+                selectwin = "val",
+                targetpos = NULL,
+                minIS = 2,
+                label = NULL,
+                verbose = T) {
         Win.ID <- SegSites <- POS <- V1 <- temp <- NCD2 <- CHR <- AF <- AF2 <- NULL
         tx_1 <- tn_1 <- tx_1 <- tx_2 <- tn_2 <- ID <- SNP <- FD <- MAF <- NULL
         tictoc::tic("Total runtime")
@@ -70,7 +70,7 @@ ncd2 <- function(
         mylist <-
                 parallel::mclapply(x2[polpos2, ]$POS, function(y) {
                         x2[POS >= y - w1 &
-                                  POS < y + w1][, .(POS, AF, AF2, ID, SNP, FD, tx_1, tx_2, MAF)]
+                                   POS < y + w1][, .(POS, AF, AF2, ID, SNP, FD, tx_1, tx_2, MAF)]
                 },
                 mc.cores =
                         ncores)
@@ -78,7 +78,7 @@ ncd2 <- function(
                 do.call(rbind,
                         parallel::mclapply(1:length(mylist), function(y)
                                 mylist[[y]][, Mid := x2[polpos2,]$POS[y]][, Win.ID :=
-                                                                                y],
+                                                                                  y],
                                 mc.cores = ncores))
         mylist <- data.table::setDT(mylist)
         # }
@@ -141,7 +141,7 @@ ncd2 <- function(
         res4 <- merge(res2, res3) %>% as.data.table
         res4 <- res4 %>% dplyr::ungroup() %>% as.data.table
         mini_fun<-function(x,y){
-        sum((rep(0, x)-y)^2)
+                sum((rep(0, x)-y)^2)
         }
         res4[, temp4 := mini_fun(unique(FDs),unique(tf)), by=Win.ID]
         res4[, NCD2 := sqrt(((temp2 + temp4) / IS)), by = Win.ID]
@@ -176,14 +176,14 @@ ncd2 <- function(
 
         } else if (selectwin == "mid") {
                 res4 <- res4[which.min(res4$NCD2)][, .(Win.ID,
-                                                      SegSites,
-                                                      IS,
-                                                      FDs,
-                                                      CenMaf,
-                                                      Mid,
-                                                      MidMaf,
-                                                      NCD2,
-                                                      tf)]
+                                                       SegSites,
+                                                       IS,
+                                                       FDs,
+                                                       CenMaf,
+                                                       Mid,
+                                                       MidMaf,
+                                                       NCD2,
+                                                       tf)]
 
         } else{
                 res4 <- res4[, .(Win.ID,

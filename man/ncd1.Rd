@@ -18,6 +18,21 @@ ncd1(
   label = NULL,
   verbose = T
 )
+
+ncd1(
+  x = x,
+  tf = 0.5,
+  fold = T,
+  w = 3000,
+  by.snp = TRUE,
+  mid = FALSE,
+  ncores = 2,
+  selectwin = "val",
+  targetpos = NULL,
+  minIS = 2,
+  label = NULL,
+  verbose = T
+)
 }
 \arguments{
 \item{x}{A data.table object}
@@ -50,13 +65,20 @@ less informative sites than this threshold are discarded.}
 
 \item{verbose}{Logical. If TRUE, progress reports will be printed as the
 function runs.}
+
+\item{by}{Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
 }
 \value{
+A data.table object with columns:  Win.ID, S (sites), IS (informative sites), tf, ncd1
+
 A data.table object
 }
 \description{
 Calculate non-central statistic (NCD1)
+
+Calculate non-central statistic (NCD1)
 }
 \examples{
+ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
 ncd1(x=ncd1_input, selectwin="mid", targetpos=15000, mid=TRUE)
 }
