@@ -1,3 +1,0 @@
-load("/Users/dhansell/Documents/GitHub/balselr/data/example_vcf.rda")
-load("/Users/dhansell/Documents/GitHub/balselr/data/example_vcf.rda")
-print("example_vcf.rda)
