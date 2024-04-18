@@ -6,45 +6,122 @@
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
 #' @return Returns a data table object with columns CHR   POS REF ALT tx_1 tn_1 (if type is ncd1) or  CHR   POS REF ALT tx_1 tn_1 tx_2 tn_2 (if type is ncd2)
 #' @export
-#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
-#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=1, type="ncd2")
-#' @param verbose Logical. Printed updates. Default is T.
+#'
+#' @examples parse_vcf(infile="inst/example.vcf", outfile="inst/example_parse_ncd1.out", n0=108,  type="ncd1")
+#'parse_vcf(infile="inst/example.vcf",n0=108, n1=1, type="ncd2", outfile="example_parse_ncd2.out")
 
-# to do: test that outputs of both commands in the examples have the same values for tx_1 and tn_1
-parse_vcf <- function(infile = NULL,
-                      n0 = NULL,
-                      n1 = NULL,
-                      type = NULL,
-                      verbose=F) {
+parse_vcf <-
+  function(infile = "*.vcf",
+           outfile = NULL,
+           n0= NULL,
+           n1= NULL,
+           type = NULL,
+           fold = T,
+           intern = T,
+           verbose = T) {
+          tictoc::tic("Total runtime")
+    assertthat::assert_that(file.exists(infile),
+      msg = glue::glue("VCF file {infile} does not exist.\n")
+    )
+    assertthat::assert_that(is.numeric(n0)
+      )
+        format_type <- function(type) {
+             incorrect_types_ncd1 <- c("ncd1", "ned1", "ncd_1", "ned_1")
+             incorrect_types_ncd2 <- c("ncd2", "ned2", "ncd_2", "ned_2")
 
-        assertthat::assert_that(file.exists(infile),
-                                msg = glue::glue("VCF file {infile} does not exist.\n"))
-        #to do: check that n0 and n1 meet requirements outlined above.
-        #to do: check that vcf file has at least the number of individuals provided in n0+n1 (i.e., if users says n0=10, n1=1 but vcf only has 8 individuals, this should return an error as early as possible)
-        type <- tolower(type)
-        assertthat::assert_that(type %in% c("ncd1", "ncd2"), msg = "ncd_type must be either ncd1 or ncd2.\n")
-        if (type == "ncd2") {
-                assertthat::assert_that(is.null(n1) == FALSE, msg = "n1 cannot be 'NULL'. NCD2 requires an outgroup at least one individual as an outgroup.")
+             type <- tolower(type)
+             if (type %in% incorrect_types_ncd1) {
+                     type <- "ncd1"
+             } else if (type %in% incorrect_types_ncd2) {
+                     type <- "ncd2"
+             }
+
+             return(type)
+
         }
-        inp <- read_vcf(x = infile)
-        nind<-c(n0,n1)
-        index.col <- which(colnames(inp) == "FORMAT") + 1
-        if (type == "ncd2") {
-                res <-
-                        .vcf_ncd2(
-                                x = inp,
-                                nind = nind,
-                                index.col = index.col,
-                                verbose = verbose
-                        )
-        } else if (type == "ncd1") {
-                res <-
-                        .vcf_ncd1(
-                                x = inp,
-                                nind = nind,
-                                index.col = index.col,
-                                verbose = verbose
-                        )
+        if (is.null(type)) {
+                print("You must choose either 'ncd1' or 'ncd2'")
+                return(NULL)
         }
-        return(res)
-}
+        # Index No. of the individual to use as ``ancestral'' sequence
+        if (fold == F & type == "ncd2") {
+            outseq <- (index.col) + (sum(nind) - 1)
+            if (verbose == T) {
+                    cat(
+                            glue::glue(
+                                    "You asked for the unfolded version. You need a third species. I will use column {outseq} for this."
+                            ),
+                            "\n"
+                    )
+            }
+    }else if (type == "ncd2"){
+            assertthat::assert_that(is.null(n1)==FALSE, msg="n1 cannot be NULL. NCD2 requires an outgroup.")
+    }
+    else if (type == "ncd1") {
+            assertthat::assert_that(fold == T, msg = "Only the folded option is available when Ancestral/Derived states are unknown.\n")
+    }
+    #
+    if (is.null(outfile)) {
+            outfile = outfile_path(glue::glue("{infile}"))
+            if (verbose == T) {
+                    cat(
+                            glue::glue(
+                                    "No outfile provided. Will write this into tmp file {outfile}_{type}.out"
+                            ),
+                            "\n"
+                    )
+            }
+    }else{
+    outfile <- glue::glue("{outfile}_{type}.out")
+    }
+
+    nind<-c(n0,n1)
+    pref <- gsub(".vcf", "", infile)
+    inp <- read_vcf(x = infile, only.bi = T)
+
+    index.col <- which(colnames(inp) == "FORMAT") + 1
+    if (verbose == T) {
+      cat(
+        glue::glue(
+          "First genotype column is {index.col}"
+        ), "\n"
+      )
+    }
+    if (verbose == T) {
+      cat(
+        glue::glue("Creating input file for {type} from {infile}..."),
+        "\n"
+      )
+    }
+
+
+    #
+    if (type == "ncd2") {
+      res <-
+        .vcf_ncd2(
+          x = inp,
+          outfile = outfile,
+          nind = nind,
+          index.col = index.col,
+          fold = fold,
+          verbose = verbose
+        )
+    } else if (type == "ncd1") {
+      res <-
+        .vcf_ncd1(
+          x = inp,
+          outfile = outfile,
+          nind = nind,
+          index.col = index.col,
+          verbose = verbose
+        )
+    }
+    if (verbose == T) {
+      cat(
+        glue::glue("Finished making input file for {type}. File written to: {outfile}"),
+        "\n"
+      )
+        tictoc::toc()
+    } else {
+      cat(glue::glue("File written to: {outfile}"), "\n")
+    }
