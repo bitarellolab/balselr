@@ -1,3 +1,4 @@
+#' Parse vcf
 #' @param infile The path and name of a vcf file - single chromosome. Can be NULL if vcf_data is provided.
 #' @param vcf_data A data.table object containing VCF data. Can be NULL if infile is provided.
 #' @param n0 Number of individuals in pop0. Must be >=2 for both ncd1 and ncd2.
