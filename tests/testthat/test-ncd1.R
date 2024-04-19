@@ -10,7 +10,7 @@ test_that("ncd1 fails with invalid input", {
 
 test_that("parse_vcf correctly parses a VCF file", {
         result <- parse_vcf(infile = system.file(package="balselr", "example.vcf"), n0 = 108, type = "ncd1")
-        expect_is(result, "data.table")
+        expect_s3_class(result, "data.table")
 })
 
 

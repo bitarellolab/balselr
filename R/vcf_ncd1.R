@@ -35,16 +35,16 @@
 
         x <- data.table::setDT(x)
         tableout <-
-                x %>% dplyr::select(CHR, POS, REF, ALT) %>% as.data.table
+                x %>% dplyr::select(CHR, POS, REF, ALT)
         tableout <- dplyr::bind_cols(
                 tableout,
                 x %>%
                         dplyr::rowwise() %>%
-                        dplyr::reframe(across(pop0_cols, .count_alleles)) %>%
+                        dplyr::reframe(across(all_of(pop0_cols), .count_alleles)) %>%
                         dplyr::reframe(tx_1 = Reduce(`+`, .)),
                 x %>%
                         dplyr::rowwise() %>%
-                        dplyr::reframe(across(pop0_cols, .count_nonmissing)) %>%
+                        dplyr::reframe(across(all_of(pop0_cols), .count_nonmissing)) %>%
                         dplyr::reframe(tn_1 = Reduce(`+`, .))
         ) %>%
                 dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1) %>%
