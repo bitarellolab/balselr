@@ -3,6 +3,7 @@
 export("%>%")
 export(modmod_read_vcf)
 export(ncd1)
+export(ncd2)
 export(outfile_path)
 export(parse_vcf)
 export(read_vcf)
