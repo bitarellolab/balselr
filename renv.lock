@@ -534,7 +534,11 @@
     },
     "renv": {
       "Package": "renv",
+<<<<<<< Updated upstream
       "Version": "1.0.4",
+=======
+      "Version": "1.0.5",
+>>>>>>> Stashed changes
       "Source": "Repository"
     },
     "rlang": {
