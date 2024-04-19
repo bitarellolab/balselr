@@ -35,7 +35,7 @@
 
         x <- data.table::setDT(x)
         tableout <-
-                x %>% dplyr::select(CHR, POS, REF, ALT)
+                x[,.(CHR, POS, REF, ALT)]
         tableout <- dplyr::bind_cols(
                 tableout,
                 x %>%

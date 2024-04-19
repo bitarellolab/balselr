@@ -8,7 +8,7 @@
 
        # if(length(x) == 1){
         #as.vector(as.integer(stringr::str_split(string = x, pattern = split, simplify = T)[,c(2,4)]))
-        as.numeric(unlist(lapply(stringr::str_split(string = x, pattern = "|"), function(x) x[c(2,4)])))
+        suppressWarnings(as.numeric(unlist(lapply(stringr::str_split(string = x, pattern = "|"), function(x) x[c(2,4)]))))
        # }else{
 
 #}

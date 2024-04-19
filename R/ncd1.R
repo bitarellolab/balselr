@@ -102,10 +102,10 @@ ncd1 <- function(x = x,
                 as.data.table
 
         }
-        split_ids <- lapply(strsplit(res4$Win.ID, "_"), as.numeric)
-        sort_values <- sapply(split_ids, function(x) x[2])
-        res5 <- res4[order(sort_values), ]
+       # split_ids <- lapply(strsplit(res4$Win.ID, "_"), as.numeric)
+#        sort_values <- sapply(split_ids, function(x) x[2])
+ #       res5 <- res4[order(sort_values), ]
 
-        return(res5)
+        return(res4)
 }
 
