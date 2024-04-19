@@ -36,9 +36,10 @@ ncd1 <- function(x = x,
                 x[AF != 1 & AF != 0]$ID #select positions that are polymorphic
         x[, SNP := ifelse(ID %in% polpos, T, F)] #logical: True if SNP, False if not.
         x[, MAF := ifelse(AF > 0.5, 1 - AF, AF)]
+        x[, CHR := stringr::str_replace(CHR,"-","")]
         ####################################################################################
         if(by=="POS"){
-        #windows (sliding)
+                #windows (sliding)
                 #to do: add some checks here
                 vec<-data.table(start=seq(from=x$POS[1], to=x$POS[nrow(x)], by=w1))
                 vec[,end:=start+w]
@@ -48,9 +49,9 @@ ncd1 <- function(x = x,
                 res_0<-foverlaps(x, vec, type="within")[, Win.ID:=paste0(CHR,"_",start,"_",end)][, POS:=start][,.(POS,AF, ID,SNP,MAF, Win.ID)]
                 res_0<-res_0[SNP==T][, tf:=tf]
                 res_1<-unique(res_0[,.(S = sum(SNP),
-                        IS = sum(SNP),
-                        tf = tf),
-                by= Win.ID])
+                                       IS = sum(SNP),
+                                       tf = tf),
+                                    by= Win.ID])
                 res_2<-res_0[, .(temp2 = sum((MAF - tf) ^ 2)), by=Win.ID]
                 res4 <- merge(res_1, res_2) %>%
                         dplyr::filter(IS >= minIS) %>%
@@ -64,7 +65,7 @@ ncd1 <- function(x = x,
                 mylist <-
                         parallel::mclapply(x2$POS, function(y) {
                                 x2[,start:=y-w1][,end:=y+w1][POS >= start &
-                                          POS < end][, Mid:=y][,Win.ID:=paste0(CHR,"_",start,"_",end)][, tf:=tf][, .(POS, AF, ID, SNP, MAF, Mid, Win.ID, tf)]
+                                                                     POS < end][, Mid:=y][,Win.ID:=paste0(CHR,"_",start,"_",end)][, tf:=tf][, .(POS, AF, ID, SNP, MAF, Mid, Win.ID, tf)]
                         },
                         mc.cores =
                                 ncores) #creates list where each element is a genomic window
@@ -77,35 +78,32 @@ ncd1 <- function(x = x,
                 #remove window where mid==last POS in dataset
                 mylist2<-mylist2[Mid!=mylist2$POS[nrow(mylist2)]]
                 #to do: check that mylist2 is a data table
-        res <-
-                unique(mylist2[, .(S = sum(SNP),
-                            IS = sum(SNP),
-                            tf = tf),
-                        by = Win.ID])
-        #to do: add some checks here
-        res1 <- unique(as.data.table(mylist2[, .(MidMaf = MAF[which(Mid == POS)],
-                               Mid = Mid), by=Win.ID]))
+                res <-
+                        unique(mylist2[, .(S = sum(SNP),
+                                           IS = sum(SNP),
+                                           tf = tf),
+                                       by = Win.ID])
+                #to do: add some checks here
+                res1 <- unique(as.data.table(mylist2[, .(MidMaf = MAF[which(Mid == POS)],
+                                                         Mid = Mid), by=Win.ID]))
                 # TopMaf = which(min(abs(MAF - tf)), Win.ID = Win.ID) %>%
 
-        #to do: add some checks here
-        res2 <- merge(res, res1)
-        #to do: add some checks here
-        res3 <-
-                mylist2[, .(temp2 = sum((MAF - tf) ^ 2)), by=Win.ID]
+                #to do: add some checks here
+                res2 <- merge(res, res1)
+                #to do: add some checks here
+                res3 <-
+                        mylist2[, .(temp2 = sum((MAF - tf) ^ 2)), by=Win.ID]
 
 
-        res4 <- merge(res2, res3) %>%
-                dplyr::mutate(ncd1:=sqrt((temp2)/IS)) %>%
-                dplyr::filter(IS >= minIS) %>%
-                dplyr::select(Win.ID, S, IS, tf, MidMaf, Mid) %>%
-                dplyr::arrange(ncd1) %>%
-                as.data.table
+                res4 <- merge(res2, res3) %>%
+                        dplyr::mutate(ncd1:=sqrt((temp2)/IS)) %>%
+                        dplyr::filter(IS >= minIS) %>%
+                        dplyr::select(Win.ID, S, IS, tf, MidMaf, Mid) %>%
+                        dplyr::arrange(ncd1) %>%
+                        as.data.table
 
         }
-       # split_ids <- lapply(strsplit(res4$Win.ID, "_"), as.numeric)
-#        sort_values <- sapply(split_ids, function(x) x[2])
- #       res5 <- res4[order(sort_values), ]
+
 
         return(res4)
 }
-
