@@ -99,7 +99,7 @@ ncd1 <- function(x = x,
                         dplyr::mutate(ncd1:=sqrt((temp2)/IS)) %>%
                         dplyr::filter(IS >= minIS) %>%
                         dplyr::select(Win.ID, S, IS, tf, MidMaf, Mid) %>%
-                        dplyr::arrange(ncd1) %>%
+                        #dplyr::arrange(ncd1) %>%
                         as.data.table
 
         }

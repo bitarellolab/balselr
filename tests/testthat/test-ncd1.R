@@ -33,7 +33,7 @@ testthat::test_that( "ncd correctly calculates ncd1",{
         res_2<-res_0[, .(temp2 = sum((MAF - tf) ^ 2))]
         res_3 <- cbind(res_1, res_2)
         expected_ncd1<-res_3[, ncd1:=sqrt((temp2)/IS)][,temp2:=NULL]
-        calc_ncd1<-ncd1(ncd1_input)
+        calc_ncd1<-ncd1(ncd1_input) %>% dplyr::arrange(desc(Win.ID)) %>% as.data.table()
         expect_equal(calc_ncd1$ncd1[1], expected_ncd1$ncd1)
 })
 
