@@ -18,8 +18,9 @@ columns: CHR, POS, REF, ALT, tx_1 (number of alternate allele copies), tn_1 (tot
 Default is 2.}
 
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
-less informative sites than this threshold are discarded.
-#' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
+less informative sites than this threshold are discarded.}
+
+\item{by}{Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
 }
 \value{
 A data.table object with columns:  Win.ID, S (sites), FD (fixed differences),IS (informative sites), tf (target frequency), ncd2

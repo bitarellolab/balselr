@@ -5,7 +5,8 @@
 
 <!-- badges: start -->
 
-<img src="images/balselr2.png" style="width:40.0%;height:40.0%" />
+<img src="images/balselr.png" style="width:40.0%;height:40.0%" />
+[![R-CMD-check](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Installation
@@ -46,7 +47,16 @@ Run `ncd1 (tf=0.5)` with a 3000 basepair window and a minimum of 8
 informative sites per window using 2 cores:
 
 ``` r
+data(ncd1_input)
 ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
+```
+
+Run `ncd2 (tf=0.5)` with a 3000 basepair window and a minimum of 2
+informative sites per window using 2 cores:
+
+``` r
+data(ncd2_input)
+ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`

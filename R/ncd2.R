@@ -8,7 +8,7 @@
 #' Default is 2.
 #' @param minIS Minimum number of informative sites. Default is 2. Windows with
 #'  less informative sites than this threshold are discarded.
-#'  #' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
+#' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
 #' @return A data.table object with columns:  Win.ID, S (sites), FD (fixed differences),IS (informative sites), tf (target frequency), ncd2
 #' @export
 #'
@@ -47,7 +47,8 @@ ncd2 <- function(x = x,
                 x[,start:=POS][,end:=POS]
                 res_0<-foverlaps(x, vec, type="within")[, Win.ID:=paste0(CHR,"_",start,"_",end)][,.(POS, ID,SNP,fd,MAF, Win.ID)]
                 res_0<-res_0[SNP==T | fd==T][, tf:=tf]
-                res_1<-unique(res_0[,.(POS=POS,S = sum(SNP),
+                res_1<-unique(res_0[,.(POS=POS,
+                                       S = sum(SNP),
                                        FD = sum(fd),
                                        IS = sum(SNP) + sum(fd),
                                        tf = tf),
@@ -56,16 +57,16 @@ ncd2 <- function(x = x,
 
                # res_2<-data.table::merge.data.table(res_0, res_1)
                 setkey(res_0, Win.ID, POS, tf)
-                setkey(res_1, Win.ID, POS,tf)
+                setkey(res_1, Win.ID, POS, tf)
                 res_2<- setorder(res_0[res_1], cols="POS")
                 #to do: check that each Win.ID has the number of rows given by IS
                 res_3<-res_2[, .(ncd2 = sqrt(sum((MAF-tf)^2)/IS)), by=Win.ID]
-                res_2<-res_2[,.(POS,Win.ID,S, FD, IS,tf,ncd1)]
                 res_3<-unique(res_3, by = "Win.ID")
-                res_2<-unique(res_2, by="Win.ID")
-                setkey(res_2, "Win.ID")
+                res_3b<-res_2[,.(POS,Win.ID,S, FD, IS,tf)]
+                res_3b<-unique(res_3b, by="Win.ID")
                 setkey(res_3, "Win.ID")
-                res4 <- setorder(data.table::merge.data.table(res_2, res_3)[IS>=minIS],cols="POS")[,POS:=NULL]
+                setkey(res_3b, "Win.ID")
+                res4 <- setorder(data.table::merge.data.table(res_3, res_3b)[IS>=minIS],cols="POS")[,POS:=NULL]
 
         }else if (by=="IS"){
                 #to do: write this code.

@@ -4,7 +4,7 @@
 #' @param n0 Number of individuals in pop0. Must be >=2 for both ncd1 and ncd2.
 #' @param n1 Number of individuals in pop1. Must be >=1 for ncd2. Must be NULL for ncd1. NULL by default.
 #' @param type Which input format will be generated. Options: ncd1, ncd2.
-#' @param verbose Logical. Printed updates. Default is T.
+#' @param verbose Logical. Printed updates. Default is F.
 #' @return Returns a data table object with relevant columns based on type
 #' @export
 #' @examples data(vcf_data) #vcf file read as-is

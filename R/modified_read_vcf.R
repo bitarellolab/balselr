@@ -2,7 +2,7 @@
 #'
 #' @param x The path and name of a vcf file
 #' @return Returns a data.table object containing only SNPs
-#' @export
+#
 #'
 #' @examples read_vcf(x=system.file(package="balselr", "example.vcf"))
 #' @import data.table

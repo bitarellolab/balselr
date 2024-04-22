@@ -24,7 +24,7 @@ parse_vcf(
 
 \item{type}{Which input format will be generated. Options: ncd1, ncd2.}
 
-\item{verbose}{Logical. Printed updates. Default is T.}
+\item{verbose}{Logical. Printed updates. Default is F.}
 }
 \value{
 Returns a data table object with relevant columns based on type
