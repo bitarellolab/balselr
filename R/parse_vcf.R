@@ -7,7 +7,9 @@
 #' @param verbose Logical. Printed updates. Default is T.
 #' @return Returns a data table object with relevant columns based on type
 #' @export
-#' @examples parse_vcf(vcf_data=your_preloaded_vcf, n0=108, type="ncd1")
+#' @examples data(vcf_data) #vcf file read as-is
+#' @examples parse_vcf(vcf_data=vcf_obj, n0=108, type="ncd1")
+#' @examples Or, reading VCF from file:
 #' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=1, type="ncd2")
 parse_vcf <- function(infile = NULL,
                       vcf_data = NULL,

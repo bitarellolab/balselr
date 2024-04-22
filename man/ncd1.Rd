@@ -21,14 +21,14 @@ Default is 2.}
 \item{minIS}{Minimum number of informative sites. Default is 2. Windows with
 less informative sites than this threshold are discarded.}
 
-\item{by}{Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.}
+\item{by}{Define how to scan the genome. "POS" (default) defined sliding windows based on w. Future implementation: "IS" defined windows around each informative site.}
 }
 \value{
-A data.table object with columns:  Win.ID, S (sites), IS (informative sites), tf, ncd1
+A data.table object with columns:  Win.ID, S (sites), IS (informative sites), tf (target frequency), ncd1
 }
 \description{
 Calculate non-central statistic (NCD1)
 }
 \examples{
-ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
+ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=2)
 }
