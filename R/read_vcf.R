@@ -8,7 +8,8 @@
 #' @import data.table
 #' @importFrom data.table ":="
 #'
-read_vcf <- function(x = "inst/example.vcf", pos.range = NULL, id.range = NULL) {
+read_vcf <- function(x =system.file(package="balselr", "example.vcf")){
+                     #, pos.range = NULL, id.range = NULL) {
         inp <- data.table::fread(x, skip = "##", header = TRUE)
         data.table::setnames(inp, "#CHROM", "CHR")
 

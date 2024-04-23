@@ -2,9 +2,11 @@
 #'
 #' @param x The path and name of a vcf file
 #' @return Returns a data.table object containing only SNPs
-#' @export
+#
 #'
 #' @examples read_vcf(x=system.file(package="balselr", "example.vcf"))
+#' @param pos.range A vector containing a range of positions to be included in the filtered object. E.g. c(1,100)
+#' @param id.range  A vector containing sample IDs to be included in the filtered object.
 #' @import data.table
 #' @importFrom data.table ":="
 #'

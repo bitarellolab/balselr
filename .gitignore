@@ -7,3 +7,4 @@
 .DS_Store
 local_only/
 inst/doc
+.quarto

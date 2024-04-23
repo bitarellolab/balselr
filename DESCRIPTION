@@ -4,14 +4,13 @@ Version: 0.0.0.1000
 Authors@R: 
     person("Bárbara", "Bitarello", , "barbarabitarello@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7676-9367"))
-Description: Produce input files for different balancing selection programs/tests and run the tests.
+Description: Run NCD statistics on population-level genomic data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 LazyData: true
 Imports: 
-    assertthat,
     data.table,
     dplyr,
     glue,
@@ -22,7 +21,9 @@ Depends:
 Config/testthat/edition: 3
 Suggests: 
     knitr,
+    withr,
+    testthat,
+    DT,
     rmarkdown,
-    testthat (>= 3.1.9),
-    withr
+    roxygen2
 VignetteBuilder: knitr

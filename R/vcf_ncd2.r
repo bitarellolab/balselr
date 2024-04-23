@@ -49,7 +49,7 @@
                                 "\n"
                         )
                 }
-                npop<-npop2
+                npop <- npop2
                 pop1_cols <-
                         colnames(x)[(index.col + nind[1]):(index.col + (sum(nind) - 1))]
                 if (verbose == T) {
@@ -68,19 +68,19 @@
                         tableout,
                         x %>%
                                 dplyr::rowwise() %>%
-                                dplyr::reframe(across(pop0_cols, .count_alleles)) %>%
+                                dplyr::reframe(across(all_of(pop0_cols), .count_alleles)) %>%
                                 dplyr::reframe(tx_1 = Reduce(`+`, .)),
                         x %>%
                                 dplyr::rowwise() %>%
-                                dplyr::reframe(across(pop0_cols, .count_nonmissing)) %>%
+                                dplyr::reframe(across(all_of(pop0_cols), .count_nonmissing)) %>%
                                 dplyr::reframe(tn_1 = Reduce(`+`, .)),
                         x %>%
                                 dplyr::rowwise() %>%
-                                dplyr::reframe(across(pop1_cols, .count_alleles)) %>%
+                                dplyr::reframe(across(all_of(pop1_cols), .count_alleles)) %>%
                                 dplyr::reframe(tx_2 = Reduce(`+`, .)),
                         x %>%
                                 dplyr::rowwise() %>%
-                                dplyr::reframe(across(pop1_cols, .count_nonmissing)) %>%
+                                dplyr::reframe(across(all_of(pop1_cols), .count_nonmissing)) %>%
                                 dplyr::reframe(tn_2 = Reduce(`+`, .))
                 ) %>%
                         dplyr::select(CHR, POS, REF, ALT, tx_1, tn_1, tx_2, tn_2) %>%
