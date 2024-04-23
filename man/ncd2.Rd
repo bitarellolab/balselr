@@ -29,5 +29,5 @@ A data.table object with columns:  Win.ID, S (sites), FD (fixed differences),IS 
 Calculate non-central statistic (NCD2)
 }
 \examples{
-ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=8)
+ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
 }

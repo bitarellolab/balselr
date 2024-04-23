@@ -37,4 +37,3 @@ testthat::test_that( "ncd correctly calculates ncd1",{
         calc_ncd1<-ncd1(ncd1_input) %>% dplyr::arrange(desc(Win.ID)) %>% as.data.table()
         testthat::expect_equal(calc_ncd1$ncd1[1], expected_ncd1$ncd1)
 })
-

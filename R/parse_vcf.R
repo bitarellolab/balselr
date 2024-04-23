@@ -9,8 +9,7 @@
 #' @export
 #' @examples data(vcf_data) #vcf file read as-is
 #' @examples parse_vcf(vcf_data=vcf_obj, n0=108, type="ncd1")
-#' @examples Or, reading VCF from file:
-#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=1, type="ncd2")
+#' @examples parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=1, type="ncd2") #Or, reading VCF from file
 parse_vcf <- function(infile = NULL,
                       vcf_data = NULL,
                       n0 = NULL,
@@ -35,7 +34,7 @@ parse_vcf <- function(infile = NULL,
         index.col <- which(colnames(inp) == "FORMAT") + 1
         if (type == "ncd2") {
                 res <-
-                        balselr:::.vcf_ncd2(
+                       .vcf_ncd2(
                                 x = inp,
                                 nind = nind,
                                 index.col = index.col,
@@ -43,7 +42,7 @@ parse_vcf <- function(infile = NULL,
                         )
         } else if (type == "ncd1") {
                 res <-
-                        balselr:::.vcf_ncd1(
+                       .vcf_ncd1(
                                 x = inp,
                                 nind = nind,
                                 index.col = index.col,

@@ -11,8 +11,7 @@
 #' @param by Define how to scan the genome. "POS" (default) defined sliding windows based on w. "IS" defined windows around each informative site.
 #' @return A data.table object with columns:  Win.ID, S (sites), FD (fixed differences),IS (informative sites), tf (target frequency), ncd2
 #' @export
-#'
-#' @examples ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=8)
+#' @examples ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
 #' @import data.table
 #' @importFrom data.table ":="
 #'
@@ -54,8 +53,6 @@ ncd2 <- function(x = x,
                                        tf = tf),
                                     by= Win.ID])
 
-
-               # res_2<-data.table::merge.data.table(res_0, res_1)
                 setkey(res_0, Win.ID, POS, tf)
                 setkey(res_1, Win.ID, POS, tf)
                 res_2<- setorder(res_0[res_1], cols="POS")

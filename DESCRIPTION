@@ -4,8 +4,8 @@ Version: 0.0.0.1000
 Authors@R: 
     person("Bárbara", "Bitarello", , "barbarabitarello@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7676-9367"))
-Description: Run NCD statistics on population-level genomic data
-License: The Commons Clause
+Description: Run NCD statistics on population-level genomic data.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
@@ -13,16 +13,17 @@ LazyData: true
 Imports: 
     data.table,
     dplyr,
-    DT,
     glue,
     magrittr,
-    rmarkdown,
-    stringr,
-    testthat
+    stringr
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
 Suggests: 
     knitr,
-    withr
+    withr,
+    testthat,
+    DT,
+    rmarkdown,
+    roxygen2
 VignetteBuilder: knitr

@@ -8,6 +8,10 @@ modmod_read_vcf(x = "inst/example.vcf", pos.range = NULL, id.range = NULL)
 }
 \arguments{
 \item{x}{The path and name of a vcf file}
+
+\item{pos.range}{A vector containing a range of positions to be included in the filtered object. E.g. c(1,100)}
+
+\item{id.range}{A vector containing sample IDs to be included in the filtered object.}
 }
 \value{
 Returns a data.table object containing only SNPs
