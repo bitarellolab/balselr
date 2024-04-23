@@ -24,6 +24,7 @@ ncd2 <- function(x = x,
                  by= "POS") {
         assertthat::assert_that(length(unique(x[, CHR])) == 1,
                                 msg = "Run one chromosome at a time\n")
+        x <- copy(x)
         x[, AF := tx_1 / tn_1]  #allele relative frequency
         x[, AF2 := tx_2 / tn_2]  #allele relative frequency
         x[, ID := seq_along(CHR)]
@@ -68,5 +69,5 @@ ncd2 <- function(x = x,
         }else if (by=="IS"){
                 #to do: write this code.
         }
-        return(print(res4))
+        return(res4)
 }
