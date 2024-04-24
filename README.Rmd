@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 ![](images/balselr.png){width=40% height=40%}
 
-
+[![R-CMD-check](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ### What is `balselr`?

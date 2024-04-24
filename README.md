@@ -7,6 +7,7 @@
 
 <img src="images/balselr.png" style="width:40.0%;height:40.0%" />
 
+[![R-CMD-check](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ### What is `balselr`?
