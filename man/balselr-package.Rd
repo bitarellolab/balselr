@@ -8,6 +8,13 @@
 \description{
 Run NCD statistics on population-level genomic data.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://bitarellolab.github.io/balselr/}
+}
+
+}
 \author{
 \strong{Maintainer}: Bárbara Bitarello \email{barbarabitarello@gmail.com} (\href{https://orcid.org/0000-0001-7676-9367}{ORCID})
 

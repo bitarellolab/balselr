@@ -38,10 +38,8 @@ README\.html
 ^\.git-blame-ignore-revs$
 ^rchk$
 ^\.library$
-^data-raw/
 ^renv*
 ^LICENSE\.md$
 ^codecov\.yml$
 ^inst/balselr_win_test\.R$
 ^README\.Rmd$
-^R/modified_read_vcf\.R$

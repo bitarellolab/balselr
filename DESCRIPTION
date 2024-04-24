@@ -30,3 +30,4 @@ Suggests:
     rmarkdown,
     roxygen2
 VignetteBuilder: knitr
+URL: https://bitarellolab.github.io/balselr/
