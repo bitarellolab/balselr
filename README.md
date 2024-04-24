@@ -3,12 +3,6 @@
 
 <img src="man/figures/balselr.png" style="width:40.0%;height:40.0%" />
 
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml)
-
-<!-- badges: end -->
-
 ## What is `balselr`?
 
 Balancing selection with R allows you to run **NCD statistics** to
