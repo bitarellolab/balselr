@@ -6,9 +6,7 @@
 <!-- badges: start -->
 
 <img src="images/balselr.png" style="width:40.0%;height:40.0%" />
-[![R-CMD-check](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/bitarellolab/balselr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bitarellolab/balselr?branch=master)
+
 <!-- badges: end -->
 
 ### What is `balselr`?
