@@ -43,3 +43,4 @@ README\.html
 ^codecov\.yml$
 ^inst/balselr_win_test\.R$
 ^README\.Rmd$
+^data-raw$

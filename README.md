@@ -1,16 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# balselr
+<img src="man/figures/balselr.png" style="width:40.0%;height:40.0%" />
 
 <!-- badges: start -->
 
-<img src="images/balselr.png" style="width:40.0%;height:40.0%" />
+[![R-CMD-check](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml)
 
-[![R-CMD-check](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/.github/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-### What is `balselr`?
+## What is `balselr`?
 
 Balancing selection with R allows you to run **NCD statistics** to
 detect **long-term balancing selection** in genomic datasets.
@@ -19,7 +18,7 @@ Original paper describing the NCD statistics: Bitarello, De Filippo,
 Teixeira, Schmidt, Kleinert, Meyer & Andrés (2018). Signatures of
 long-term balancing selection in human genomes. Genome biology and
 evolution, 10(3), 939-955.
-[link](https://academic.oup.com/gbe/article/10/3/939/4938688)
+[Link](https://academic.oup.com/gbe/article/10/3/939/4938688)
 
 ## Installation
 

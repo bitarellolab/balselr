@@ -28,6 +28,8 @@ Suggests:
     testthat,
     DT,
     rmarkdown,
-    roxygen2
+    roxygen2,
+    rcmdcheck,
+    remotes
 VignetteBuilder: knitr
 URL: https://bitarellolab.github.io/balselr/
