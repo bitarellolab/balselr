@@ -1,13 +1,24 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# balselr
+<img src="man/figures/balselr.png" style="width:40.0%;height:40.0%" />
 
 <!-- badges: start -->
 
-<img src="images/balselr.png" style="width:40.0%;height:40.0%" />
 [![R-CMD-check](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bitarellolab/balselr/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
+
+## What is `balselr`?
+
+Balancing selection with R allows you to run **NCD statistics** to
+detect **long-term balancing selection** in genomic datasets.
+
+Original paper describing the NCD statistics: Bitarello, De Filippo,
+Teixeira, Schmidt, Kleinert, Meyer & Andrés (2018). Signatures of
+long-term balancing selection in human genomes. Genome biology and
+evolution, 10(3), 939-955.
+[Link](https://academic.oup.com/gbe/article/10/3/939/4938688)
 
 ## Installation
 
@@ -26,21 +37,30 @@ library(balselr)
 This is a basic example which shows you how to read in a vcf file:
 
 ``` r
-read_vcf(x="inst/example.vcf")
+read_vcf(x=system.file(package = "balselr", "example.vcf"))
 ```
 
 This is an example which shows how to parse a vcf file and output an
 input file for `ncd1`:
 
 ``` r
-parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, type="ncd1")
+parse_vcf(
+        infile = system.file(package = "balselr", "example.vcf"),
+        n0 = 108,
+        type = "ncd1"
+)
 ```
 
 This is an example which shows how to parse a vcf file and output an
 input file for `ncd2`:
 
 ``` r
-parse_vcf(infile=system.file(package="balselr", "example.vcf"), n0=108, n1=2, type="ncd2")
+parse_vcf(
+        infile = system.file(package = "balselr", "example.vcf"),
+        n0 = 108,
+        n1 = 2,
+        type = "ncd2"
+)
 ```
 
 Run `ncd1 (tf=0.5)` with a 3000 basepair window and a minimum of 8
@@ -58,9 +78,3 @@ informative sites per window using 2 cores:
 data(ncd2_input)
 ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.

@@ -1,0 +1,113 @@
+---
+title: "balselr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{balselr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(balselr)
+```
+
+
+## Read in some data
+
+Read in a vcf ([Variant Call Format][https://en.wikipedia.org/wiki/Variant_Call_Format]) file:
+
+```{r, echo=T, eval=F}
+read_vcf(x=system.file("balselr","example.vcf"))
+```
+
+
+## Prepare `ncd1` input file
+
+This is an example which shows how to parse a vcf file and output an input file for `ncd1`:
+
+```{r, echo=T, eval=F}
+prep_my_ncd1_file<-parse_vcf(
+        infile = system.file(package = "balselr", "example.vcf"),
+        n0 = 108,
+        type = "ncd1"
+)
+```
+
+This is an example which shows how to parse an R object made from a vcf file and output an input file for `ncd1`:
+
+```{r, echo=T, eval=F}
+prep_my_ncd1_file2<-parse_vcf(
+        vcf_data = vcf_obj),
+        n0 = 108,
+        type = "ncd1"
+)
+```
+
+
+
+Run `ncd1` with a 3000 basepair window and a minimum of 8 informative sites per window using 2 cores and a target frequency of 0.5:
+
+```{r, echo=T, eval=F}
+
+res1<-ncd1(x=prep_my_ncd1_file, tf=0.5, w=3000, ncores=2, minIS=8)
+res1
+```
+
+
+Make the minIS filter less restrictive and the window smaller:
+
+
+```{r, echo=T, eval=F}
+res2<-ncd1(x=prep_my_ncd1_file, tf=0.5, w=2000, ncores=2, minIS=2)
+res2
+```
+
+## Prepare `ncd2` input file
+
+This is an example which shows how to parse a vcf file and output an input file for `ncd1`; use 4 individuals for the outgroup:
+
+```{r, echo=T, eval=F}
+prep_my_ncd1_file<-parse_vcf(
+        infile = system.file(package = "balselr", "example.vcf"),
+        n0 = 108,
+        n1 = 4,
+        type = "ncd2"
+)
+```
+
+This is an example which shows how to parse an R object made from a vcf file and output an input file for `ncd1`; use only one individual for the outgroup:
+
+```{r, echo=T, eval=F}
+prep_my_ncd2_file2<-parse_vcf(
+        vcf_data = vcf_obj),
+        n0 = 108,
+        n1 = 1,
+        type = "ncd2"
+)
+```
+
+
+
+Run `ncd2` with a 3000 basepair window and a minimum of 8 informative sites per window using 2 cores and a target frequency of 0.5:
+
+```{r, echo=T, eval=F}
+
+res1<-ncd2(x=prep_my_ncd2_file, tf=0.5, w=3000, ncores=2, minIS=8)
+res1
+```
+
+
+Make the minIS filter less restrictive and the window smaller:
+
+
+```{r, echo=T, eval=F}
+res2<-ncd2(x=prep_my_ncd2_file, tf=0.5, w=2000, ncores=2, minIS=2)
+res2
+```

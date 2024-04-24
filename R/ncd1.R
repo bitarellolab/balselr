@@ -25,7 +25,7 @@ ncd1 <- function(x = x,
                  by="POS") {
         assertthat::assert_that(length(unique(x[, CHR])) == 1, msg = "Run one
                           chromosome at a time\n")
-
+        x <- copy(x)
         x[, AF := tx_1 / tn_1] #allele relative frequency
         x[, ID := seq_along(CHR)]
         w1 <- w / 2
@@ -102,5 +102,5 @@ ncd1 <- function(x = x,
         # }
 
 
-        return(print(res5))
+        return(res5)
 }
