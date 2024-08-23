@@ -1,69 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/articles/balselr.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/balselr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/dot-count_alleles.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/dot-split_geno.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/dot-vcf_ncd1.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/dot-vcf_ncd2.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/ncd1.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/ncd1_input.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/ncd2.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/ncd2_input.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/parse_vcf.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/read_vcf.html</loc>
-  </url>
-  <url>
-    <loc>https://bitarellolab.github.io/balselr/reference/vcf_obj.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://bitarellolab.github.io/balselr/404.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/LICENSE-text.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/LICENSE.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/articles/balselr.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/articles/index.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/authors.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/index.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/news/index.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/balselr-package.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/dot-count_alleles.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/dot-split_geno.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/dot-vcf_ncd1.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/dot-vcf_ncd2.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/index.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/ncd1.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/ncd1_input.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/ncd2.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/ncd2_input.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/parse_vcf.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/pipe.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/read_vcf.html</loc></url>
+<url><loc>https://bitarellolab.github.io/balselr/reference/vcf_obj.html</loc></url>
 </urlset>
+
