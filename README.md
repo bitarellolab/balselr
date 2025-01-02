@@ -16,7 +16,7 @@ evolution, 10(3), 939-955.
 
 ## Citing
 
-If you have used `nitro` in a publication and have found it useful, please
+If you have used `balselr` in a publication and have found it useful, please
 consider citing it as follows:
 
 Hansell, D. & Bitarello, B. (2024). balselr: balancing selection tests in R. GitHub repository:
