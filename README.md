@@ -1,9 +1,11 @@
 
+[![DOI](https://zenodo.org/badge/353810861.svg)](https://doi.org/10.5281/zenodo.18148849)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <img src="man/figures/balselr.png" style="width:40.0%;height:40.0%" />
 
-# What is `balselr`?
+## What is `balselr`?
 
 Balancing selection with R allows you to run **NCD statistics** to
 detect **long-term balancing selection** in genomic datasets.
@@ -13,14 +15,6 @@ Teixeira, Schmidt, Kleinert, Meyer & Andrés (2018). Signatures of
 long-term balancing selection in human genomes. Genome biology and
 evolution, 10(3), 939-955.
 [Link](https://academic.oup.com/gbe/article/10/3/939/4938688)
-
-## Citing
-
-If you have used `balselr` in a publication and have found it useful, please
-consider citing it as follows:
-
-Hansell, D. & Bitarello, B. (2024). balselr: balancing selection tests in R. GitHub repository:
-https://github.com/bitarellolab/balselr.
 
 ## Installation
 

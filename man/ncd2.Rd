@@ -31,3 +31,6 @@ Calculate non-central statistic (NCD2)
 \examples{
 ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
 }
+\references{
+Bitarello et al. Genome Biology and Evolution, Volume 10, Issue 3, March 2018, Pages 939–955, https://doi.org/10.1093/gbe/evy054
+}

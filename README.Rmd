@@ -1,6 +1,14 @@
 ---
 output: github_document
+toc: true
 ---
+
+# balselr <a href="https://bitarellolab.github.io/balselr/"><img src="man/figures/logo.png" align="right" height="138" alt=""/></a>
+
+<!-- badges: start -->
+[![DOI](https://zenodo.org/badge/353810861.svg)](https://doi.org/10.5281/zenodo.18148849)
+
+[![DOI](https://zenodo.org/badge/353810861.svg)](https://doi.org/10.5281/zenodo.18148849)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -22,7 +30,7 @@ knitr::opts_chunk$set(
 
 Balancing selection with R allows you to run **NCD statistics** to detect **long-term balancing selection** in genomic datasets.
 
-Original paper describing the NCD statistics: Bitarello, De Filippo, Teixeira, Schmidt,  Kleinert, Meyer & Andrés (2018). Signatures of long-term balancing selection in human genomes. Genome biology and evolution, 10(3), 939-955. [Link](https://academic.oup.com/gbe/article/10/3/939/4938688)
+Original paper describing the NCD statistics: [Bitarello et al. (2018)](https://academic.oup.com/gbe/article/10/3/939/4938688)
 
 ## Installation
 

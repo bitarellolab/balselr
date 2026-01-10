@@ -44,3 +44,5 @@ README\.html
 ^inst/balselr_win_test\.R$
 ^README\.Rmd$
 ^data-raw$
+^doc$
+^Meta$
