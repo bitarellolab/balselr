@@ -1,13 +1,20 @@
 # balselr
 
-true
-
 ## What is `balselr`?
 
 Balancing selection with R allows you to run **NCD statistics** to
 detect **long-term balancing selection** in genomic datasets as
 described in the paper: [Bitarello et
 al. (2018)](https://academic.oup.com/gbe/article/10/3/939/4938688)
+
+## How to cite us
+
+For now, please cite us as follows:
+
+> Hansell, D and Bitarello, B (2026). balselr: Balancing Selection in R
+> Zenodo. <https://doi.org/10.5281/zenodo.18148850>
+
+Thank you!
 
 ## Installation
 

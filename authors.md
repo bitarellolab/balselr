@@ -15,7 +15,7 @@ Source:
 [`inst/CITATION`](https://github.com/bitarellolab/balselr/blob/master/inst/CITATION)
 
 Hansell and Bitarello (2026). balselr: Balancing Selection in R
-https://doi.org/10.5281/zenodo.2647541
+10.5281/zenodo.18148849
 
     @Misc{,
       title = {balselr: Balancing Selection in R},
