@@ -11,5 +11,5 @@ bibentry(
   textVersion  =
            paste("Hansell and Bitarello (2026).",
                  "balselr: Balancing Selection in R",
-                 "https://doi.org/10.5281/zenodo.2647541")
+                 "10.5281/zenodo.18148849")
 )
