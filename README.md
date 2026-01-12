@@ -1,20 +1,21 @@
 
-[![DOI](https://zenodo.org/badge/353810861.svg)](https://doi.org/10.5281/zenodo.18148849)
+true
+
+# balselr <a href="https://bitarellolab.github.io/balselr/"><img src="man/figures/logo.png" align="right" height="138" alt=""/></a>
+
+<!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18148849.svg)](https://doi.org/10.5281/zenodo.18148849)
+![codecov](https://codecov.io/gh/bitarellolab/balselr/badge.svg)\](<https://codecov.io/gh/bitarellolab/balselr>)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-<img src="man/figures/balselr.png" style="width:40.0%;height:40.0%" />
 
 ## What is `balselr`?
 
 Balancing selection with R allows you to run **NCD statistics** to
-detect **long-term balancing selection** in genomic datasets.
-
-Original paper describing the NCD statistics: Bitarello, De Filippo,
-Teixeira, Schmidt, Kleinert, Meyer & Andrés (2018). Signatures of
-long-term balancing selection in human genomes. Genome biology and
-evolution, 10(3), 939-955.
-[Link](https://academic.oup.com/gbe/article/10/3/939/4938688)
+detect **long-term balancing selection** in genomic datasets as
+described in the paper: [Bitarello et
+al. (2018)](https://academic.oup.com/gbe/article/10/3/939/4938688)
 
 ## Installation
 
@@ -33,7 +34,7 @@ library(balselr)
 This is a basic example which shows you how to read in a vcf file:
 
 ``` r
-read_vcf(x=system.file(package = "balselr", "example.vcf"))
+read_vcf(x = system.file(package = "balselr", "example.vcf"))
 ```
 
 This is an example which shows how to parse a vcf file and output an
@@ -64,7 +65,7 @@ informative sites per window using 2 cores:
 
 ``` r
 data(ncd1_input)
-ncd1(x=ncd1_input, tf=0.5, w=3000, ncores=2, minIS=8)
+ncd1(x = ncd1_input, tf = 0.5, w = 3000, ncores = 2, minIS=8)
 ```
 
 Run `ncd2 (tf=0.5)` with a 3000 basepair window and a minimum of 2
@@ -72,5 +73,5 @@ informative sites per window using 2 cores:
 
 ``` r
 data(ncd2_input)
-ncd2(x=ncd2_input, tf=0.5, w=3000, ncores=2, minIS=2)
+ncd2(x = ncd2_input, tf = 0.5, w = 3000, ncores = 2, minIS=2)
 ```

@@ -1,9 +1,12 @@
 Package: balselr
+Version: 1.0.0
 Title: Balancing Selection in R
-Version: 0.0.0.9000
+Date: 2026-01-12
 Authors@R: 
-    c(person("Bárbara", "Bitarello", , "barbarabitarello@gmail.com", role = c("cre","aut", "cre"),comment = c(ORCID = "0000-0001-7676-9367")),
-    person(give="Daphne",family="Hansell",role=c("ctb","aut")))
+    c(person(give="Daphne",family="Hansell",role=c("ctb","aut")),
+    person("Bárbara", "Bitarello", , "barbarabitarello@gmail.com", role = c("cre","aut", "cre"),comment = c(ORCID = "0000-0001-7676-9367")),
+    person(give="Débora",family="YC Brandt",role=c("ctb")))
+Maintainer: Bárbara Bitarello <barbarabitarello@gmail.com>
 Description: Run NCD statistics on population-level genomic data.
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -33,3 +36,4 @@ Suggests:
     remotes
 VignetteBuilder: knitr
 URL: https://bitarellolab.github.io/balselr/
+BugReports: https://github.com/bitarellolab/balselr/issues

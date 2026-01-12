@@ -6,12 +6,15 @@
 \alias{balselr-package}
 \title{balselr: Balancing Selection in R}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Run NCD statistics on population-level genomic data.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://bitarellolab.github.io/balselr/}
+  \item Report bugs at \url{https://github.com/bitarellolab/balselr/issues}
 }
 
 }
@@ -21,6 +24,11 @@ Useful links:
 Authors:
 \itemize{
   \item Daphne Hansell [contributor]
+}
+
+Other contributors:
+\itemize{
+  \item Débora YC Brandt [contributor]
 }
 
 }
