@@ -8,6 +8,8 @@ Useful links:
 
 - <https://bitarellolab.github.io/balselr/>
 
+- Report bugs at <https://github.com/bitarellolab/balselr/issues>
+
 ## Author
 
 **Maintainer**: Bárbara Bitarello <barbarabitarello@gmail.com>
@@ -16,3 +18,7 @@ Useful links:
 Authors:
 
 - Daphne Hansell \[contributor\]
+
+Other contributors:
+
+- Débora YC Brandt \[contributor\]

@@ -2,20 +2,24 @@
 
 ## Authors
 
+- **Daphne Hansell**. Contributor, author.
+
 - **Bárbara Bitarello**. Maintainer, author, maintainer.
   [](https://orcid.org/0000-0001-7676-9367)
 
-- **Daphne Hansell**. Contributor, author.
+- **Débora YC Brandt**. Contributor.
 
 ## Citation
 
-Bitarello B, Hansell D (2026). *balselr: Balancing Selection in R*. R
-package version 0.0.0.9000, <https://bitarellolab.github.io/balselr/>.
+Source:
+[`inst/CITATION`](https://github.com/bitarellolab/balselr/blob/master/inst/CITATION)
 
-    @Manual{,
+Hansell and Bitarello (2026). balselr: Balancing Selection in R
+https://doi.org/10.5281/zenodo.2647541
+
+    @Misc{,
       title = {balselr: Balancing Selection in R},
-      author = {Bárbara Bitarello and Daphne Hansell},
-      year = {2026},
-      note = {R package version 0.0.0.9000},
+      author = {Daphne Hansell and Bárbara Bitarello},
+      doi = {10.5281/zenodo.18148849},
       url = {https://bitarellolab.github.io/balselr/},
     }
