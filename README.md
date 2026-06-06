@@ -18,10 +18,9 @@ al. (2018)](https://academic.oup.com/gbe/article/10/3/939/4938688)
 
 For now, please cite us as follows:
 
-> Hansell, D and Bitarello, B (2026). balselr: Balancing Selection in R
-> Zenodo. <https://doi.org/10.5281/zenodo.18148850>
-
-Thank you!
+> Hansell, D., Brandt, D.Y.C. & Bitarello, B.D. (2025). Balancing
+> Selection Tests in R (v1.0.0-beta.2). Zenodo.
+> <https://doi.org/10.5281/zenodo.18148849>
 
 ## Installation
 

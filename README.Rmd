@@ -28,9 +28,8 @@ Balancing selection with R allows you to run **NCD statistics** to detect **long
 
 For now, please cite us as follows:
 
-> Hansell, D and Bitarello, B (2026). balselr: Balancing Selection in R Zenodo. https://doi.org/10.5281/zenodo.18148849
+> Hansell, D., Brandt, D.Y.C. & Bitarello, B.D. (2025). Balancing Selection Tests in R (v1.0.0-beta.2). Zenodo. https://doi.org/10.5281/zenodo.18148849
 
-Thank you!
 
 ## Installation
 

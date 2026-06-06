@@ -23,6 +23,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Bárbara Bitarello \email{barbarabitarello@gmail.com} (\href{https://orcid.org/0000-0001-7676-9367}{ORCID})
   \item Daphne Hansell [contributor]
 }
 
