@@ -1,6 +1,7 @@
 # balselr
 
 ``` r
+
 library(balselr)
 ```
 
@@ -10,6 +11,7 @@ Read in a vcf (\[Variant Call
 Format\]\[<https://en.wikipedia.org/wiki/Variant_Call_Format>\]) file:
 
 ``` r
+
 read_vcf(x=system.file("balselr","example.vcf"))
 ```
 
@@ -19,6 +21,7 @@ This is an example which shows how to parse a vcf file and output an
 input file for `ncd1`:
 
 ``` r
+
 prep_my_ncd1_file<-parse_vcf(
         infile = system.file(package = "balselr", "example.vcf"),
         n0 = 108,
@@ -42,6 +45,7 @@ sites per window using 2 cores and a target frequency of 0.5:
 
 ``` r
 
+
 res1<-ncd1(x=prep_my_ncd1_file, tf=0.5, w=3000, ncores=2, minIS=8)
 res1
 ```
@@ -49,6 +53,7 @@ res1
 Make the minIS filter less restrictive and the window smaller:
 
 ``` r
+
 res2<-ncd1(x=prep_my_ncd1_file, tf=0.5, w=2000, ncores=2, minIS=2)
 res2
 ```
@@ -59,6 +64,7 @@ This is an example which shows how to parse a vcf file and output an
 input file for `ncd1`; use 4 individuals for the outgroup:
 
 ``` r
+
 prep_my_ncd1_file<-parse_vcf(
         infile = system.file(package = "balselr", "example.vcf"),
         n0 = 108,
@@ -85,6 +91,7 @@ sites per window using 2 cores and a target frequency of 0.5:
 
 ``` r
 
+
 res1<-ncd2(x=prep_my_ncd2_file, tf=0.5, w=3000, ncores=2, minIS=8)
 res1
 ```
@@ -92,6 +99,7 @@ res1
 Make the minIS filter less restrictive and the window smaller:
 
 ``` r
+
 res2<-ncd2(x=prep_my_ncd2_file, tf=0.5, w=2000, ncores=2, minIS=2)
 res2
 ```

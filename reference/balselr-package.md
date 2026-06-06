@@ -17,6 +17,9 @@ Useful links:
 
 Authors:
 
+- Bárbara Bitarello <barbarabitarello@gmail.com>
+  ([ORCID](https://orcid.org/0000-0001-7676-9367))
+
 - Daphne Hansell \[contributor\]
 
 Other contributors:
